@@ -1,0 +1,483 @@
+Day43
+
+王老师
+QQ:634962146
+tel:17701268205
+jquery 框架
+框架：把项目常用的功能封装好。
+js作用：实现页面特效
+核心思想：找到它，操作它。
+它：节点----html标签
+
+<div id="div1">div1</div>
+var ob=document.getElementById("div1")
+ob.style.background="#ccc";
+1、下载
+jquery.js
+2、加载jquery框架程序
+<script type="text/javascript" src="js/jquery.js"></script>
+选择器
+	$(选择器) //生产选择器对象，jquery对象
+	
+	id选择器demo-1.html
+	写法：
+	$("#ID值")
+	作用：找id值为ID值的标签
+	$("#div1")
+	
+	类别选择器，根据class属性去找demo-1.html
+	语法：
+	$(".class值")
+
+	标签选择器demo-1.html
+	语法：
+	$("标签名称")
+	作用：
+	根据标记名称
+
+	属性选择器 demo-2.html
+	作用：可以根据任何的属性来找页面元素
+	语法：
+		$("[属性名='属性值']")
+		$("[属性名^='值']")
+		$("[属性名$='值']")
+		$("[属性名*='值']")  包含
+	
+复合选择器：
+	后代选择器 demo-3.html
+	作用：找某些元素的后代标签
+	<ul>
+		<li>
+		<ul>
+			<li></li>
+		</ul>
+		</li>
+	</ul>
+	语法：
+	$("选择器1 选择器2 ......")
+	
+	子代选择器
+	作用：找某些元素的子元素
+	语法：
+	$("选择器1>选择器2>......")
+
+	并集选择器
+	作用：把多个选择器选择到的结果，放在一起
+	语法：
+	$("选择器1,选择器2,.....")
+	交集选择器
+	作用：把多个选择器选择到的结果，公共部分获取到
+	语法：$("选择器1选择器2......")
+	位置选择器
+	作用：通过位置去找到页面元素。
+	$(":first")
+	$(":last")
+	$(":eq(位置值)")
+
+	$(":odd") //奇数位的元素
+	$(":even") //偶数位的元素  0 2 4 6 ....
+	
+选择器对象的遍历：
+	选择器对象.length 
+	作用：获取选择器对象中节点对象的个数
+
+	for(var i=0;i<ob.length;i++){
+		alert(ob[i]);
+	}	
+	例子：找到页面中的所有img，给每个图片标签加
+	上属性title img-9.html
+	<img src=""/>
+	<img src=""/>
+	<img src=""/>
+	
+	选择器对象.each(function(index){
+		this//当前遍历到的节点对象，等同于ob[i]
+	})
+	index-----节点对象的下标
+	this-----当前遍历到的节点对象
+	把this转化成选择器对象：$(this)
+	练习：
+	有5个li，通过选择器对象的遍历，
+	给每个li加上title属性，值为：兄弟第几个
+	
+操作：
+	标签属性
+		获取
+		object.attr("属性名称")
+		设置
+		object.attr("属性名称","属性的值");
+	案例：验证码的刷新
+	每次改变src属性的值，且和上次不一样，保证请求的是一个php程序：
+	$("#verify").attr('src','verifyImage.php?a='+Math.random());
+	
+	内容
+		表单控件的内容
+		$("选择器").val() //获取内容
+		$("选择器").val("值") //设置内容
+		单行文本框
+		密码框
+		下拉列表框
+		
+		html标签的内容
+		$("选择器").html()
+		$("选择器").text()
+		$("选择器").html("内容")
+		$("选择器").text("内容")
+		div
+		p
+		b
+	样式
+		行内样式 style属性的值
+		$("选择器").css("css样式属性"[,"css样式属性的值"]);
+		类别样式 class属性的值
+		$("选择器").addClass("类别样式名称")//增加类别样式
+		$("选择器").removeClass("类别样式名称")//取出类别样式
+	案例：登录表单验证？
+		
+
+	事件
+
+	宽高及位置
+	动画
+	标签的动态产生及删除
+	
+
+
+project
+
+smarty
+
+mysql高级
+
+框架 thinkphp
+
+Day44
+
+总结回顾：
+	核心思想，找到它操作它。
+	选择器：
+		id选择器
+		$("#id值")
+		类别选择器
+		$(".类别名称")
+		属性选择器
+		$("[属性名=值]")
+		$("[属性名^=值]")
+		$("[属性名$=值]")
+		$("[属性名*=值]")
+		标签选择器
+		$("标记名称")
+		交集选择器
+		$("选择器1选择器2....")
+		并集选择器
+		$("选择器1,选择器2,....")
+		后代选择器
+		$("选择器1 选择器2 ....")
+		子代选择器
+		$("选择器1>选择器2>....")
+		位置选择器
+		$("li:first")
+		$("li:last")
+		$("li:eq(位置值)")
+		$("li:odd")
+		$("li:even")
+	操作它：
+		属性
+		object.attr(属性名[,值])
+		样式
+		object.css("样式属性名"[,'样式属性名值']);
+		object.addClass("类别样式名称")
+		object.removeClass("类别样式名称")
+		内容
+		object.html(['content'])
+		object.text(['content'])
+		object.val(['content'])
+	选择器对象的遍历
+	$("选择器").each(function(index){
+		$(this)
+	});
+		
+知识点：
+	json对象,用来存放数据的轻量级对象，
+	可以指定下标的数组。
+	var jOb={下标:'值',下标:'值',......}
+	访问：
+	jOb.下标
+	案例：存放一个学生信息
+	var sOb={name:'xiaoli',age:18,classname:'psd1505',sex:'男'};
+	
+	var jOb=[{下标:'值',下标:'值',......},{下标:'值',下标:'值',......},....];
+	案例：存放psd1505所有学生的信息
+	var sOb=[{name:'xiaohuang',age:22},
+		 {name:'xiaozhang',age:21},
+		 {name:'xiaowang',age:18}];
+	访问：
+	sOb[0].name
+	遍历：
+	使用for循环
+
+	动画
+	$(选择器).show(speed)//显示元素
+	$(选择器).hide(速度)//隐藏元素
+	speed:
+		1000  1秒
+		slow
+		fast
+		normal
+	案例：选项卡效果
+	$(选择器).slideDown(speed) //下拉显示
+	$(选择器).slideUp(speed) //上拉隐藏
+
+	案例：提示中奖。 down-up-5.html
+	
+
+	$(选择器).animate({},speed[,callBack])
+	例子：让一个div，沿着x轴，走动 piao-x-6.html
+	
+	
+	宽高及位置
+	$("选择器").width() //内容的宽
+	$("选择器").height() //内容的高
+	$("选择器").outerWidth();
+	$("选择器").outerHeight();
+	例子：获取一个div的宽和高
+	1、页面结构  <div id="div1">div1</div>
+	2、div1被单击时，把自己的宽和高获取到，显示出来
+	应用：
+	获取窗口的宽高window
+	获取页面的宽度和高度
+
+	页面元素位置
+	$("选择器").offset().left
+	$("选择器").offset().top
+	滚动条位置的获取
+	$(window).scrollTop() 滚动条离开上端的距离
+	$(window).scrollLeft() 滚动条离开左端的距离
+	例子：对联广告
+	
+	事件
+	鼠标位置获取
+
+	元素的动态产生删除
+
+Day45
+
+事件操作：
+	光标事件
+
+	得到光标 onfocus
+	失去焦点 onblur
+	光标离开内容变化 onchange
+
+	鼠标事件
+		onclick
+		ondblclick
+		onmouseout
+		onmouseover
+		onmousemove
+		onmousedown
+		onmouseup
+
+	键盘事件
+		onkeydown  任何键
+		onkeyup
+		onkeypress  除功能键外
+		
+	页面事件
+		onload
+	滚动条事件
+		onscroll
+	jquery中动态操作事件：
+		一个事件对应了一个方法
+		object.click(函数名|匿名函数);
+		object.focus()
+		object.change()
+		object.blur()
+		
+		object.click()
+		object.dblclick()
+		object.mouseleave()
+		object.mouseout()
+		object.mouseenter()
+		object.mouseover()
+		object.mousedown()
+		object.mouseup()
+		object.mousemove()
+
+		object.ready()
+		object.scroll()
+
+元素的动态产生删除
+	增加
+	$("选择器").append("content");//追加最小的子元素
+	$("选择器").before("content");//追加的是哥哥
+	$("选择器").after("content");//追加弟弟
+	删除
+	$("选择器").remove();//删除自己
+	$("选择器").empty();//删除所有的子元素
+案例：
+	两级联动（省 市）
+
+ajax：异步通信。不刷新页面，直接通过jquery中的一个方法
+	请求，服务器。
+$.ajax({
+	url:'请求谁',
+	type:'get|post',//传值方式
+	data:'名=值&名=值&.....',//传值
+	dataType:'text|htm|script|json|xml',
+	success:function(re){
+		alert(re);//re中放的就是服务器回传的结果
+	},
+	cache:false,
+	timeout:3000
+})
+
+案例：读取文章表数据，显示在div中，且可以指定文章的分类。
+create table news(
+	id int(8) primary key auto_increment,
+	title varchar(50) not null,
+	content text,
+	type enum('1','2','3','4')	
+);
+insert into news(title,content,type) values('今天学习的是ajax-1','很简单','1');
+insert into news(title,content,type) values('今天学习的是ajax-2','很简单','2');
+insert into news(title,content,type) values('今天学习的是ajax-3','很简单','3');
+insert into news(title,content,type) values('今天学习的是ajax-4','很简单','4');
+insert into news(title,content,type) values('今天学习的是ajax-5','很简单','1');
+insert into news(title,content,type) values('今天学习的是ajax-6','很简单','2');
+insert into news(title,content,type) values('今天学习的是ajax-7','很简单','3');
+insert into news(title,content,type) values('今天学习的是ajax-8','很简单','4');
+insert into news(title,content,type) values('今天学习的是ajax-9','很简单','1');
+insert into news(title,content,type) values('今天学习的是ajax-10','很简单','2');
+insert into news(title,content,type) values('今天学习的是ajax-11','很简单','3');
+insert into news(title,content,type) values('今天学习的是ajax-12','很简单','4');
+insert into news(title,content,type) values('今天学习的是ajax-13','很简单','1');
+insert into news(title,content,type) values('今天学习的是ajax-14','很简单','2');
+insert into news(title,content,type) values('今天学习的是ajax-15','很简单','3');
+
+json json_encode(array)
+array二维，[{},{},....]
+array一维，{}
+
+xml：可扩展文本标记语言。
+作用：用来存放数据。
+标记格式：
+	单标记
+	<标记名称 属性="值" ...../>
+	双标记
+	<标记名称 属性名='值' ....>文本内容或子标记</标记名称>
+案例：
+	用xml来存放一个班学生信息
+	psd1505.xml
+	<student name='小李' sex='男' age='18'/>
+	<student name='小张' sex='女' age='19'/>
+	<student name='小明' sex="男" age="20"/>
+案例：
+	存放多个班的学生信息
+	<class name="psd1504">
+		<student name='小李1' sex='男' age='18'/>
+		<student name='小张1' sex='女' age='19'/>
+		<student name='小明1' sex="男" age="20"/>
+	</class>
+	<class name="psd1505">
+		<student name='小李' sex='男' age='18'/>
+		<student name='小张' sex='女' age='19'/>
+		<student name='小明' sex="男" age="20"/>
+	</class>
+练习：
+	省市县信息
+	河北
+		石家庄
+			赵县
+			火线
+		承德
+			丰宁
+			忘了
+	山东
+		济南
+			县1
+			县2
+		青岛
+			平度
+			即墨
+	<province name='河北' id='1'>
+		<city name='石家庄' id='11'>
+			<area name='赵县' id="111"/>
+		</city>
+		<city name='承德' id='12'>
+			<area name='丰宁' id="121"/>
+		</city>
+	</province>
+	<province name='山东' id='2'>
+		<city name='济南' id='21'>
+			<area name='县1' id="211"/>
+		</city>
+		<city name='青岛' id='22'>
+			<area name='平度' id="221"/>
+		</city>
+	</province>
+xml使用：
+	1、加载
+	2、找子标签 $(re).find("选择器")，html标签的属性怎么操作，xml标签的属性就怎么操作
+		$(this).attr('属性名称')
+	3、呈现页面效果
+
+
+三级联动
+下拉菜单
+图片轮换
+遮罩层，及窗口移动
+
+图片放大镜效果
+web文本编辑器
+
+
+Day46
+
+三级联动
+	province.xml  省市县信息
+	province.html 三级联动
+	1、呈现页面效果 写三个下拉列表框
+	2、实现联动效果
+		a、省呈现下拉框内容
+		加载province.xml
+		去xml中找到province标签
+		遍历，同时生成option
+		
+下拉菜单
+	02menu.html
+图片轮换
+	$("选择器").index(Element)
+	效果一，只实现图片变化，没有切换效果。
+	var arr=['url1','url2','',''];
+	$(".content div").click(function(){
+		//img src属性值的变化
+	})
+自动轮换：
+	每过一段事件，图片显示下一张。
+	num=0;//第一张，控制显示谁。
+	function autoNext(){
+		num++;//下一张
+		if(num>=4){
+			num=0;
+		}
+		//获取当前图片的路径
+		//把路径赋给img的属性src
+		//改变当前小div的样式
+		$(".content div:eq("+num+")")
+	}
+	定时器，window.setInterval(autoNext,1500);
+	
+	
+遮罩层，及窗口移动
+	1、新建一个html文件
+	2、页面效果，内容，遮罩层，遮罩层上方有一个窗口
+	3、登陆窗口的移动
+	
+
+图片放大镜效果
+web文本编辑器
+
+
+对于HTML元素本身就带有的固有属性，在处理时，使用prop方法;
+对于HTML元素我们自己自定义的DOM属性，在处理时，使用attr方法

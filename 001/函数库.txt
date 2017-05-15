@@ -1,0 +1,499 @@
+打印变量函数库：
+打印关于变量的信息：bool print_r ( mixed $expression [, bool $return ] );
+打印变量的相关信息：void var_dump ( mixed $expression [, mixed $... ] );
+sleep();
+ob_flush();
+flush();
+ob_start();
+session_start();
+set_time_limit(5000);
+feof();
+fgetcsv();
+fputcsv();
+sprintf();
+
+数据转换函数库：
+转换数据类型：bool settype ( mixed &$var , string $type );
+转换成整型：int intval(mixed $var);
+转换成浮点型：float floatval(mixed $var);
+转换成字符串：string strval(mixed $var);
+
+类型判别函数库：
+返回是否为整型：bool is_int(mixed $var);
+返回是否为浮点型：bool is_float(mixed $var);
+返回是否为数字或数字字符串：bool is_numeric(mixed $var);
+返回是否为布尔型：bool is_bool(mixed $var);
+返回是否为字符串：bool is_string(mixed $var);
+返回是否为标量类型(整型或浮点或布尔或字符串)：bool is_scalar(mixed $var);
+返回是否为数组：bool is_array(mixed $var);
+返回是否为对象：bool is_object(mixed $var);
+返回是否为资源：bool is_resource(mixed $var);
+返回是否为NULL：bool is_null(mixed $var);
+判断文件是否是通过 HTTP POST 上传的：bool is_uploaded_file ( string $filename);
+
+日期时间函数库：
+格式化一个本地时间／日期 ：string date (string $format [, int $timestamp ]);
+设置时区：bool date_default_timezone_set ( string $timezone_identifier );
+获取时区：string date_default_timezone_get(void);
+返回当前Unix时间戳：int time(void);
+将字符串解析为Unix时间戳：int strtotime(string $string);
+取得一个日期的 Unix 时间戳：int mktime ([ int $hour = date("H") [, int $minute = date("i") [, int $second = date("s") [, int $month = date("n") [, int $day = date("j") [, int $year = date("Y") [, int $is_dst = -1 ]]]]]]] )
+返回当前 Unix 时间戳和微秒数 ：mixed microtime ([ bool $get_as_float ]);
+
+数学函数库：
+进一取整：float ceil(float $var);
+舍一取整：float floor(float $var);
+幂运算：float pow(float $base , float $exp);
+获取平方根：float sqrt(float $var);
+获取最大值：mixed max(number $var,number $var[,...]);
+获取最小值：mixed min(number $var,number $var[,...]);
+产生随机数：int rand([int $min,int $max]);
+产生随机数：int mt_rand([int $min,int $max]);
+四舍五入：float round ( float $val [, int $precision = 0]);
+绝对值：number abs ( mixed $number );
+获取浮点数的余数：float fmod ( float $x , float $y ) ;
+
+字符串函数库：
+返回字符串在另一个字符串中第一次出现的位置,区分大小写：mixed strpos ( string $haystack , mixed $needle );
+返回字符串在另一个字符串中第一次出现的位置,不区分大小写：mixed stripos ( string $haystack , mixed $needle );
+返回字符串在另一个字符串中最后一次出现的位置,区分大小写：mixed strrpos ( string $haystack , mixed $needle );
+返回字符串在另一个字符串中最后一次出现的位置,不区分大小写：mixed strripos ( string $haystack , mixed $needle );
+字符串替换,区分大小写：mixed str_replace(mixed $search,mixed $replacement,string $string);
+字符串替换,不区分大小写：mixed str_ireplace(mixed $search,mixed $replacement,string $string);
+获取字符串的长度：int strlen(dtring $str);
+截取字符串：string substr(string $str,int $start[,int $length]);
+字符串反转：string strrev(string $str);
+将字符串转化为小写：string strtolower(string $str);
+将字符串转化为大写：string strtoupper(string $str);
+将字符串的首字母转换为大写：string ucfirst(string $str);
+将字符串中每个单词的首字母转换为大写：string ucwords(string $str);
+将字符中特殊的符号替换成HTML实体：string htmlspecialchars(string $string[,int $quote_style=ENT_COMPAT]);
+计算字符串的md5哈希值：string md5(string $str);
+删除前导空格：string ltrim(string $str);
+删除后续空格：string rtrim(string $str);
+删除前导和后续空格：string trim(string $str);
+字符串按要求的字符编码来转换：string iconv ( string $in_charset , string $out_charset , string $str )
+随机打乱一个字符串：string str_shuffle ( string $str )
+成一个唯一ID：string uniqid ([ string $prefix = "" [, bool $more_entropy = false ]] )
+将字符串编码成 URL 专用格式: string rawurldecode(string str)
+simplexml_load_string() 函数把 XML 字符串载入对象中
+字符串重复n次：string str_repeat(string $input, int $multiplier)
+
+数组函数库：
+获取数组成员或对象属性的数量：int count/sizeof(mixed $var);
+使用字符串拆分另一个字符串：array explode(string $delimiter,string $string);
+使用指定的分隔符将数组成员连接成字符串：string join/implode(string $delimiter,array $array);
+返回当前指针指向的成员：mixed current(array &$array);
+移动数组的指针到第一个成员,并且返回该成员：mixed reset(array &$array);
+移动数组的指针到下一个成员,并且返回该成员：mixed next(array &$array);
+移动数组的指针到上一个成员,并且返回该成员：mixed prev(array &$array);
+移动数组的指针到最后一个成员,并且返回该成员：mixed end(array &$array);
+将数组的键名转变成另外一个数组的键值：array array_keys(array $array);
+将数组的键值转变成另外一个数组的键值：array array_values(array $array);
+返回指定值是否在数组值中出现：bool in_array(mixed $needle,array $array);
+返回指定键名是否在数组中出现：bool array_key_exists ( mixed $key , array $array );
+在数组的未尾添加一个或多个成员,返回数组的新长度：int array_push(array &$array,mixed $value[,...]);
+在数组的开头添加一个或多个成员,返回数组的新长度：int array_unshift(array &$array,mixed $value[,...]);
+删除数组的最后一个成员,并且返回该成员：mixed array_pop(array &$array);
+删除数组的第一个成员,并且返回该成员：mixed array_shift(array &$array);
+数组反转：array array_reverse(array $array[, bool $preserve_keys = false ]);
+将回调函数作用于数组的每一个成员：array array_map ( callable $callback , array $arr1 [, array $... ] );
+计算数组中所有值的和：number array_sum (array $array)
+合并一个或多个数组：array array_merge ( array $array1 [, array $... ] )
+将数组打乱：bool shuffle ( array &$array )
+把百分号（%）符号替换成一个作为参数进行传递的变量: sprintf() %u 不包含正负号的十进制数; %s 字符串
+$_REPUEST 是接收了 $_GET $_POST $_COOKIE 三个的集合
+array array_combine ( array $keys , array $values )返回一个 array，用来自 keys 数组的值作为键名，来自 values 数组的值作为相应的值。
+array_map('trim', explode(',', $names));
+array_map('addslashes', $productNamesArr);
+
+自定义函数库;
+返回函数的参数总数：int func_num_args(void);
+返回函数的所有参数所组成的数组：array func_get_args(void);
+返回函数的参数中的某一项：mixed func_get_arg ( int $arg_num );
+检测指定的函数是否存在：bool function_exists(string $function_name);
+
+数据库函数：
+设置编码格式：mysql_set_charset('utf8');
+建立与MySQL服务器的连接：resource mysql_connect(string $host,string $username,string $password);
+打开指定的数据库：bool mysql_select_db(string $database);
+执行SQL语句：mixed mysql_query(string $sql);
+取得前一次 MySQL 操作所影响的记录行数：int mysql_affected_rows ([ resource $link_identifier ] )
+取得上一步 INSERT 操作产生的 ID：int mysql_insert_id ([ resource $link_identifier ] )
+从结果集中取得一行作为枚举数组：array mysql_fetch_row ( resource $result )
+返回结果集包含的行数(记录数)：int mysql_num_rows(resource $result);
+抽取结果集的一行作为关联数组返回,如果没有更多的行则返回FALSE：array mysql_fetch_assoc(resource $result);
+从结果集中取得一行作为关联数组，或数字数组，或二者兼有：array mysql_fetch_array ( resource $result [, int $ result_type ] )
+关闭 MySQL 连接：bool mysql_close ([ resource $link_identifier ] )
+
+Mysqli类库
+实例化Mysqli对象：$object = new Mysqli(string $hostname,string $username,string $password,string $database[,string $port])
+获取连接时的错误信息：string $object -> connect_error
+获取连接时的错误代码：int $object -> connect_errno
+执行SQL查询：mixed $object -> query(string $sql)
+返回上一条SQL语句所影响的记录数：int $object -> affected_rows
+返回最后插入记录的ID号：int $object -> insert_id
+事先编译SQL语句：mysqli_stmt object $object ->  prepare(string $sql)
+返回结果集包含的行数：int $object -> num_rows
+抽取结果集的一行作为索引数组返回,结果没有更多的行,则返回NULL：mixed $object-> fetch_row() 
+抽取结果集的一行作为关联数组返回,结果没有更多的行,则返回NULL：mixed $object-> fetch_assoc() 
+抽取结果集的一行作为索引或者关联或两者都有返回,结果没有更多的行,则返回NULL：mixed $object-> fetch_array([int $result_type=MYSQLI_BOTH])
+抽取结果集的一行作为对象返回,结果没有更多的行,则返回NULL：mixed $object-> fetch_object([ string $class_name = "stdClass"])
+将结果集包含所有行作为索引数组/关联数组/两者兼有返回：mixed $object -> fetch_all ([ int $resulttype = MYSQLI_NUM ] )
+获取结果集包含的字段数量(不一定是数据表中所有字段的数量)：int $object -> field_count
+释放结果集：void $object -> free()
+绑定变量到事先编译的SQL语句中作为参数出现：bool $object -> bind_param ( string $types , mixed &$var1 [, mixed &$... ] )
+执行事先编译的SQL语句：bool $object -> execute ( void )
+获取最后插入记录的ID号：int $object -> insert_id
+获取被影响的记录数：int $object -> affected_rows
+返回stmt对象执行后结果集包含的行数：int $object -> num_rows
+将结果集中的字段值绑定到变量：bool $object->bind_result ( mixed &$var1 [, mixed &$... ] )
+将结果集中的一行绑定到事先定义好的变量内：bool $object -> fetch ( void )
+
+PDO类库
+实例化PDO对象：$object = new PDO(string $dsn[,string $username[,string $password]])
+MySQL的DSN写法为：mysql:host=主机名称;dbname=数据库名称
+执行SQL查询：mixed $object -> query(string $sql)
+返回最后插入行的ID：string $object -> lastInsertId()
+预编译SQL语句：PDOStatement object $object -> prepare(string $sql)
+抽取结果集中的全部记录作用数组返回：array $object -> fetchAll( [int $fetch_style = PDO::FETCH_BOTH])
+绑定变量到参数(必须是变量)：bool $object->bindParam ( mixed $parameter , mixed &$variable) 
+绑定值到参数：bool $object->bindValue ( mixed $parameter , mixed &$variable) 
+执行预编译的SQL语句：bool $object -> execute([array $params])
+
+GD函数库:
+创建基于调色板的图像:resource imagecreate(int $width,int $height)
+创建基于真彩色的图像:resource imagecreatetruecolor(int $width,int $height)
+为图像分配颜色:int imagecolorallocate(resource $image,int $red,int $green,int $blue)
+为图像分配颜色,并且指定透明度:int imagecolorallocatealpha(resource $image,int $red,int $green,int $blue,int $alpha)
+填充区域:bool imagefill(resource $image,int $x,int $y,int $color)
+绘制单个像素点:bool imagesetpixel(resource $image,int $x,int $y,int $color)
+绘制矩形框:bool imagerectangle(resource $image,int $x1,int $y1,int $x2,int $y2,int $color)
+绘制填充矩形:bool imagefilledrectangle(resource $image,int $x1,int $y1,int $x2,int $y2,int $color)
+水平绘制单个字符:bool imagechar ( resource $image , int $font , int $x , int $y , string $c , int $color )
+垂直绘制单个字符:bool imagecharup ( resource $image , int $font , int $x , int $y , string $c , int $color )
+水平绘制字符串:bool imagestring ( resource $image , int $font , int $x , int $y , string $string , int $color )
+垂直绘制字符串:bool imagestringup ( resource $image , int $font , int $x , int $y , string $string , int $color )
+使用TrueType字体绘制文本:array imagettftext ( resource $image , float $size , float $angle , int $x , int $y , int $color , string $fontfile , string $text )
+以GIF格式输出图像到浏览器或文件:bool imagegif(resource $image[,string $filename])
+以JPEG格式输出图像到浏览器或文件:bool imagejpeg ( resource $image [, string $filename [, int $quality ]] )
+将GIF文件读取为图像资源:resource imagecreatefromgif(string $filename)
+将JPEG文件读取为图像资源:resource imagecreatefromjpeg(string $filename)
+将PNG文件读取为图像资源:resource imagecreatefrompng(string $filename)
+复制图像:bool imagecopy ( resource $dst_im , resource $src_im , int $dst_x , int $dst_y , int $src_x , int $src_y , int $src_w , int $src_h )
+销毁图像资源:bool imagedestroy(resource $image)
+获取图像的相关信息：array getimagesize(string $filename);
+获取图像的宽度：int imagesx(resource $image);
+获取图像的高度：int imagesy(resource $image);
+根据图像文件类型返回MIME类型：sting image_type_to_mime_type(int $image_type);
+根据图像文件类型返回扩展名：sting image_type_to_extension(int $image_type);
+取得使用TrueType字体绘制文件时的盒子信息：array imagettfbbox ( float $size , float $angle , string $fontfile , string $text );
+复制图像并且重新采样：bool imagecopyresampled ( resource $dst_image , resource $src_image , int $dst_x , int $dst_y , int $src_x , int $src_y , int $dst_w , int $dst_h , int $src_w , int $src_h );
+复制图像并且调整大小：bool imagecopyresized ( resource $dst_image , resource $src_image , int $dst_x , int $dst_y , int $src_x , int $src_y , int $dst_w , int $dst_h , int $src_w , int $src_h );
+设置是否开启图像的混合模式：bool imagealphablending ( resource $image , bool $blendmode );
+设置是否在保存PNG图像时保留Alpha通道信息：bool imagesavealpha ( resource $image , bool $saveflag );
+
+目录文件函数库：
+创建目录：bool mkdir(string $path[,int $permisson=0755[,bool $recursive=FALSE]])
+检测文件/目录是否存在：bool file_exists(string $path)
+重命名文件/目录：bool rename(string $oldname,string $newname)
+删除目录：bool rmdir(string $path)
+打开目录：resource opendir(string $path)
+读取目录条目：bool readdir(resource $handle)
+关闭目录：bool closedir(resource $handle)
+判断是否为目录：bool is_dir(string $path)
+判断是否为文件：bool is_file(string $path)
+删除文件：bool unlink(string $path)
+复制文件：bool copy(string $source,string $destination)
+打开文件：resource fopen(string $path,string $mode)
+读取一个字符：string fgetc(resource $handle)
+读取一行：string fgets(resource $handle)
+读取一行,并且过滤掉其中的HTML标记：string fgetss(resource $handle)
+返回指针是否到达文件尾：bool feof(resource $handle)
+读取文件内容：string fread(resource $handle,int $length)
+获取文件字节数：int filesize(string $filename)
+写入文本：int fwrite(resource $handle,string $string)
+关闭文件：bool fclose(resource $handle)
+返回路径中的目录部分：string dirname(string $path)
+读取整个文件的内容：string file_get_contents(string $filepath)
+写入文件内容：int file_put_contents(string $filepath,string $text)
+返回路径中的文件名称部分：string basename(string $filepath)
+返回路径中的目录部分：string dirname ( string $path )
+将上传的文件移动到新位置：bool move_uploaded_file ( string $filename , string $destination);
+
+正则函数库：
+执行一个正则表达式匹配：int preg_match ( string $pattern , string $subject[,array &$matches])
+执行一个全局正则表达式匹配：int preg_match_all ( string $pattern , string $subject[,array &$matches])
+使用正则表达式进行匹配：string preg_replace(string $pattern,string $replacement,string $string)
+使用正则表达式拆分字符串：array preg_split(string $pattern,string $string)
+
+函数函数库：
+判断函数是否存在：bool function_exists ( string $function_name )
+判断函数有几个参数：int func_num_args ( void )
+把函数的参数以数组的形式返回：array func_get_args ( void )
+返回函数中指定的一个参数：mixed func_get_arg ( int $arg_num )
+
+PDO类库
+实例化PDO对象：$object = new PDO(string $dsn[,string $username[,string $password]])
+MySQL的DSN写法为：mysql:host=127.0.0.1;dbname=database_name
+执行SQL查询：mixed $object -> query(string $sql)
+返回最后插入行的ID：string $object -> lastInsertId()
+预编译SQL语句：PDOStatement object $object -> prepare(string $sql)
+抽取结果集中的全部记录作用数组返回：array $object -> fetchAll( [int $fetch_style = PDO::FETCH_BOTH])
+绑定变量到参数(必须是变量)：bool $object->bindParam ( mixed $parameter , mixed &$variable)
+绑定值到参数：bool $object->bindValue ( mixed $parameter , mixed &$variable)
+执行预编译的SQL语句：bool $object -> execute([array $params])
+判断某个对象是否是某个类的实例：bool object instanceof class
+获取当前对象的类名称：string get_class([object $object])
+检测类是否被定义：bool class_exists(string $classname)
+检测方法是否存在：bool method_exists ( mixed $object , string $method_name )
+
+bool defined(name) 检查常量是否存在；
+
+$_REQUEST 用于收集HTML表单提交的数据;
+
+new self() 创建所在类的一个实例
+
+utf-8 中文 /^[\x{4e00}-\x{9fa5}]+$/u
+
+cmd
+//登录MySQL
+mysql -h 127.0.0.1 -P 3306 -u root -p
+
+//打印MySQL的版本信息；当前登录用户；当前的日期时间；
+SELECT VERSION(),USER(),NOW();
+
+//创建数据库
+CREATE DATABASE db_name;
+
+//显示当前服务器的数据库列表
+SHOW DATABASES;
+
+//查看数据库创建时的命令
+SHOW CREATE DATABASE db_name;
+
+//修改数据库
+ALTER DATABASE db_name CHARACTER SET 'utf8';
+
+//删除数据库
+DROP DATABASE db_name;
+
+//打开数据库
+USE db_name;
+
+//打印当前打开的数据库
+SELEECT DATABASE();
+
+//创建表单
+CREATE TABLE table_name ( col_name data_type,···,col_name data_type);
+
+//显示当前数据库中的所有表单
+SHOW TABLES;
+
+//查看表单创建时的命令
+SHOW CREATE TABLES table_name;
+
+//获取有关列的信息
+DESCRIBE table_name;
+
+//删除表单
+DROP TABLE table_name;
+
+//清空表
+DELETE FROM table_name;
+
+//插入一列
+ALTER TABLE table_name ADD col_name data_type;
+
+//删除一列
+ALTER TABLE table_name DROP col_name;
+
+//插入一行
+INSERT table_name (col_name data_type,···,col_name data_type) VALUES (value,···,value);
+
+//从表单中检索所有行
+SELECT * FROM table_name;
+
+//修改行
+UPDATE table_name SET cols_name = 'value' WHERE cols_name = 'value';
+
+//删除一行
+DELETE FROM table_name WHERE row_name;
+
+
+//删除表单
+DROP TABLE table_name;
+
+//查看数据表的索引
+SHOW INDEXES FROM table_name;
+
+//添加单列
+ALTER TABLE table_name ADD col_name data_type;
+
+//添加多列
+ALTER TABLE table_name ADD (col_name column_definition,...)
+
+//添加主键约束
+ALTER TABLE table_name ADD  PRIMARY KEY (index_col_name,...)
+
+//添加唯一约束
+ALTER TABLE table_name ADD UNIQUE KEY (index_col_name,...)
+
+//删除列
+ALTER TABLE table_name DROP col_name
+
+//删除主键约束
+ALTER TABLE table_name DROP PRIMARY KEY
+
+//删除索引
+ALTER TABLE table_name DROP KEY index_name
+
+//只能添加/删除默认值
+ALTER col_name DROP DEFAULT;
+
+//只能修改列定义及位置
+ALTER TABLE table_name MODIFY col_name col_defination;
+
+//修改列名称、列定义及及位置
+ALTER TABLE table_name CHANGE old_col_name new_col_name col_defination;
+
+//数据表更名
+ALTER TABLE table_name RENAME new_name
+
+//删除记录
+DELETE FROM table_name;
+
+//截断数据表
+TRUNCATE TABLE table_name
+
+//查找记录
+SELECT col_name  FROM table_name;
+
+//字符函数
+SELECT CONCAT('我','是','中国','人','!');
+SELECT CONCAT_WS('|','我','是','中国','人','!');
+
+//输出用户的完全姓名
+SELECT id,CONCAT(first_name,last_name)AS fullname FROM t15;
+
+
+//a|A->A
+SELECT UPPER('tom');
+
+//a|A->a
+SELECT LOWER('JAVASCRIPT');
+
+//a->b
+SELECT REPLACE('tarena','a','b');
+
+//在users中表查找username包含a字母的记录
+SELECT userId,username FROM users WHERE username LIKE '%a%';
+
+//查找以t开头的记录
+SELECT userId,username FROM users WHERE username LIKE 't%';
+
+//第二个字符为o的记录
+SELECT userId,username FROM users WHERE username LIKE  '_o%';
+
+//在users中插入记录
+INSERT users(username,password,email,sex) VALUES('abot%cd','12','a@b.net','2');
+INSERT users(username,password,email,sex) VALUES('yto_cx','34','e@f.net','2');
+
+//查找username包含%的记录
+SELECT userId,username FROM users WHERE username LIKE '%\%%';
+
+//查找username包含_的记录
+SELECT userId,username FROM users WHERE username LIKE '%\_%';
+
+//从第1条(offset为0),返回前2条
+
+SELECT id,bookname FROM books LIMIT 2;
+
+//从第3条(offset为2)返回,返回2条
+
+SELECT id,bookname FROM books LIMIT 2,2;
+
+//offset
+
+SELECT id,bookname,price FROM books ORDER BY price DESC LIMIT 3,2;
+
+//表达式
+SELECT 3 + 2;
+
+//函数
+SELECT CONCAT('中','国');
+SELECT SUBSTRING('javascript',2,3);
+
+//字段
+SELECT userId,username FROM db2.users;
+
+//算术运算符及函数
+SELECT CEIL(6.0001);
+SELECT FLOOR(7.888);
+SELECT POW(3,4);
+SELECT SQRT(2);
+SELECT ROUND(6.725);
+SELECT ROUND(6.725,2);
+SELECT RAND();
+SELECT FLOOR(RAND() * 100);
+
+//从users数据表中查找ID号为偶数的记录
+SELECT userId,username FROM users WHERE userId % 2 = 0;
+
+//从t4数据表中查找工资为整数的话,超过5000的用户
+SELECT userId,username,ROUND(salary) FROM t4 WHERE ROUND(salary) >= 5000;
+
+//图书按价格升序排列
+SELECT id,bookname,price FROM books ORDER BY price;
+
+//图书按价格降序排列
+SELECT id,bookname,price FROM books ORDER BY price DESC;
+
+//查找价格介于50到100之间图书,并且按价格降序排列
+SELECT id,bookname,price FROM books WHERE price BETWEEN 50 AND 100 ORDER BY price DESC;
+
+//查找ID号为偶数的记录,并且以价格升序排列
+SELECT id,bookname,price FROM books WHERE id % 2 = 0 ORDER BY price;
+
+//查找id介于10到14之间的记录
+SELECT userId,username FROM users WHERE userId BETWEEN 10 AND 14;
+SELECT userId,username FROM users WHERE userId >= 10 AND userId <= 14;
+
+//查找id为10或14的记录
+SELECT userId,username FROM users WHERE userId IN(10,14);
+SELECT userId,username FROM users WHERE userId = 10 OR userId = 14;
+
+//查找t7数据表中c2列为空的记录
+SELECT c1,c2,c3 FROM t7 WHERE c2 IS  NULL;
+
+//按出版社进行分组
+SELECT publishing FROM books GROUP BY publishing;
+
+//查找users数据表的userId和username字段,并且将结果写入到新表t16中
+CREATE TABLE t16 SELECT userId,username FROM users;
+
+//另外将查找的结果写入新表t17,同时需要再添加新字段age
+CREATE TABLE t17 (age  TINYINT UNSIGNED NOT NULL DEFAULT 0)  SELECT userId AS id,username AS uname FROM users;
+
+//多表更新
+UPDATE books INNER JOIN publishing ON publishing = pname SET publishing = publishing.id;
+
+//修改books表中publishing字段的名称及数据类型
+ALTER TABLE books CHANGE publishing pid TINYINT UNSIGNED NOT NULL;
+
+//多表连接
+SELECT books.id,bookname,pname AS publishing FROM books INNER JOIN publishing ON pid = publishing.id;
+
+//分组的结果进行过滤
+SELECT publishing FROM books GROUP BY publishing HAVING publishing LIKE '中国%';
+SELECT publishing,COUNT(id) AS counts FROM books GROUP BY publishing HAVING COUNT(id) >= 2;
+
+//汉字排序 (默认UTF-8)
+SELECT t.emp_id, t.emp_name 
+    FROM t_employee t
+	LEFT JOIN t_department d ON d.department_id = t.department_id
+	WHERE t.emp_id NOT IN ('51','10')
+	AND d.department_name = 'IT'
+	ORDER BY CONVERT(t.emp_name USING GBK) ASC;
+
+SELECT product_id,product_dimensions FROM t_product WHERE FIND_IN_SET('rflkt',product_attrs);

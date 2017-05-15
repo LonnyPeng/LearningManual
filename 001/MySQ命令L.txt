@@ -1,0 +1,243 @@
+﻿cmd
+//登录MySQL
+mysql -h 127.0.0.1 -P 3306 -u root -p
+
+//打印MySQL的版本信息；当前登录用户；当前的日期时间；
+SELECT VERSION(),USER(),NOW();
+
+//创建数据库
+CREATE DATABASE db_name;
+
+//显示当前服务器的数据库列表
+SHOW DATABASES;
+
+//查看数据库创建时的命令
+SHOW CREATE DATABASE db_name;
+
+//修改数据库
+ALTER DATABASE db_name CHARACTER SET 'utf8';
+
+//删除数据库
+DROP DATABASE db_name;
+
+//打开数据库
+USE db_name;
+
+//打印当前打开的数据库
+SELEECT DATABASE();
+
+//创建表单
+CREATE TABLE table_name ( col_name data_type,···,col_name data_type);
+
+//显示当前数据库中的所有表单
+SHOW TABLES;
+
+//查看表单创建时的命令
+SHOW CREATE TABLES table_name;
+
+//获取有关列的信息
+DESCRIBE table_name;
+
+//删除表单
+DROP TABLE table_name;
+
+//清空表
+DELETE FROM table_name;
+
+//插入一列
+ALTER TABLE table_name ADD col_name data_type;
+
+//删除一列
+ALTER TABLE table_name DROP col_name;
+
+//插入一行
+INSERT table_name (col_name data_type,···,col_name data_type) VALUES (value,···,value);
+
+//从表单中检索所有行
+SELECT * FROM table_name;
+
+//修改行
+UPDATE table_name SET cols_name = 'value' WHERE cols_name = 'value';
+
+//删除一行
+DELETE FROM table_name WHERE row_name;
+
+
+//删除表单
+DROP TABLE table_name;
+
+//查看数据表的索引
+SHOW INDEXES FROM table_name;
+
+//添加单列
+ALTER TABLE table_name ADD col_name data_type;
+
+//添加多列
+ALTER TABLE table_name ADD (col_name column_definition,...)
+
+//添加主键约束
+ALTER TABLE table_name ADD  PRIMARY KEY (index_col_name,...)
+
+//添加唯一约束
+ALTER TABLE table_name ADD UNIQUE KEY (index_col_name,...)
+
+//删除列
+ALTER TABLE table_name DROP col_name
+
+//删除主键约束
+ALTER TABLE table_name DROP PRIMARY KEY
+
+//删除索引
+ALTER TABLE table_name DROP KEY index_name
+
+//只能添加/删除默认值
+ALTER col_name DROP DEFAULT;
+
+//只能修改列定义及位置
+ALTER TABLE table_name MODIFY col_name col_defination;
+
+//修改列名称、列定义及及位置
+ALTER TABLE table_name CHANGE old_col_name new_col_name col_defination;
+
+//数据表更名
+ALTER TABLE table_name RENAME new_name
+
+//删除记录
+DELETE FROM table_name;
+
+//截断数据表
+TRUNCATE TABLE table_name
+
+//查找记录
+SELECT col_name  FROM table_name;
+
+//字符函数
+SELECT CONCAT('我','是','中国','人','!');
+SELECT CONCAT_WS('|','我','是','中国','人','!');
+
+//输出用户的完全姓名
+SELECT id,CONCAT(first_name,last_name)AS fullname FROM t15;
+
+
+//a|A->A
+SELECT UPPER('tom');
+
+//a|A->a
+SELECT LOWER('JAVASCRIPT');
+
+//a->b
+SELECT REPLACE('tarena','a','b');
+
+//在users中表查找username包含a字母的记录
+SELECT userId,username FROM users WHERE username LIKE '%a%';
+
+//查找以t开头的记录
+SELECT userId,username FROM users WHERE username LIKE 't%';
+
+//第二个字符为o的记录
+SELECT userId,username FROM users WHERE username LIKE  '_o%';
+
+//在users中插入记录
+INSERT users(username,password,email,sex) VALUES('abot%cd','12','a@b.net','2');
+INSERT users(username,password,email,sex) VALUES('yto_cx','34','e@f.net','2');
+
+//查找username包含%的记录
+SELECT userId,username FROM users WHERE username LIKE '%\%%';
+
+//查找username包含_的记录
+SELECT userId,username FROM users WHERE username LIKE '%\_%';
+
+//从第1条(offset为0),返回前2条
+
+SELECT id,bookname FROM books LIMIT 2;
+
+//从第3条(offset为2)返回,返回2条
+
+SELECT id,bookname FROM books LIMIT 2,2;
+
+//offset
+
+SELECT id,bookname,price FROM books ORDER BY price DESC LIMIT 3,2;
+
+//表达式
+SELECT 3 + 2;
+
+//函数
+SELECT CONCAT('中','国');
+SELECT SUBSTRING('javascript',2,3);
+
+//字段
+SELECT userId,username FROM db2.users;
+
+//算术运算符及函数
+SELECT CEIL(6.0001);
+SELECT FLOOR(7.888);
+SELECT POW(3,4);
+SELECT SQRT(2);
+SELECT ROUND(6.725);
+SELECT ROUND(6.725,2);
+SELECT RAND();
+SELECT FLOOR(RAND() * 100);
+
+//从users数据表中查找ID号为偶数的记录
+SELECT userId,username FROM users WHERE userId % 2 = 0;
+
+//从t4数据表中查找工资为整数的话,超过5000的用户
+SELECT userId,username,ROUND(salary) FROM t4 WHERE ROUND(salary) >= 5000;
+
+//图书按价格升序排列
+SELECT id,bookname,price FROM books ORDER BY price;
+
+//图书按价格降序排列
+SELECT id,bookname,price FROM books ORDER BY price DESC;
+
+//查找价格介于50到100之间图书,并且按价格降序排列
+SELECT id,bookname,price FROM books WHERE price BETWEEN 50 AND 100 ORDER BY price DESC;
+
+//查找ID号为偶数的记录,并且以价格升序排列
+SELECT id,bookname,price FROM books WHERE id % 2 = 0 ORDER BY price;
+
+//查找id介于10到14之间的记录
+SELECT userId,username FROM users WHERE userId BETWEEN 10 AND 14;
+SELECT userId,username FROM users WHERE userId >= 10 AND userId <= 14;
+
+//查找id为10或14的记录
+SELECT userId,username FROM users WHERE userId IN(10,14);
+SELECT userId,username FROM users WHERE userId = 10 OR userId = 14;
+
+//查找t7数据表中c2列为空的记录
+SELECT c1,c2,c3 FROM t7 WHERE c2 IS  NULL;
+
+//按出版社进行分组
+SELECT publishing FROM books GROUP BY publishing;
+
+//查找users数据表的userId和username字段,并且将结果写入到新表t16中
+CREATE TABLE t16 SELECT userId,username FROM users;
+
+//另外将查找的结果写入新表t17,同时需要再添加新字段age
+CREATE TABLE t17 (age  TINYINT UNSIGNED NOT NULL DEFAULT 0)  SELECT userId AS id,username AS uname FROM users;
+
+//多表更新
+UPDATE books INNER JOIN publishing ON publishing = pname SET publishing = publishing.id;
+
+//修改books表中publishing字段的名称及数据类型
+ALTER TABLE books CHANGE publishing pid TINYINT UNSIGNED NOT NULL;
+
+//多表连接
+SELECT books.id,bookname,pname AS publishing FROM books INNER JOIN publishing ON pid = publishing.id;
+
+//分组的结果进行过滤
+SELECT publishing FROM books GROUP BY publishing HAVING publishing LIKE '中国%';
+SELECT publishing,COUNT(id) AS counts FROM books GROUP BY publishing HAVING COUNT(id) >= 2;
+
+//添加普通索引
+alter table t_toponymy add index toponymy_name(toponymy_name);
+
+//查看索引
+SHOW index from t_toponymy
+
+//删除普通索引
+DROP index toponymy_name on t_toponymy
+
+//模糊查询
+select count(*) from t_toponymy where position('参' in toponymy_name);

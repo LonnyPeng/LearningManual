@@ -1,0 +1,557 @@
+﻿Day40
+
+一、JavaScript基础
+
+1.什么是JavaScript?
+
+JavaScript是运行在客户端的解释性脚本语言。
+
+JavaScript是Netscape(网景)公司推出的产品。
+
+JScript是Microsoft公司的产品。
+
+ECMA(欧洲计算机制造商协会)推出ECMAScript,作为所有客户端脚本的标准。
+
+JavaScript由ECMAScript、DOM和BOM组成。
+
+ECMAScript规定的数据类型、流程控制语句、内置对象等。
+
+2.书写JavaScript
+
+<script type="text/javascript">
+
+...
+
+</script>
+
+<script type="text/javascript" src="JS文件URL"></script>
+
+3.变量
+
+[var] 变量名称[=值]
+
+变量的命名规范:
+
+A.变量名称必须以字母、下划线、美元符号开头,包含字母、数字及下划线
+
+B.变量最好含义明确
+
+C.变量名称最好遵守"驼峰标记法"
+
+D.变量名称禁止与系统关键字相同
+
+4.系统关键字
+
+if、for、while、do、switch、break、continue....
+
+class、abstract、public、protected、private等
+
+5.数据类型
+
+5.1)字符型(string),必须括在单引号或双引号之间。
+
+转义符:
+
+\n,换行
+
+\r,回车
+
+\t,水平制表符
+
+\v,垂直制表符
+
+\f,换页
+
+\\,反斜线
+
+\',单引号
+
+\",双引号
+
+5.2)数值型(number):整数+浮点
+
+5.3)布尔型(boolean):存储true和false
+
+5.4)函数(function):可以重复执行的代码段;
+
+5.5)对象(object):属性与方法的集合体;
+
+5.6)未定义(undefined)
+
+5.7)null(空值)
+
+undefined与null,
+
+undefined理解为"此处该有值,但是没有值";
+
+null理解为"此处不该有值"
+
+6.流程控制语句
+
+if
+
+switch
+
+for
+
+while
+
+do...while
+
+
+二、JavaScript内置对象
+
+1.String对象
+
+1.1)声明String对象
+
+var 变量名称 = "值";
+
+var 变量名称 = new String("值");
+
+1.2)属性
+
+length
+
+描述:获取字符串对象的长度
+
+语法:int object.length
+
+1.3)方法
+
+toLowerCase()
+
+描述:转换成小写字母
+
+语法:string object.toLowerCase()
+
+toUpperCase()
+
+描述:转换成大写字母
+
+语法:string object.toUpperCase()
+
+substr()
+
+描述:截取字符串
+
+语法:string object.substr(int start[,int length])
+
+说明:起始位置为负数,则倒数。
+
+substring()
+
+描述:截取字符串
+
+语法:string object.substring(int start[,int end])
+
+说明:包含起始位,但不包含结束位。
+
+indexOf()
+
+描述:返回字符串在另一个字符串中第一次出现的位置,如果没有出现,则返回-1
+
+lastIndexOf()
+
+描述:返回字符串在另一个字符串中最后一次出现的位置,如果没有出现,则返回-1
+
+replace()
+
+描述:使用正则表达式进行替换
+
+语法:string object.replace(object regExp,string replacement)
+
+function ltrim(str){
+	return str.replace(/^\s*/g,'');
+}
+
+function rtrim(str){
+	return str.replace(/\s*$/g,'');
+}
+
+function trim(str){
+	return str.replace(/^\s*|\s*$/g,'');
+}
+
+split()
+
+描述:拆分字符串
+
+语法:array object.split(string delimitar)
+
+2.Math对象
+
+2.1)概述
+
+Math对象是静态对象。其调用方式为:
+
+Math.属性名称
+
+或者
+
+Math.方法名称([参数,...])
+
+2.2)属性
+
+Math.PI,圆周率
+
+Math.SQRT2,2的平方根
+
+2.3)方法
+
+Math.ceil()
+
+描述:进一取整
+
+语法:number Math.ceil(number var)
+
+Math.floor()
+
+描述:舍一取整
+
+语法:number Math.floor(number var)
+
+Math.pow()
+
+描述:幂运算
+
+语法:number Math.pow(number base,number exp)
+
+Math.sqrt()
+
+描述:平方根
+
+语法:number Math.sqrt(number var)
+
+Math.random()
+
+描述:返回介于0~1之间的随机数
+
+语法:number Math.random(void)
+
+Math.round()
+
+描述:四舍五入
+
+语法:number Math.round(number var)
+
+说明:只能保留到整数位
+
+3.Date对象
+
+3.1)创建Date对象
+
+var 变量名称 = new Date();
+
+3.2)方法
+
+getYear()
+
+描述:返回从公元1900到现在经历的年数
+
+语法:int object.getYear()
+
+getFullYear()
+
+描述:返回年份
+
+语法:int object.getFullYear()
+
+getMonth()
+
+描述:返回月份,范围为0~11
+
+语法:int object.getMonth()
+
+getDate()
+
+描述:返回日期
+
+语法:int object.getDate()
+
+getDay()
+
+描述:返回是星期的第几天,其中0表示星期日,依次类推
+
+语法:int object.getDay()
+
+getHours()
+
+描述:返回小时
+
+语法:int object.getHours()
+
+getMinutes()
+
+描述:返回分钟
+
+语法:int object.getMinutes()
+
+getSeconds()
+
+描述:返回小时
+
+语法:int object.getSeconds()
+
+getTime
+
+描述:返回毫秒的时间戳
+
+语法:int object.getTime()
+
+4.Array对象
+
+4.1)创建Array对象
+
+var 变量名称  = new Array(length)
+
+或者
+
+var 变量名称 = new Array(值,...)
+
+或者
+
+var 变量名称 = [值,...]
+
+4.2)属性
+
+length
+
+4.3)方法
+
+join()
+
+描述:将数组成员连接成字符串
+
+语法:string object.join(string delimitar)
+
+push()
+
+描述:在数组的未尾添加一个或多个成员
+
+语法:int object.push(mixed value,...)
+
+unshift()
+
+描述:在数组的开头添加一个或多个成员
+
+语法:int object.unshift(mixed value,...)
+
+pop()
+
+描述:删除数组的最后一个成员,并且返回该成员
+
+语法:mixed object.pop()
+
+shift()
+
+描述:删除数组的第一个成员,并且返回该成员
+
+语法:mixed object.shift()
+
+4.4)遍历数组或对象
+
+for...in
+
+for(key in array|object){
+
+}
+
+三、自定义函数
+
+//传统方式
+
+function 函数名称([参数[,...]]){
+    ...
+    ...
+    [return 返回值]
+} 
+
+//匿名函数
+
+var 变量名称 = function(){
+   
+}
+
+四、DOM编程
+
+4.1)什么是DOM
+
+DOM[Document Object Model],文档对象模型
+
+文档中所有存在的元素称为节点(Node);
+
+元素(Element):是一种类型的节点,是指HTML标记。
+
+节点(Node),是所有类型节点统称,包括元素节点、文本节点、属性节点等。
+
+4.2)查找到特定的节点
+
+Element document.getElementById(string id)
+
+4.3)访问/控制HTML元素的属性
+
+A.绝大部分HTML标记的属性即HTMLDOM元素的属性;
+
+Day41
+
+一、访问/控制HTML元素的属性
+
+A.绝大部分HTML标记的属性即HTMLDOM元素的属性;
+
+B.如果HTML属性为合成词(如表格的cellpadding、cellspacing、bgcolor等),
+
+    在HTMLDOM中必须遵守"驼峰标记法";
+
+C.HTML标记中的class属性在HTMLDOM中采用className取代(因为class为系统预保留关键字);
+
+D.HTMLDOM中,HTML元素的style属性将返回object(Chrome为CSSStyleDeclaration,Firefox为CSS2Properties),
+
+    所以,HTMLDOM中,对象的style属性通过以下语法访问:
+    
+  object.style.property
+  
+  object.style.method()
+  
+  CSSStyleDeclaration或CSS2Properties对象:
+  
+  D1)如果CSS样式为单个单词,则直接书写;
+  
+  D2)如果CSS样式带有短横线,在HTMLDOM编程时将短横线去掉后,采用"驼峰标记法"表示;
+  
+  D3)CSS样式中的float属性,在HTMLDOM编程时,如果为chrome、Firefox浏览器,其写法为
+  
+  object.style.cssFloat 
+  
+    而在IE浏览器中需要
+    
+  object.style.styleFloat
+  
+二、访问/控制HTML元素的文本
+
+object.innerText,纯文本
+
+object.innerHTML,解析HTML
+
+三、创建/删除节点
+
+创建元素节点
+
+var 变量名称 = document.createElement(string tagName) 
+  
+添加子节点
+
+parentElement.appendChild(sonElement)
+
+删除子节点
+
+parentElement.removeChild(sonElement)
+
+四、获取对象
+
+1.element document.getElementById(string id)
+
+2.object.getElementsByTagName(string tagName)
+
+Day42
+
+一、DOM编程
+
+body区域的尺寸
+
+document.body.clientWidth
+
+document.body.clientHeight
+
+可见区域的尺寸
+
+document.documentElement.clientWidth
+
+document.documentElement.clientHeight
+
+创建Option对象
+
+var 变量名称 = new Option(文本[,值])
+
+添加Option对象
+
+selectElement.add(optionEle)
+
+select对象的length属性
+
+描述:访问/设置列表项的数量
+
+语法:selectElement.length
+
+获取对象的方法
+
+element document.getElementById(string id)
+
+elements object.getElementsByTagName(string tagName)
+
+elements document.getElementsByName(string name)
+
+控制台命令
+
+console.log(string str)
+
+关于控制台的相关资料
+
+https://developer.mozilla.org/zh-CN/docs/Tools/Web_Console
+
+关于Firebug的相关资料
+
+http://getfirebug.com/faq/
+
+
+二、BOM
+
+1.什么是BOM
+
+BOM[Browser Object Model],浏览器对象模型,提供与浏览器相关的API。
+
+BOM的层次结构如下:
+
+window
+|
+|-- screen
+|
+|-- history
+|
+|-- navigator
+|
+|-- location
+|
+|-- document
+
+window常见的方法
+
+window.alert(),警示对话框
+
+window.confirm(),询问对话框
+
+window.prompt(),输入对话框
+
+screen对象
+
+screen.width,返回显示器分辨率的宽度
+
+screen.height,返回显示器分辨率的宽度
+ 
+navigator对象
+
+navigator.appName,返回浏览器的类型
+
+navigator.userAgent,返回浏览器的内核信息
+
+location对象
+
+location.href,访问或设置浏览器地址栏URL
+
+history对象
+
+history.back(),后退
+
+history.forward(),前进
+
+history.go(数字),前进或后退

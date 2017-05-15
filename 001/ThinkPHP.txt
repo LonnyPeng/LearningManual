@@ -1,0 +1,804 @@
+﻿mvc优点：
+	1、结构清晰，代码规范
+	2、实现了软件的低耦合
+	3、提高了代码利用率，减少了重复代码编写。
+	4、开发周期变短
+mvc缺点：
+	1、理解难度高
+	控制器---》model----》显示模板
+	2、c层工作繁重。 
+	3、c和v层过于紧密。
+
+PDO的优点：
+	操作所有类型的数据库，统一接口。
+	提供预处理功能。
+PDO的缺点：
+	性能低了。
+
+ThinkPHP:php框架，国内程序员编写。 CI
+www.thinkphp.cn
+学习方法：
+总入口的编写
+	//定义项目名称
+    	define('APP_NAME', 'message');//项目文件夹名字一样
+    	//定义项目路径
+    	define('APP_PATH', './message/');
+    	//加载框架入文件
+    	require './ThinkPHP/ThinkPHP.php';
+目录结构
+	Common 项目公共文件目录，一般放置项目的公共函数 
+	Conf 项目配置目录，项目所有的配置文件都放在这里 
+	Lang 项目语言包目录（可选 如果不需要多语言支持 可删除） 
+	Lib 项目类库目录，通常包括Action和Model子目录 
+	Tpl 项目模板目录，支持模板主题 
+	Runtime 项目运行时目录，包括Cache（模板缓存）、Temp（数据缓存）、Data（数据目录）和Logs（日志文件）子目录，如果存在分组的话，则首先是分组目录。 
+
+url地址规则
+	index.php?m=控制器名&a=方法名&id=5
+	index.php/控制器名/方法名/id/5
+	
+c层编写规则，文件命名规则
+1、控制器名称
+	自定义名称Action.class.php,类名和类文件名一样。
+2、存放目录
+	lib/Action/NewsAction.class.php
+3、方法名称小写
+4、继承Action.class.php 
+	在哪？ThinkPHP\Lib\Core\Action.class.php
+Action基类的方法及属性：
+	给模板传值
+	assign("模板变量名称",值)
+	显示模板
+	display([path])
+	path----"news/lister"----"控制器下的方法对应的模板"
+	path----模板路径----./Tpl/news/lister.html
+	模板的默认规则：
+		Tpl/控制器名/方法名.html
+	成功提示
+	success("提示语","目标地址")
+	失败提示
+	error("提示语","目标地址");
+	问题：修改提示页面？
+	ThinkPHP/Tpl/dispatch_jump.tpl
+	url地址生成函数
+	U("url"[,其他传值])
+	http://localhost/13_ThinkPHP/index.php/News/oper
+	U("News/oper")
+	http://localhost/13_ThinkPHP/index.php/News/detail/id/55
+	U("News/detail",array('id'=>55))
+	跳转
+	redirect();
+		string $url 跳转的URL表达式 
+	 	array $params 其它URL参数 
+	 	integer $delay 延时跳转的时间 单位为秒 
+	 	string $msg 跳转提示信息
+	初始化方法,类似于构造函数
+	function _initialize(){
+		//所有方法，执行之前，需要执行的代码
+	}
+
+
+把控制器及对应的模板，分组
+	'APP_GROUP_LIST'        => 'Home,Admin',
+	// 项目分组设定,多个组之间用逗号分隔,例如'Home,Admin'
+    	'APP_GROUP_MODE'        =>  0,  
+	// 分组模式 0 普通分组 1 独立分组
+	普通分组下---》控制器放在lib/action/Admin或者Home
+    	独立分组----》Modules/Home/Action/控制器类
+	              Modules/Home/Tpl/模板
+			Modules/Home/Conf/config.php				
+	'APP_GROUP_PATH'        =>  'Modules', 
+	// 分组目录 独立分组模式下面有效
+案例：
+	后台的首页
+	后台的登录,异步登录
+	if($username=='admin' && $password=='123456'){
+	
+	}
+
+	m层编写
+	v层编写
+	公共类
+		分页类
+		文件上传类
+		验证码类
+		缩略图类
+		.....
+
+	
+
+
+控制器编写规则：
+	1、名称Action.class.php,首字母大写，类名和文件名同名
+	2、继承Action.class.php
+	3、方法名称小写
+	4、放到lib/Action/分组名/控制器
+基类Action的方法：
+	1、给模板传值
+	assign("模板标签名称",被传递的变量);
+	2、显示模板
+	display([path])
+	a、path可以为空，默认模板
+	b、path---控制器名/方法名
+	c、path,相对路径，现对于index.php所在的目录
+	
+	3、success(提示语,目标地址)
+	成功提示
+	4、error(提示语,目标地址)
+	失败提示
+	U("分组/控制器/方法",array())//生成url地址
+	5、redirect
+	redirect("分组/控制器/方法",array(),秒数,提示语)
+	6、_initialize
+分组：
+	修改配置文件
+	APP_GROUP_LIST =>'Admin,Home',
+	DEFAULT_GROUP =>'Home',
+
+m层编写
+	1、修改配置文件，连接数据库
+	'DB_TYPE'               => 'mysql',     // 数据库类型
+    	'DB_HOST'               => 'localhost', // 服务器地址
+    	'DB_NAME'               => 'company',          // 数据库名
+    	'DB_USER'               => 'root',      // 用户名
+    	'DB_PWD'                => 'root',          // 密码
+    	'DB_PREFIX'             => 'cms_',    // 数据库表前缀
+    	'DB_CHARSET'            => 'utf8', 
+	2、测试数据库链接是否成功。
+	$mOb=M("表名") new Model("表名") 实例化Model数据模型类
+	$arr=$mOb->select();
+编写数据模型类：
+	1、继承Model.class.php 框架目录/lib/core/Model.class.php
+	特点：可以直接被实例化，操作所有表。
+	2、存放位置：lib/Model/数据模型类
+	3、数据模型类的名称和表名同名
+	NewsModel.class.php,类名和类文件名同名
+	4、方法名称没有要求
+	getNewsById()
+说明：表名和数据模型类名称一致，不用指定。但是如果不一致，
+需要使用属性protected $tableName="news1";
+	protected $trueTableName="真实表名";
+数据模型类Model,给我们提供的方法：
+
+查询
+	table("真实表名")//指定表名
+	where("条件")//指定where条件
+	order("字段名 排序方式")//指定order by 子句
+	limit("开始位置,长度")//指定的是limit子句的内容
+
+	join("t2 on t1.字段名=t2.字段名")//表的链接查询
+	select t1.*,t2.* from t1 join t2 on t1.字段名=t2.字段名
+	field("字段列表") //指定字段列表
+	group("字段名称") //分组查询
+	having("条件")//筛选
+	上面的方法是用来产生sql，
+	select();//执行
+例子：查询id为5的文章。
+例子：查询分类为单位动态，获取最新5条。
+select id,tile from 表名 
+where type='单位动态' 
+order by id desc limit 0,5
+例子：学生表，班级表。查询5个男生，显示所在班级。
+create table cms_student(
+	id int(5) key auto_increment,
+	name char(10),
+	sex enum('男','女'),
+	age tinyint(3),
+	cid tinyint(2)
+);
+create table cms_class(
+	cid tinyint(2) key auto_increment,
+	cname char(20)
+);
+insert into cms_class(cname) value('psd1505');
+insert into cms_class(cname) value('psd1506');
+insert into cms_class(cname) value('psd1507');
+
+insert into cms_student(name,sex,age,cid) value('小李1','男',20,1);
+insert into cms_student(name,sex,age,cid) value('小李2','男',20,2);
+insert into cms_student(name,sex,age,cid) value('小李3','男',21,3);
+insert into cms_student(name,sex,age,cid) value('小李4','男',21,1);
+insert into cms_student(name,sex,age,cid) value('小李5','男',22,2);
+insert into cms_student(name,sex,age,cid) value('小李6','男',22,3);
+
+ 查询5个男生，显示所在班级名称
+ select name,sex,age,cname from cms_student s 
+ join cms_class as c on s.cid=c.cid limit 0,5
+ 查询都哪个班的人数超过了3人。
+ select count(*) as num,cname 
+ from cms_student as s join 
+ cms_class as c on s.cid=c.cid 
+ group by s.cid having num>=3;
+	
+数据模型类model对象 = M("表名")//实例化数据模型类Model
+D("表名") 实例化数据模型类 既可以实例化Model，也可以实例化NewsModel 等
+  特点：
+	表名对象数据模型类存在，则实例化此模型类
+	否则，实例化Model
+
+	
+	
+增
+删
+改
+
+	
+v层编写
+公共类
+	分页类
+	文件上传类
+	验证码类
+	缩略图类
+	.....
+
+	
+
+增加
+	data()
+	add()
+修改
+	data()
+	where()
+	save()
+删除
+	where()
+	delete()
+查询
+	table()
+	field()
+	where()
+	group()
+	having()
+	order()
+	limit()
+	join()
+	alias()
+	
+	select()
+例子：会员注册
+创建会员表：
+create table cms_user(
+	uid int(6) key auto_increment,
+	username varchar(20) not null,
+	password varchar(32) not null,
+	name varchar(10),
+	tel varchar(15),
+	email varchar(50),
+	address varchar(80),
+	sex enum('男','女','保密'),
+	age tinyint(3),
+	regtime int(10)
+)
+	1、表单
+UserAction.class.php
+class UserAction extends Action{
+	function reg(){
+		$this->display();
+	}
+	function regsave(){
+		//数据入表
+		$userOb=new UserModel();
+		$re=$userOb->addUser();
+		//提示
+	}
+}
+Tpl/Home/User/reg.html
+	2、数据入表，有一个表
+	regsave()
+自动验证
+	1、在数据模型类中加一个属性：
+	protected $_validate=array(
+		array(验证字段,验证规则,错误提示,[验证条件,附加规则,验证时间),//一个规则
+	);
+	附加规则：验证的方式
+	验证规则：验证的内容
+	说明：验证方式决定验证内容。
+例子：
+1、验证用户名是否有唯一性
+	array('username','','用户名已经存在',0,'unique'),//一个规则
+2、验证用户名的格式，4到20位，有英文字母及数字下划线组成，数字不能开头
+	array('username','/^[a-z_]\w{3,19}$/i','用户名格式错误'),
+3、密码格式，任意字符，6到20个
+	array('password','/^.{6,20}$/','密码格式错误')
+4、两次密码是否一致：
+	array('repassword','password','两次密码不一致',1,'confirm'),
+令牌验证
+	localhost/13_ThinkPHP/index.php/Home/User/regsave
+	实现：
+	开启令牌验证
+	TOKEN_ON=>true,
+
+自动完成
+	实现：
+	protected $_auto=array(
+		array("字段",'内容','条件','附加规则'),//自动完成的规则
+	);
+	例子：
+	1、注册时间的产生
+	time()
+	array('pubtime','time',3,'function')
+	2、密码进行md5加密处理
+	array('password','md5',3,'function')
+v层编写
+	标签定界符，默认定界符{} 
+	修改定界符：
+		TMPL_L_DELIM => '{{',
+		TMPL_R_DELIM => "}}"
+	模板变量标签：
+	{$名称}
+	{$数组名称.下标}
+	{$数组名称['下标']}
+
+	数组的遍历：
+	<foreach name='数组名称' item='v' key='k'>
+	{$v.下标}----{$k}
+	</foreach>
+	条件语句：
+	<if condition='or and gt lt eq neq egt elt'>
+	</if>
+
+	<if condition="">
+	<else />
+	</if>
+
+	<if condition="">
+	<elseif condition=''/>
+	<else />
+	</if>
+练习：
+	呈现一个会员的列表页。表格 table
+	
+公共类
+	分页类
+	文件上传类
+	验证码类
+	缩略图类
+	.....
+
+	
+
+view层：
+	模板拆分
+	<include file="路径"/>
+	说明：
+	1、相对路径 ./13_ThinkPHP/.......
+	2、控制器名/方法名
+	变量调节器：使用函数在模板上对变量进行处理
+	{变量标签|函数名=第二个参数,参数,......}
+	说明：
+	如果被调节的变量，不是第一个参数
+	{变量标签|函数名=第一个参数,###,......}
+	预定义变量的调用
+	$_GET
+	$_POST
+	$_REQUEST
+	$_COOKIE
+	$_SESSION
+	$_SERVER
+	
+	调用：
+	$Think.get.名称
+	$Think.post.名称
+	$Think.request.名称
+	$Think.cookie.名称
+	$Think.session.名称
+	$Think.server.名称
+
+	魔术标签
+__PUBLIC__：会被替换成当前网站的公共目录 通常是 /Public/
+__ROOT__： 会替换成当前网站的地址（不含域名） 
+__APP__： 会替换成当前项目的URL地址 （不含域名）
+__GROUP__：会替换成当前分组的URL地址 （不含域名）
+__URL__： 会替换成当前模块的URL地址（不含域名）
+__ACTION__：会替换成当前操作的URL地址 （不含域名）
+__SELF__： 会替换成当前的页面URL
+
+	页面布局,把正则页面分成几部分，组装。
+	如何实现：
+	1、开启布局
+	LAYOUT_ON => true,
+	2、指定布局文件的名称
+	LAYOUT_NAME => 'layout' 
+	3、在Tpl/Home/layout.html
+	
+公共类
+	分页类
+	//加载分页类
+	import("ORG.Util.Page");
+	//获取总条数，确定每页的条数
+	//实例化分页类
+	//获取分页的结果
+	//获取开始位置
+	//拿当前页面数据
+例子：实现文章分页
+$type=$_GET['type'];
+		$title="腾讯网站-{$type}下文章";
+		$ob=D("News");
+		//加载分页类
+		import("ORG.Util.Page");
+		//获取总条数,当前分类下文章总条数
+		$num=$ob->where("type='$type'")->count();
+		//确定每页的条数
+		$pageSize=5;
+		//实例化分页类
+		$pageOb=new Page($num,$pageSize);
+		//获取分页的结果
+		$pageStr=$pageOb->show();
+		//获取开始位置
+		$start=$pageOb->firstRow;
+		//拿当前页面数据
+		$arr=$ob->field("id,title")
+					->where("type='$type'")
+					->order("id desc")
+					->limit("$start,$pageSize")
+					->select();
+		$this->assign('arr',$arr);
+		$this->assign('title',$title);
+		$this->assign('pageStr',$pageStr);
+练习：显示会员列表，带分页。
+
+验证码类
+	import("ORG.Util.Image");
+	Image::buildImageVerify($length,$mode);
+
+	验证码上的文字：
+		0---字母
+		1---数字
+		2---大写字母
+		3---小写字母
+验证：
+	if($_SESSION['verify']==md5($verify)){
+
+	}
+
+文件上传类
+	1、文件选择表单页面
+	2、控制器方法使用UploadFile来实现文件的保存
+	加载文件上传类
+	import("ORG.Net.UploadFile");
+	a、实例化对象，并指定允许的类型大小，命名规则
+	$uploadOb=new UploadFile(array('allowTypes'=>array('image/jpg','image/png','image/jpeg','image/gif'),'maxSize'=>200000));
+	b、
+	$uploadOb->upload("../Public/upload/");
+	b、获取上传文件的信息
+	$arr=$uploadOb->getUploadFileInfo();
+	$error=$uploadOb->getErrorMsg();
+问题处理：
+private function getSaveName($filename) {
+        $rule = $this->saveRule;
+        if(empty($rule)) {//没有定义命名规则，则保持文件名不变
+            $saveName = $filename['name'];
+        }else {
+            if(function_exists($rule)) {
+                //使用函数生成一个唯一文件标识号
+                $saveName = $rule(time().mt_rand(1000,9999),true).".".$filename['extension'];
+            }else {
+                //使用给定的文件名作为标识号
+                $saveName = $rule.".".$filename['extension'];
+            }
+        }
+        if($this->autoSub) {
+            // 使用子目录保存文件
+            $filename['savename'] = $saveName;
+            $saveName = $this->getSubName($filename).$saveName;
+        }
+        return $saveName;
+    }
+例子：实现每次最多上传三张图片。
+	
+缩略图类
+	'thumb'             =>  true,    // 使用对上传图片进行缩略图处理
+        'thumbMaxWidth'     =>  '100',// 缩略图最大宽度
+        'thumbMaxHeight'    =>  '100',// 缩略图最大高度
+        'thumbPrefix'       =>  's1_',// 缩略图前缀
+
+留言板
+	1、创建表
+	create table cms_message(
+	id int(8) primary key auto_increment,
+	content varchar(200) not null,
+	name varchar(10),
+	pubtime int(10),
+	ip varchar(15),
+	tel varchar(20),
+	email varchar(50),
+	qq varchar(15),
+	state tinyint(1) default 0 -- 审核 1 未审核 0
+	);
+	2、分析
+	发布留言
+	a、呈现留言表单
+	
+	审核留言 ---- 后台
+	删除留言 ---- 后台
+	留言列表
+
+Day63
+
+韩
+13581698800
+84772721
+
+
+
+购物车功能：网上购物功能
+
+页面流程
+index.php-----------act.php--------------car.php
+商城首页          操纵购物车           购物车页面
+
+实现购物车的方式
+1、session	效率高、不人性化
+2、cookie	不用
+3、database	效率低、人性化
+
+
+session存储所有商品
+$_SESSION["car"] = array(
+  3=>array("bookId"=>值,"bookName"=>值,"price"=>值),
+  5=>array("bookId"=>值,"bookName"=>值,"price"=>值),
+  8=>array("bookId"=>值,"bookName"=>值,"price"=>值),
+);
+
+
+购物流程
+LoginAction->IndexAction->ActAction->CarAction->OrderAction
+会员登陆     商城页面    操纵购物车 购物车页面  订单结算
+
+数据表
+userInfo(用户表)		LoginAction
+bookInfo(产品表)		IndexAction
+carInfo(购物车表)		ActAction、CarAction
+orderInfo(订单表)		OrderAction
+orderDetails(订单明细表)	OrderAction
+
+项目目录
+library------------------第三方资源包
+  ThinkPHP
+  jquery
+application--------------应用程序
+  default----------------前台网站
+  admin------------------后台网站
+public-------------------公用文件
+  images
+  css
+index.php----------------前台入口
+admin.php----------------后台入口
+
+
+
+ThinkPHP配置文件
+1、当前应用程序目录
+   application/default/Conf/config.php
+2、全局配置文件
+   library/ThinkPHP/Conf/convention.php
+注意：
+1、config.php优先级高于convention.php
+2、建议大家不要修改convention.php
+
+
+ThinkPHP的常量
+__APP__		返回入口文件地址：/项目/index.php
+__ROOT__	返回项目的根目录：/项目
+注意：不仅可以在视图页使用也可以在控制器里使用
+
+解决__ROOT__不起作用的办法
+在入口文件中重新定义__ROOT__常量
+define("__ROOT__","/项目");
+<img src="__ROOT__/public/images/111.jpg">
+
+
+ThinkPHP获得模型对象
+$model = M("表名");//不用建模型文件
+$model = D("表名");//不用建模型文件
+$model = D("模型名");//必须建模型文件
+注意：
+表名必须全部小写
+M("bookinfo")	表名：bookinfo
+M("bookInfo")	表名：book_info
+
+
+数据库操作
+1、查询多条记录，返回：二维数组
+$result = $model->select();
+$result = $model->where(条件)->order()->limit()->select();
+2、查询一条记录，返回：一维关联的数组
+$result = $model->find();
+$result = $model->where()->find();
+3、添加记录，返回：新添加记录的主键值
+$result = $model->add(数组);
+$result = $model->data(数组)->add();
+4、修改记录，返回：受影响的行数
+$result = $model->where()->save(数组);
+5、删除记录，返回：受影响的行数
+$result = $model->delete();
+$result = $model->whre()->delete();
+6、执行select语句，返回：二维数组
+$result = M()->query("select语句");
+7、执行insert、update、delete语句，返回：受影响的行数
+$result = M()->exec("insert|update|delete语句");
+
+Day64
+
+购物车功能：网上购物功能
+
+实现购物车功能的方式
+1、cookie
+2、session
+3、database
+
+项目目录
+library-------------------第三方资源包
+  ThinkPHP
+  jquery
+application---------------应用程序
+  default
+  admin
+public--------------------公用文件
+  images
+  css
+index.php
+admin.php
+
+
+ThinkPHP配置文件
+1、当前应用程序目录下的配置文件
+   application/default/Conf/config.php
+2、全局配置文件
+   library/ThinkPHP/Con/convention.php
+config.php优先级高于convention.php
+
+配置项：显示trace信息
+"SHOW_PAGE_TRACE"=>true,
+
+
+ThinkPHP获得模型对象
+1、M()
+   $model = M("表名");
+2、D()
+   $model = D("表名");
+   $model = D("模型文件名");
+
+
+ThinkPHP数据库操作
+1、查询多条记录，返回：二维数组
+   $result = 模型->select();
+   $result = 模型->where()->order()->limit()->select();
+2、查询一条记录，返回：一维关联数组
+   $result = 模型->find();
+   $result = 模型->where()->find();
+3、添加记录，返回：新添加记录的主键值
+   $result = 模型->add(关联数组);
+   $result = 模型->data(关联数组)->add();
+4、修改记录，返回：受影响的行数
+   $result = 模型->save(关联数组);
+   $result = 模型->where()->save(关联数组);
+5、删除记录，返回：受影响的行数
+   $result = 模型->delete();
+   $result = 模型->where()->delete();
+6、执行select语句,返回：二维数组
+   $result = M()->query("select语句");
+7、执行insert、update、delete语句，返回：受影响的行数
+   $result = M()->exec("insert|update|delete语句");
+
+
+ThinkPHP购物流程
+LoginAction->IndexAction->ActAction->CarAction->OrderAction
+登陆页面     商城首页    操纵购物车 显示购物车 订单结算
+
+数据表
+userInfo(会员表)		LoginAction
+bookInfo(产品表)		IndexAction
+carInfo(购物车表)		ActAction、CarAction
+orderInfo(订单表)		OrderAction
+orderDetails(订单明细表)	OrderAction
+
+
+设置系统的提示信息页面
+1、新建一个模板文件
+   Tpl
+     Public
+       success.html
+2、在config.php配置文件
+   'TMPL_ACTION_ERROR'  => 'Public:success',
+   'TMPL_ACTION_SUCCESS' => 'Public:success',
+
+
+多表查询语句
+内连接：将多张表的字段合为一个结果集
+select * from 表1 inner join 表2 on 条件;
+
+外连接：将多张表的字段合为一个结果集
+1、左外连接：左表为主，右表为副
+select * from 表1 left outer join 表2 on 条件;
+2、右外连接：右表为主，左表为副
+select * from 表1 right outer join 表2 on 条件;
+
+子查询(嵌套查询)
+select * from 表 where 字段 in (select语句);
+delete from 表 where 字段 in (select语句);
+
+内连接的另一种写法
+select * from 表1,表2,表3 where 关联的字段相等;
+
+
+模型中的字段自增与自减
+1、自增
+$result = 模型->where()->setInc("字段名");//让字段值加一
+$result = 模型->where()->setInc("字段名",5);//让字段值加5
+2、自减
+$result = 模型->where()->setDec("字段名");//让字段值减一
+$result = 模型->where()->setDec("字段名",5);//让字段值减5
+
+
+使用运算符
+{$a}   {$b}
+{$a+$b}
+{$a-$b}
+{$a*$b}
+{$a/$b}
+{$a%$b}
+{$a++}
+{$b--}
+{$v.price}   {$v.bookCount}
+{$v["price"] + $v["bookCount"]}
+{$v["price"] - $v["bookCount"]}
+
+
+公用函数文件
+1、在Common文件夹下新建一个文件common.php
+2、common.php文件固定
+3、common.php由系统自动加载
+4、控制器、视图都可以直接调用
+
+控制器调用
+函数名();
+函数名(值,值...);
+$变量 = 函数名(值,值...);
+
+视图调用
+{$a|函数名}   {$a,$b,$c|函数名}
+{$v["price"]|函数名}
+
+
+{"totalPrice":769,"price":450}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+	
+
+
+
+
+
+	
+	
+
+	

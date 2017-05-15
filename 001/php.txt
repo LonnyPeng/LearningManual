@@ -1,0 +1,2973 @@
+﻿Day09
+
+一、PHP基础
+
+1.PHP能做什么?
+
+PHP是一种动态Web开发技术,是运行在服务器端的脚本语言。
+
+服务器端编程技术:PHP、ASP.NET、JSP
+
+脚本语言,需要有特定的引擎负责编译执行。
+
+2.PHP是什么?
+
+PHP(Hypertext Preprocessor),超文本预处理程序
+
+PHP版本:5.4
+
+3.PHP环境搭建
+
+3.1).安装Web Server
+
+3.2).下载安装PHP
+
+    A.解压PHP压缩包到相应的位置
+
+    B.复制php.ini-production后,更名为php.ini
+
+3.3).编辑Apache的配置文件
+
+    A.编辑Apache的配置文件 -- httpd.conf
+
+    B.在配置文件内添加以下语句
+
+    #加载PHP5模块
+  
+    LoadModule php5_module "php5apache2_2.dll文件的完整路径信息"
+ 
+    #PHP配置文件的位置
+    
+    PHPIniDir "PHP配置文件的位置"
+
+    #告诉Apache,哪些类型的文件将交给PHP核心文件处理
+
+    AddType application/x-httpd-php .扩展名 .扩展名 ...
+
+4.PHP工作原理
+
+5.PHP语法风格
+
+5.1)XML风格
+
+<?php
+
+ ...
+
+?>
+
+说明:如果PHP为文档的最后代码,那么结束标记?>可以省略(建议省略)。
+
+5.2)短风格
+
+<?
+...
+
+...
+
+?>
+
+说明:需要开启PHP配置文件的short_open_tag选项。
+
+5.3)ASP风格
+
+<%
+
+...
+
+%>
+
+说明:需要开启PHP配置文件asp_tags选项。
+
+5.4)脚本风格
+
+<script language="php">
+
+...
+
+</script>
+
+
+5.5)PHP代码说明
+
+A.PHP严格区分大小写;
+
+B.PHP语句必须以分号结尾;
+
+C.建议省略?>结束标志;
+
+D.代码长度不要超过80字符;
+
+E.字符串尽量使用单引号;
+
+
+6.注释
+
+PHP支持单行注释和多行注释。
+
+6.1)单行注释
+
+C++风格
+
+//注释内容
+
+Shell风格
+
+#注释内容
+
+6.2)多行注释
+
+C风格
+
+/*
+...
+
+...
+
+*/
+
+二、变量(1)
+
+2.1)什么是变量?
+
+变量(variable),是指存储在内存中有名称的信息,其值在程序运行
+
+期间可以发生变化。
+
+2.2)声明变量
+
+$变量名称
+
+$变量名称 = 值;
+
+2.3)变量名称的命名规范
+
+A.变量名称必须以字母或下划线开头,包含字母、数字及下划线;
+
+B.变量名称禁止包含空格、斜线、反斜线等特殊符号;
+
+C.变量名称最好含义明确;
+
+D.变量名称最好遵守"驼峰标记法",如userId
+
+E.变量名称建议以名词开头;
+
+2.3)PHP错误报告
+
+2.3.1)开启/关闭错误报告功能
+
+修改PHP配置文件display_errors选项。
+
+2.3.2)修改错误报告级别
+
+修改PHP配置文件error_reporting选项(开发期间建议为E_ALL)。
+
+
+三、数据类型
+
+3.1)概述
+
+PHP支持8种主要数据类型和4种伪类型。
+
+主要数据类型又分为:
+
+标量类型,只能存储单一信息。
+
+    整型(Integer)
+
+    浮点型(Float/Double)
+
+    布尔型(Boolean)
+
+    字符串(String)
+
+复合类型,可以存储多个信息。
+
+    数组(Array)
+    
+    对象(Object)
+
+特殊类型,无法归为其他类型的数据。
+
+    资源(Resource)
+
+    空(NULL)
+
+3.2)整型(Integer)
+
+整型可以存储二进制、八进制、十进制、十六进制的整数;
+
+可以带有符号位;整型的存储范围与操作系统有关。可以通过
+
+PHP_INT_MAX常量获取最大的存储范围。
+
+二进制:0b[0-1]
+
+八进制:0[1-7]
+
+十六进制:0x[0-f]
+
+如果整数超过PHP_INT_MAX的限制会造成整数溢出。
+
+3.3)浮点型(Float/Double),其存储范围与操作系统有关,通常
+
+最大存储范围为1.8E308;因为浮点数在存储为近似值(也就是说它
+
+们存在合理的误差),永远不要对浮点数进行比较运算。
+
+3.4)布尔型(Boolean),值只能为true/false或TRUE/FALSE。
+
+3.5)字符串(String),必须将内容括在定界符之间。
+
+3.5.1)定界符
+
+A.单引号
+
+B.双引号
+
+C.HereDOC
+
+D.NowDOC
+
+3.5.2)转义符
+
+\n 换行
+
+\r 回车
+
+\t 水平制表符
+
+\v 垂直制表符
+
+\f 换页(走纸)
+
+\\ 反斜线
+
+\' 单引号
+
+\" 双引号
+
+3.5.3)单引号与双引号的区别
+
+A.双引号可以解析所有转义符;单引号只能解析\'和\\转义符;
+
+B.双引号内的变量可以被解析;单引号内的变量不能解析;
+
+3.5.4)单/双引号的转义符与HTML实体的使用原则
+
+如果单/双引号输出浏览器,那么PHP源代码中必须采用HTML实体;
+
+如果单/双引号输出浏览器的源代码,那么PHP源代码中采用转义符。
+
+3.5.5)花括号语法
+
+用法1:
+
+双引号内的变量可以被PHP引擎,而且PHP引擎将尽量多获取些合法
+
+的字符中作为变量名称。如果想告诉PHP引擎变量名称到此为止,
+
+那么就需要将变量名称使用花括号括起来。
+
+用法2:
+用花括号语法来访问和修改字符串中的某一位;
+字符的编号从0开始。
+
+如果修改的位数超过字符串本身的长度,则自动补加空格。
+
+3.5.6)HereDOC
+
+$变量名称 = <<<定界符
+
+....
+
+定界符;
+
+
+说明:
+
+A.适用于大量文本的处理,如大段的HTML、CSS、JS代码等;
+
+B.必须保证结束定界符位于行首;
+
+C.HereDOC内的变量和转义符可以被解析;
+
+3.5.7)NowDOC
+
+$变量名称 = <<<'定界符'
+
+...
+
+定界符;
+
+A.适用于大量文本的处理,如大段的HTML、CSS、JS代码等;
+
+B.必须保证结束定界符位于行首;
+
+C.NowDOC内的变量和转义符不能被解析;
+
+Day10
+
+一、数据类型
+
+1.概述
+
+PHP支持8种主要数据类型和4种伪类型。
+
+主要数据类型又划分为:
+
+    标量类型,只能存储单一信息
+
+        整型(Integer)
+
+        浮点型(Float)
+
+        布尔型(Boolean)
+
+        字符串(String)
+
+    复合类型,是存储信息的集合。
+
+        数组(Array)
+
+        对象(Objet)
+
+    特殊类型,无法归纳到其他类型的类型。
+
+        资源(Resource),PHP操纵磁盘/网络中的文件,
+
+        该类型的变量无法直接声明,只能通过特定的函数实现。
+
+        如MySQL函数、GD函数、文件/目录函数等。
+
+        空值(NULL),以下情况将导致为空:
+
+        A.声明但没有赋值的变量;
+
+        B.声明但赋值为NULL;
+
+        C.通过unset函数销毁的变量;
+
+2.伪类型
+
+2.1)数值(number),指整数 + 浮点
+
+2.2)混合(mixed),所有数据类型都有可能,但是不是必须为所有类型。
+
+2.3)回调函数(callback),函数名称作为另一个函数的参数。
+
+2.4)void,如果出现在返回值,则代表没有返回值;如果出现
+ 
+在参数上,则代表没有参数。
+
+3.函数
+
+函数是可以完成特定功能的、可以重复使用的代码段;函数可以
+
+分为系统函数和自定义函数。
+
+3.1调用函数
+
+返回值   函数名称 ( [ 数据类型 参数 [ , 数据类型 参数 [ ,... ] ] ])
+
+说明:
+
+A.中括号表示可选项;
+
+B.参数是程序员与程序进行沟通的媒介;
+
+C.函数至少包含零个参数;
+
+D.函数的执行结果称为返回值;
+
+E.返回值永远只能为零个或一个;
+
+F.参数与返回值之间不存在任何联系;
+
+3.2 输出语句
+
+echo
+
+描述:输出一个或多个字符串
+
+语法:void echo (string $arg[,...])
+
+说明:
+
+A.echo是一个PHP语句;
+
+B.如果输出多个字符串,则小括号必须省略;
+
+var_dump
+
+描述:打印变量的相关信息
+
+语法:void var_dump ( mixed $expression [, mixed $... ] )
+
+二、数据类型转换
+
+2.1概述
+
+PHP是一种"弱"类型语言,它可以根据运行环境的变化而自动进行
+
+数据类型的转换。
+
+PHP支持数据类型的自动转换(隐式转换)和强制转换(显式转换)两种方式。
+
+2.2转换成布尔型的原则
+
+   以下值都将转换成布尔型中的FALSE:
+
+   A.布尔型中的FALSE;
+  
+   B.空字符串''
+
+   C.整数0或浮点数0.0或字符串'0'
+
+   D.没有成员的数组 -- array()
+
+   E.NULL
+
+   除此之外,其他值(包括资源)都被转换成TRUE。
+
+2.3转换成数值型的原则
+
+   A.如果字符串为合法的数字字符串,同时不包含./e/E,而且
+
+   没有超过整型的存储范围时,将转换成整型;否则转换成浮点型;
+
+   B.如果数字字符串以非法的字符开头,则转换成整数0;
+
+   C.布尔型的TRUE转换成整数1;FALSE转换成整数0;
+
+   D.NULL转换成0
+
+   E.浮点数转换成整数将向下取整
+
+2.4转换成字符串的原则
+
+   A.数值转换成字符串即数值本身;
+ 
+   B.布尔型中的TRUE转换成字符串'1';FALSE转换成空字符串'';
+
+   C.NULL转换成空字符串'';
+
+   D.数组将转换成Array
+
+   E.资源将转换成Resource id #数字
+
+
+2.5判断语句 -- if...else
+
+if(条件表达式){
+
+    语句1
+    ... 
+
+} else {
+
+    语句2;
+    ...
+}
+
+
+执行过程:
+
+A.先判断条件表达式是否为TRUE
+
+B.如果为TRUE,则执行"语句1";然后跳过"语句2",继续执行后续语句;
+
+C.如果为FALSE,则执行"语句2";然后执行后续语句;
+
+2.6)数据类型的强制转换
+
+数据类型的强制转换又分为临时转换和永久转换。
+
+2.6.1)临时转换
+
+(int)、(integer),转换成整型
+
+(float)、(double)、(real),转换成浮点型
+
+(boolean)、(bool),转换成布尔型
+
+(string),转换成字符串
+
+(array),转换成数组
+
+(object),转换成对象
+
+2.6.2)永久转换
+
+settype
+
+描述:转换数据类型
+
+语法:bool settype ( mixed &$var , string $type )
+
+intval
+
+描述:转换成整型
+
+语法:int intval(mixed $var)
+
+floatval
+
+描述:转换成浮点型
+
+语法:float floatval(mixed $var)
+
+2.7类型判别函数库
+
+2.7.1)安装
+
+类型判别函数库属于PHPCore的组成部分。
+
+2.7.2)类型判别函数库
+
+is_int、is_integer、is_long
+
+描述:返回是否为整型
+
+语法:bool is_int(mixed $var)
+
+is_float、is_real、is_double
+
+描述:返回是否为浮点型
+
+语法:bool is_float(mixed $var)
+
+is_numeric
+
+描述:返回是否为数字或数字字符串
+
+语法:bool is_numeric(mixed $var)
+
+is_bool
+
+描述:返回是否为布尔型
+
+语法:bool is_bool(mixed $var)
+
+is_string
+
+描述:返回是否为字符串
+
+语法:bool is_string(mixed $var)
+
+is_scalar
+
+描述:返回是否为标量类型(整型或浮点或布尔或字符串)
+
+语法:bool is_scalar(mixed $var)
+
+is_array
+
+描述:返回是否为数组
+
+语法:bool is_array(mixed $var)
+
+is_object
+
+描述:返回是否为对象
+
+语法:bool is_object(mixed $var)
+
+is_resource
+
+描述:返回是否为资源
+
+语法:bool is_resource(mixed $var)
+
+is_null
+
+描述:返回是否为NULL
+
+语法:bool is_null(mixed $var)
+
+
+ZendStudio的使用
+
+1.修改编码方式
+
+A.window -> Preferences(参数设置) -> General(基本参数)
+
+B.workspace(工作区) --> Text file encoding(文件编码方式)
+
+2.修改编辑器的文本样式
+
+A.window -> Preferences(参数设置) -> General(基本参数)
+
+B.Apperance(外观) -> Colors and fonts -> Basic  -> Text font
+
+3.创建项目
+
+A.File --> New --> PHP Project(PHP项目)
+
+B.project name,输出项目名称(建议为英文)
+
+C.contents中选项项目创建的位置
+
+4.显示/隐藏面板
+
+window -> show view -> 相应的面板
+
+Day11
+
+一、运算符(Operator)
+
+1.运算符的分类
+
+按功能划分:
+
+    算术运算符
+    
+    字符运算符
+    
+    赋值运算符
+    
+  ...
+  
+按参加运算的操作数数量划分:
+
+    单目运算符,指只有一个操作数参加运算,如负号(-)。
+    
+    双目运算符,指有两个操作数参数运算,如加号(+)、减号(-)、乘号(*)等。
+    
+    三目运算符,指有三个操作数参加运算。
+    
+2.按功能划分
+
+2.1)算术运算符,包括+(正号)、-(负号)、*、/、%(取整数余数)、+(加法)、-(减法)
+
+    fmod
+    
+        描述:获取浮点数的余数
+        
+        语法:float fmod ( float $x , float $y )
+
+2.2)字符运算符,包括.
+
+2.3)赋值运算符,包括=、+=、-=、*=、/=、%=、.=
+
+2.4)自增/自减运算符,包含$n++、$n--、++$n、--$n
+
+        前缀形式:先加减,后使用
+        
+        后缀形式:先使用,后加减
+        
+        说明:
+        
+    A.布尔型不支持自增/自减运算;
+    
+    B.NULL支持自增,但是不支持自减;
+    
+    C.PHP继承Perl的风格,支持字符的自增操作,但是不支持自减操作;
+
+2.5)逻辑运算符,包括!、&&、||、and、or
+
+    &&、and运算特点为:两者同时为真,结果为真;否则结果为假;
+    
+    ||、or运算特点为:两者同时为假,结果为假;否则结果为真;
+    
+        短路求值,在进行逻辑"与"或者"或"运算时,只要第一个表达式的结果
+        
+        就能确定整个表达式的结果时,第二个表达式将忽略执行。
+        
+        引发短路求值的情况:
+        
+    A."与"运算时,第一个表达式的结果为FALSE
+    
+    B."或"运算时,第一个表达式的结果为TRUE
+
+2.6)比较运算符,包括>、>=、==、!=、<>、<=、<、===(全等)、!==(不全等)
+
+        什么情况下使用全等/不全等?
+        
+        因为PHP是一种"弱"类型语言,它可以自动根据运行环境的变化而进行
+        
+        数据类型的转换,如将整数0/浮点数0.0/字符串'0'转换成布尔型中的FALSE;
+        
+        而有一些情况,会将整数0/浮点数0.0/字符串'0'视为TRUE,此时就需要
+        
+        全等/不全等的运算符。
+        
+    strpos
+
+        描述:返回字符串在另一个字符串中第一次出现的位置,区分大小写
+
+        语法:mixed strpos ( string $haystack , mixed $needle )
+
+        说明:
+
+    A.字符编号从0开始;
+
+    B.如果没有找到,则返回FALSE;
+        
+    stripos
+
+        描述:返回字符串在另一个字符串中第一次出现的位置,不区分大小写
+
+        语法:mixed stripos ( string $haystack , mixed $needle )
+    
+    strrpos
+
+        描述:返回字符串在另一个字符串中最后一次出现的位置,区分大小写
+
+        语法:mixed strrpos ( string $haystack , mixed $needle )
+    
+    strripos
+
+        描述:返回字符串在另一个字符串中最后一次出现的位置,不区分大小写
+
+        语法:mixed strripos ( string $haystack , mixed $needle )
+    
+2.7)错误抑制符,@
+
+        说明:错误抑制符只能使用在函数之前。
+
+2.8)执行运算符,``(反引号)
+
+        说明:需要关闭PHP配置文件的safe_mode选项。
+
+2.9)位运算符,包括&、|、~等     
+    
+3.按参加运算的操作数数量划分
+
+    单目运算符,指只有一个操作数参加运算,如正号(+)、负号(-)、逻辑非(!),错误抑制符(@)。
+    
+    双目运算符,指有两个操作数参数运算,如加号(+)、减号(-)、乘号(*)等。
+    
+    三目运算符,指有三个操作数参加运算。expression ? true : false
+    
+    自PHP5.3后,三目运算符支持另一种写法:
+
+  expression1?:expression3,原型就是
+
+  expression1?expression1:expression3
+    
+4.运算符优先级
+
+    单目运算符和赋值运算符为右结合,其他为左结合。
+    
+    运算符优先级
+    
+    一、二、三、赋值
+    
+    算术、比较、逻辑
+    
+Day12
+
+一、流程控制
+
+1.为什么需要流程控制?
+
+程序默认的程序方式为逐行自上而下执行,而有时我们需要
+
+有条件的执行某段代码或重复执行某段代码,此时就需要流
+
+程控制语句。
+
+2.流程控制语句的分类
+
+    分支语句/分支结构
+    
+    循环语句/循环结构
+
+3.分支语句
+
+3.1)if语句
+
+3.1.1)if语句(单分支)
+
+    if(条件表达式){
+    
+      ...
+    
+    }
+    
+        说明:如果执行代码只包含一行语句,那么花括号可以省略(不建议省略)
+
+3.1.2)if...else语句(双分支)
+
+    if(条件表达式){
+      ...
+    } else {
+      ...
+    }
+
+3.1.3)if...elseif...else语句(多分支)
+
+    if(条件表达式){
+      ...
+    } elseif(条件表达式){
+      ...
+    } ... else{
+      
+    }
+
+3.2)switch语句
+
+    switch(测试变量){
+        case 值:
+          ...
+        break;
+        case 值:
+          ...
+        break;
+        ...
+        default:
+          ...
+        break;
+    }
+
+
+4.日期时间函数库
+
+4.1)安装
+
+日期时间函数库属于PHPCore的组成部分。
+
+4.2)日期时间函数库
+
+date_default_timezone_set
+
+描述:设置时区
+
+语法:bool date_default_timezone_set ( string $timezone_identifier )
+
+date_default_timezone_get
+
+描述:获取时区
+
+语法:string date_default_timezone_get(void)
+
+
+date
+
+描述:格式化日期
+
+语法:string date ( string $format [, int $timestamp = time() ] )
+
+Y,四位的年份
+
+m,两位的月份
+
+d,两位的日期
+
+H,两位的小时(24时制)
+
+i,两位的分钟
+
+s,两位的秒数
+
+w,今天是星期的第几天,0为星期日,依次类推
+
+时间戳(timestamp),从公元1970年1月1日00:00:00到现在经历的秒数。
+
+time
+
+描述:返回当前Unix时间戳
+
+语法:int time(void)
+
+strtotime
+
+描述:将字符串解析为Unix时间戳
+
+语法:int strtotime(string $string)
+
+5.数学函数库
+
+5.1)安装
+
+数学函数库属于PHPCore的组成部分。
+
+5.2)数学函数库
+
+ceil
+
+描述:进一取整
+
+语法:float ceil(float $var)
+
+floor
+
+描述:舍一取整
+
+语法:float floor(float $var)
+
+pow
+
+描述:幂运算
+
+语法:float pow(float $base , float $exp)
+
+sqrt
+
+描述:获取平方根
+
+语法:float sqrt(float $var)
+
+max
+
+描述:获取最大值
+
+语法:mixed max(number $var,number $var[,...])
+
+min
+
+描述:获取最小值
+
+语法:mixed min(number $var,number $var[,...])
+
+rand
+
+描述:产生随机数
+
+语法:int rand([int $min,int $max])
+
+mt_rand
+
+描述:产生随机数
+
+语法:int mt_rand([int $min,int $max])
+
+round
+
+描述:四舍五入
+
+语法:float round ( float $val [, int $precision = 0])
+
+6.循环语句
+
+6.1)for语句
+
+for(expr1;expr2;expr3){
+  ...
+}
+
+说明:
+
+A.expr1,将无条件执行一次;一般用其为变量赋予初始值;
+
+B.expr2,每次循环时都将执行,其作用是为是否进入循环进行判断;
+
+C.expr3,每次循环后都将执行,其作用是控制变量的步长;
+
+7.字符串函数库
+
+7.1)安装
+
+字符串函数库属于PHPCore的组成部分。
+
+7.2)字符串函数库
+        
+    stripos
+
+        描述:返回字符串在另一个字符串中第一次出现的位置,不区分大小写
+
+        语法:mixed stripos ( string $haystack , mixed $needle )
+    
+    strrpos
+
+        描述:返回字符串在另一个字符串中最后一次出现的位置,区分大小写
+
+        语法:mixed strrpos ( string $haystack , mixed $needle )
+    
+    strripos
+
+        描述:返回字符串在另一个字符串中最后一次出现的位置,不区分大小写
+
+        语法:mixed strripos ( string $haystack , mixed $needle )
+        
+    strlen
+    
+        描述:获取字符串长度
+        
+        语法:int strlen(string $str)
+
+    substr
+    
+        描述:截取字符串
+        
+        语法:string substr(string $str,int $start[,int $length])
+        
+        说明:
+        
+    A.字符串从0开始编号;
+    
+    B.如果省略长度,则返回到字符串结尾之间的字符;
+        
+    C.如果起始位置超过字符串长度,则返回FALSE;
+
+Day13
+
+一.循环语句
+
+1.1)for语句
+
+for(expr1;expr2;expr3){
+  ...
+}
+
+说明:
+
+A.expr1,将无条件执行一次;一般用其为变量赋予初始值;
+
+B.expr2,每次循环时都将执行,其作用是为是否进入循环进行判断;
+
+C.expr3,每次循环后都将执行,其作用是控制变量的步长;
+
+1.2)for语句的特殊用法
+
+1.2.1)for语句的表达式可以全部省略或者省略任何一个表达式
+
+    for(;;){
+    
+    }
+    
+1.2.2)for语句的每个表达式中可以带有多个语句,语句之间以逗号分隔
+
+    for($i=1,$n=2,$p=3;$i<5;$n*=2,$i++,$p*=3){
+    
+    }
+
+        说明:
+        
+    A.表达式1和表达式3可以带有多个语句
+    
+    B.表达式2因为只执行最后一个条件,所以往往只写一个条件
+    
+1.3)break语句
+
+    break可以使用在switch语句及循环语句,其目的是强行退出语句的执行。
+
+1.4)continue语句
+
+   continue语句只能使用循环语句中,其目的是跳出本次剩余的代码,从而
+   
+      执行下一次循环(在条件为真的情况下)。
+      
+1.5)while循环
+
+   while(条件表达式){
+      ...
+   }
+
+1.6)do...while循环
+
+   do{
+     ...
+   } while(条件表达式);
+   
+     说明:
+     
+   A.while、for语句都是先判断,后执行;而do...while是先执行,后判断;
+   
+   B.while、for语句至少执行零次;do...while至少执行一次;
+
+1.7)当型循环
+
+        当型循环指先进行条件判断,然后再执行相关的语句(条件为真的情况下);
+        
+        当前循环也称为"前测试型循环"。
+
+    for语句和while语句都属于当型循环,所以可以互换。
+
+2.字符串函数库
+
+2.1)安装
+
+字符串函数库属于PHPCore的组成部分。
+
+2.2)字符串函数库
+        
+    stripos
+
+        描述:返回字符串在另一个字符串中第一次出现的位置,不区分大小写
+
+        语法:mixed stripos ( string $haystack , mixed $needle )
+    
+    strrpos
+
+        描述:返回字符串在另一个字符串中最后一次出现的位置,区分大小写
+
+        语法:mixed strrpos ( string $haystack , mixed $needle )
+    
+    strripos
+
+        描述:返回字符串在另一个字符串中最后一次出现的位置,不区分大小写
+
+        语法:mixed strripos ( string $haystack , mixed $needle )
+        
+    strlen
+    
+        描述:获取字符串长度
+        
+        语法:int strlen(string $str)
+
+    substr
+    
+        描述:截取字符串
+        
+        语法:string substr(string $str,int $start[,int $length])
+        
+        说明:
+        
+    A.字符串从0开始编号;
+    
+    B.如果省略长度,则返回到字符串结尾之间的字符;
+        
+    C.如果起始位置超过字符串长度,则返回FALSE;
+    
+    D.如果起始位置或长度为负数,则倒数;
+    
+    strrev
+    
+        描述:字符串反转
+        
+        语法:string strrev(string $str)
+        
+    strtolower
+    
+        描述:将字符串转化为小写
+        
+        语法:string strtolower(string $str)
+    
+    strtoupper
+    
+        描述:将字符串转化为大写
+        
+        语法:string strtoupper(string $str)
+
+    ucfirst
+    
+        描述:将字符串的首字母转换为大写
+        
+        语法:string ucfirst(string $str)    
+    
+    ucwords
+    
+        描述:将字符串中每个单词的首字母转换为大写
+        
+        语法:string ucwords(string $str) 
+    
+    str_replace
+    
+        描述:字符串替换,区分大小写
+        
+        语法:mixed str_replace(mixed $search,mixed $replacement,string $string)
+    
+    str_ireplace
+    
+        描述:字符串替换,不区分大小写
+        
+        语法:mixed str_ireplace(mixed $search,mixed $replacement,string $string)
+    
+    htmlspecialchars
+    
+        描述:将字符中特殊的符号替换成HTML实体
+        
+        语法:string htmlspecialchars(string $string[,int $quote_style=ENT_COMPAT])
+        
+        说明:
+        
+    A.只转换大于号、小于号、双引号、单引号、连接符这五个实体;
+    
+    B.quote_style可能值包括(只处理引号):
+    
+    ENT_NOQUOTES,其值为0,代表不转换单引号和双引号;
+    
+    ENT_COMPAT,其值2,代表仅转换双引号;
+    
+    ENT_QUOTES,其值为3,代表转换单引号和双引号;
+    
+    md5
+    
+        描述:计算字符串的md5哈希值
+        
+        语法:string md5(string $str)
+        
+    ltrim
+    
+        描述:删除前导空格
+        
+        语法:string ltrim(string $str)
+    
+    rtrim
+    
+        描述:删除后续空格
+        
+        语法:string rtrim(string $str)    
+    
+    trim
+
+        描述:删除前导和后续空格
+        
+        语法:string trim(string $str)        
+        
+    
+二、数组
+
+2.1什么是数组?
+
+数组(Array),是一组相关数据的集合。
+
+2.2数组的分类
+
+索引数组,键名为整数;索引数组从0开始编号。
+
+关联数组,键名为字符串。
+
+2.3声明数组
+
+$变量名称 = array([[$key=>]value[,...]])
+
+说明:
+
+A.键名只能为整数或字符串;
+
+B.数组成员的值(键值)可以为任意数据类型;
+
+2.4访问和修改数组成员
+
+访问数组成员
+
+$数组名称[键名]
+
+修改数组成员
+
+$数组名称[键名] = 值
+
+说明:
+
+A.同名产生覆盖;不同名产生添加
+
+2.5数组函数库
+
+2.5.1)安装
+
+数组函数库属于PHPCore的组成部分
+
+2.5.2)数组函数库
+
+count/sizeof
+
+描述:获取数组成员或对象属性的数量
+
+语法:int count/sizeof(mixed $var)
+
+2.6遍历数组
+
+2.6.1使用for、while语句实现
+
+只能针对编号有规律的索引数组。
+
+2.6.2使用foreach语句实现
+
+foreach($array as $value){
+   ...
+}
+
+foreach($array as $key => $value){
+  ...
+}
+
+Day14
+
+一、数组
+
+1.声明数组
+
+1.1)通过方括号语法实现
+
+其根本运用原理就是:数组成员存在产生覆盖;不存在产生添加。
+
+$变量名称[键名]  = 值
+
+而且键名可以省略(提示:得到的为编号连续的索引数组)。
+
+1.2)使用方括号代替array()关键字(PHP5.4)
+
+$变量名称 = [...]
+
+说明:最后一个数组单元之后的逗号可以省略。
+
+2.关于数组键名的特殊情况
+
+A.数组中第一个没有键名成员之前所有成员都存在负数的键名,
+  
+    那么该成员的键名为0;
+
+B.数组中第一个没有键名成员之前所有成员都存在正数和负数的键名,
+  
+    那么该成员的键名为已有最大下标+1;
+    
+C.如果键名为合法的数字字符串,则转换成整型;
+
+D.如果键名为浮点数,则转换为整型(代表丢掉小数点后的部分);
+
+E.键名为布尔型,TRUE转换成1,FALSE转换成0;
+
+F.键名为NULL,则转换成为空字符串;
+
+二、数组函数库
+
+
+1.1)安装
+
+数组函数库属于PHPCore的组成部分
+
+1.2)数组函数库
+
+count/sizeof
+
+描述:获取数组成员或对象属性的数量
+
+语法:int count/sizeof(mixed $var)
+
+explode
+
+描述:使用字符串拆分另一个字符串
+
+语法:array explode(string $delimiter,string $string)
+
+join/implode
+
+描述:使用指定的分隔符将数组成员连接成字符串
+
+语法:string join/implode(string $delimiter,array $array)
+
+current
+
+描述:返回当前指针指向的成员
+
+语法:mixed current(array &$array)
+
+reset
+
+描述:移动数组的指针到第一个成员,并且返回该成员
+
+语法:mixed reset(array &$array)
+
+next
+
+描述:移动数组的指针到下一个成员,并且返回该成员
+
+语法:mixed next(array &$array)
+
+prev
+
+描述:移动数组的指针到上一个成员,并且返回该成员
+
+语法:mixed prev(array &$array)
+
+end
+
+描述:移动数组的指针到最后一个成员,并且返回该成员
+
+语法:mixed end(array &$array)
+
+array_keys
+
+描述:将数组的键名转变成另外一个数组的键值
+
+语法:array array_keys(array $array)
+
+array_values
+
+描述:将数组的键值转变成另外一个数组的键值
+
+语法:array array_values(array $array)
+
+Day15
+
+一、各个输出语句的区别
+
+A.echo和print是PHP语句;print_r,是PHP函数;
+
+B.echo语句可以带有至少一个参数;print和print_r只能带有一个参数;
+
+C.echo和print语句的参数必须为字符串(可能会进行数据类型的自动转换);print_r函数的参数可以为任意数据类型;
+
+说明:
+
+echo支持简捷输出方式,即<?=....?>
+
+但是在PHP5.4之必须开启短风格才行。
+
+二、数组函数库
+
+in_array
+
+描述:返回指定值是否在数组值中出现
+
+语法:bool in_array(mixed $needle,array $array)
+
+array_key_exists
+
+描述:返回指定键名是否在数组中出现
+
+语法:bool array_key_exists ( mixed $key , array $array )
+
+array_push
+
+描述:在数组的未尾添加一个或多个成员,返回数组的新长度
+
+语法:int array_push(array &$array,mixed $value[,...])
+
+array_unshift
+
+描述:在数组的开头添加一个或多个成员,返回数组的新长度
+
+语法:int array_unshift(array &$array,mixed $value[,...])
+
+array_pop
+
+描述:删除数组的最后一个成员,并且返回该成员
+
+语法:mixed array_pop(array &$array)
+
+array_shift
+
+描述:删除数组的第一个成员,并且返回该成员
+
+语法:mixed array_shift(array &$array)
+
+array_reverse
+
+描述:数组反转
+
+语法:array array_reverse(array $array[, bool $preserve_keys = false ])
+
+array_map
+
+描述:将回调函数作用于数组的每一个成员
+
+语法:array array_map ( callable $callback , array $arr1 [, array $... ] )
+
+三、二维或多维数组
+
+二维或多维数组,指数组成员值为数组。
+
+
+四、自定义函数
+
+4.1)什么是自定义函数
+
+自定义函数是封装的、可以重复使用的、完成特定功能代码段。
+
+4.2)声明自定义函数
+
+function 函数名称([$参数名称[=值][,...]]){
+  ...
+  ...
+}
+
+4.3)函数名称命名规范
+
+A.必须以字母或下划线开头,包含字母、数字及下划线;
+
+B.函数名称禁止包含空格、斜线、反斜线等特殊符号;
+
+C.函数名称最好含义明确;
+
+D.函数名称最好遵守"驼峰标记法";
+
+E.函数名称往往以动词开头,如getInfoById,setInfoById
+
+4.4)参数
+
+A.参数就是占位符,也称为形参;
+
+B.函数可以有零个或多个参数;
+
+C.参数的数据类型可以为任意类型(资源除外);
+
+4.5)调用函数
+
+[$变量名称=]函数名称([值,[,..]])
+
+Day16
+
+一、自定义函数
+
+1.1)参数
+
+A.参数就是占位符,也称为形参;
+
+B.函数可以有零个或多个参数;
+
+C.参数的数据类型可以为任意类型(资源除外);
+
+D.没有默认值的参数称为必选参数;有默认值的参数称为可选参数;所有
+
+    必选参数必须位于可选参数之前;
+
+    
+1.2)返回值
+
+function 函数名称([$参数名称[=值][,...]]){
+      
+  ...
+      
+  [return 返回值]
+    
+}
+    
+说明:
+    
+A.return语句将终止函数的执行;将控制权交回调用函数时的位置;
+  
+B.函数只能存在零个或一个返回值;返回值的数据类型为任意类型(资源除外);
+
+C.参数与返回值之间不存在必然的联系(无论数量、数据类型等)
+
+1.3)递归函数(Recursive)
+
+递归函数,指函数调用自身。
+
+递归函数的使用情形,A函数的实现的过程中需要调用B函数;但是B函数的
+
+功能与A函数完全相同。
+
+1.4)变量函数
+
+如果将函数名称赋予变量,并且在使用该变量时带有小括号,那么PHP
+ 
+引擎将正常解析函数。
+
+Day17
+
+一、自定义函数函数库
+
+1.1)安装
+
+自定义函数函数库属于PHPCore的组成部分。
+
+1.2)自定义函数函数库
+
+func_num_args
+
+描述:返回函数的参数总数
+
+语法:int func_num_args(void)
+
+func_get_args
+
+描述:返回函数的所有参数所组成的数组
+
+语法:array func_get_args(void)
+
+func_get_arg
+
+描述:返回函数的参数中的某一项
+
+语法:mixed func_get_arg ( int $arg_num )
+
+function_exists
+
+描述:检测指定的函数是否存在
+
+语法:bool function_exists(string $function_name)
+
+
+二、变量(2)
+
+1.变量作用域
+
+1.1)局部变量,只在声明的代码块内有效。
+
+1.2)全局变量,在所有范围内都有效。
+
+方案1:
+
+在函数内部使用global关键字;
+
+方案2:
+
+使用$GLOBALS预定义变量;
+
+1.3)超全局变量,无论函数内部还是外部都可以直接使用,而无需特殊声明;
+
+所有的预定义变量都是超全局变量。
+  
+2.预定义变量,包括
+
+$_ENT
+
+$_GET,表单以GET方式提交时,所有数据都存储到该变量内。
+
+$_POST,表单以POST方式提交时,所有数据都存储到该变量内。
+
+$_REQUEST
+
+$_SESSION
+
+$_SERVER
+
+$_FILES
+
+$_COOKIE
+
+$GLOBALS,存储所有全局变量
+
+
+说明:
+
+A.所有预定义变量的作用域都为超全局作用域;
+
+B.所有预定义变量的数据类型都为数组;
+
+三、常量
+
+3.1)什么是常量?
+
+常量是一个简单值的标识符,其值一经定义无法修改。
+
+3.1)定义常量
+
+define(string $name,mixed $value)
+
+说明:
+
+A.常量名称在定义和使用时无需美元符号;
+
+B.常量名称使用全部大写字母;
+
+C.常量值只能为标量类型;
+
+D.常量的作用域是全局变量;
+
+3.1)魔术常量
+
+__LINE__,返回行号
+
+__FILE__,返回文件完整的路径信息
+
+__CLASS__,返回类名称
+
+__METHOD__,返回方法名称
+
+__FUNCTION__,返回函数名称
+
+__DIR__,返回目录名称
+
+__TRAIT__,返回Trait名称
+
+__NAMESPACE__,返回命名空间的名称
+
+Day18
+
+一、文件上传
+
+1.1)表单的限制
+
+A.具有浏览框的表单,其提交方式只能为post;
+
+B.必须设置表单的enctype="multipart/form-data"属性;
+
+1.2)预定义变量 -- $_FILES
+
+$_FILES存储文件上传时的信息。
+
+$_FILES['浏览框名称']['name'],返回上传文件的名称
+
+$_FILES['浏览框名称']['type'],返回上传文件的MIME类型
+
+$_FILES['浏览框名称']['size'],返回上传文件的字节数
+
+$_FILES['浏览框名称']['error'],返回上传文件过程中产生的错误代码
+
+$_FILES['浏览框名称']['tmp_name'],返回上传文件在服务器临时目录中的存储位置及名称
+
+
+1.3)错误代码
+
+UPLOAD_ERR_OK,其值为0,代表没有错误产生;
+
+UPLOAD_ERR_INI_SIZE,其值为1,代表上传文件的字节数超过PHP配置文件规定的尺寸;
+
+UPLOAD_ERR_FORM_SIZE,其值为2,代表上传文件的字节数超过隐藏域规定的字节数;
+
+UPLOAD_ERR_PARTIAL,其值为3,代表文件部分被上传;
+
+UPLOAD_ERR_NO_FILE,其值为4,代表没有上传文件;
+
+UPLOAD_ERR_NO_TMP_DIR,其值为6,代表临时目录不存在;
+
+UPLOAD_ERR_CANT_WRITE,其值为7,代表临时目录不可写;
+
+1.4)PHP配置文件中与文件上传相关的选项
+
+file_uploads = On / Off,开启/关闭文件上传功能
+
+upload_tmp_dir,指定服务器的临时目录
+
+upload_max_filesize = 2M,指定上传文件最大的字节数
+
+1.5)文件上传的函数
+
+move_uploaded_file
+
+描述:移动上传文件
+
+语法:bool move_uploaded_file(string $source,string $destination)
+
+1.6)多个文件上传
+
+浏览框的命名:
+
+A.单独命名 -- 形成了标准的二维数组,与单个文件上传时的不同在于:数组包含了多个成员。
+
+B.命名为数组形式 -- 形成了标准的三维数组
+
+uniqid
+
+描述:产生唯一的ID
+
+语法:string uniqid ([string $prefix = ""]) 
+
+file_exists
+
+描述:检测文件/目录是否存在
+
+语法:bool file_exists(string $path)
+
+mkdir
+
+描述:创建目录
+
+语法:bool mkdir(string $path)
+
+1.7)包含文件
+
+include '文件路径及名称'
+
+require '文件路径及名称'
+
+include_once '文件路径及名称'
+
+require_once '文件路径及名称'
+
+说明:
+
+A.如果包含文件不存在,include产生警告级别错误;require产生致命级别错误;
+
+B.如果包含文件不存在,include将继续执行后续语句;require将终止代码的执行;
+
+测试能否省略?>时需要将output_buffering修改为Off。
+
+Day26
+
+一、GD函数库
+
+1.安装
+
+A.启用PHP配置文件的extension=php_gd2.dll
+
+B.编辑extension_dir选项
+
+2.GD函数库
+
+imagecreate
+
+描述:创建基于调色板的图像
+
+语法:resource imagecreate(int $width,int $height)
+
+imagecreatetruecolor
+
+描述:创建基于真彩色的图像
+
+语法:resource imagecreatetruecolor(int $width,int $height)
+
+imagecolorallocate
+
+描述:为图像分配颜色
+
+语法:int imagecolorallocate(resource $image,int $red,int $green,int $blue)
+
+imagecolorallocatealpha
+
+描述:为图像分配颜色,并且指定透明度
+
+语法:int imagecolorallocate(resource $image,int $red,int $green,int $blue,int $alpha)
+
+imagefill
+
+描述:填充区域
+
+语法:bool imagefill(resource $image,int $x,int $y,int $color)
+
+imagesetpixel
+
+描述:绘制单个像素点
+
+语法:bool imagesetpixel(resource $image,int $x,int $y,int $color)
+
+imagerectangle
+
+描述:绘制矩形框
+
+语法:bool imagerectangle(resource $image,int $x1,int $y1,int $x2,int $y2,int $color)
+
+imagefilledrectangle
+
+描述:绘制填充矩形
+
+语法:bool imagefilledrectangle(resource $image,int $x1,int $y1,int $x2,int $y2,int $color)
+
+
+
+imagechar
+
+描述:水平绘制单个字符
+
+语法:bool imagechar ( resource $image , int $font , int $x , int $y , string $c , int $color )
+
+imagecharup
+
+描述:垂直绘制单个字符
+
+语法:bool imagecharup ( resource $image , int $font , int $x , int $y , string $c , int $color )
+
+imagestring
+
+描述:水平绘制字符串
+
+语法:bool imagestring ( resource $image , int $font , int $x , int $y , string $string , int $color )
+
+imagestringup
+
+描述:垂直绘制字符串
+
+语法:bool imagestringup ( resource $image , int $font , int $x , int $y , string $string , int $color )
+
+imagettftext
+
+描述:使用TrueType字体绘制文本
+
+语法:array imagettftext ( resource $image , float $size , float $angle , int $x , int $y , int $color , string $fontfile , string $text )
+
+imagegif
+
+描述:以GIF格式输出图像到浏览器或文件
+
+语法:bool imagegif(resource $image[,string $filename])
+
+imagejpeg
+
+描述:以JPEG格式输出图像到浏览器或文件
+
+语法:bool imagejpeg ( resource $image [, string $filename [, int $quality ]] )
+
+imagepng
+
+描述:以PNG格式输出图像到浏览器或文件
+
+
+imagecreatefromgif
+
+描述:将GIF文件读取为图像资源
+
+语法:resource imagecreatefromgif(string $filename)
+
+imagecreatefromjpeg
+
+描述:将JPEG文件读取为图像资源
+
+语法:resource imagecreatefromjpeg(string $filename)
+
+imagecreatefrompng
+
+描述:将PNG文件读取为图像资源
+
+语法:resource imagecreatefrompng(string $filename)
+
+
+
+imagecopy
+
+描述:复制图像
+
+语法:bool imagecopy ( resource $dst_im , resource $src_im , int $dst_x , int $dst_y , int $src_x , int $src_y , int $src_w , int $src_h )
+
+
+imagedestroy
+
+描述:销毁图像资源
+
+语法:bool imagedestroy(resource $image)
+
+Day27
+
+一、GD函数库
+
+getimagesize
+
+描述:获取图像的相关信息
+
+语法:array getimagesize(string $filename)
+
+说明:返回值为包含4个成员的索引数组,它们是:
+
+0,表示图像的宽度
+
+1,表示图像的高度
+
+2,表示图像的类型,其中1表示GIF,2表示JPG,3表示PNG 
+
+3,以'width="xx" height="xx"'形式返回图像的宽度与高度
+
+imagesx
+
+描述:获取图像的宽度
+
+语法:int imagesx(resource $image)
+
+imagesy
+
+描述:获取图像的高度
+
+语法:int imagesy(resource $image)
+
+list语句
+
+描述:将数组成员值赋予变量
+
+语法:list(string $var_name,...) = array
+
+image_type_to_mime_type
+
+描述:根据图像文件类型返回MIME类型
+
+语法:sting image_type_to_mime_type(int $image_type)
+
+image_type_to_extension
+
+描述:根据图像文件类型返回扩展名
+
+语法:sting image_type_to_extension(int $image_type)
+
+imagettfbbox
+
+描述:取得使用TrueType字体绘制文件时的盒子信息
+
+语法:array imagettfbbox ( float $size , float $angle , string $fontfile , string $text )
+
+说明:返回包含8个成员的索引数组,它们是:
+
+0	左下角 X 位置
+
+1	左下角 Y 位置
+
+2	右下角 X 位置
+
+3	右下角 Y 位置
+
+4	右上角 X 位置
+
+5	右上角 Y 位置
+
+6	左上角 X 位置
+
+7	左上角 Y 位置
+
+imagecopyresampled
+
+描述:复制图像并且重新采样
+
+语法:bool imagecopyresampled ( resource $dst_image , resource $src_image , int $dst_x , int $dst_y , int $src_x , int $src_y , int $dst_w , int $dst_h , int $src_w , int $src_h )
+
+imagecopyresized
+
+描述:复制图像并且调整大小
+
+语法:bool imagecopyresized ( resource $dst_image , resource $src_image , int $dst_x , int $dst_y , int $src_x , int $src_y , int $dst_w , int $dst_h , int $src_w , int $src_h )
+
+imagealphablending
+
+描述:设置是否开启图像的混合模式
+
+语法:bool imagealphablending ( resource $image , bool $blendmode )
+
+imagesavealpha
+
+描述:设置是否在保存PNG图像时保留Alpha通道信息
+
+语法:bool imagesavealpha ( resource $image , bool $saveflag )
+
+Day28
+
+一、预定义变量 -- $_SESSION(会话)
+
+1.SESSION的工作原理
+
+A."第一次"用户发送HTTP请求时,服务器检测是否存在SESSION_ID,
+
+    如果不存在,服务器将产生SESSION_ID,同时在服务器上创建sess_开头的文件;
+    
+    并且将SESSION_ID与响应信息一并发送到客户端;
+    
+B."第二次及第N次"发送请求时,请求的头部信息中会自动将SESSION_ID
+
+    一并发送给服务器;此时服务器就能"记住"客户端了;
+    
+2.启用session
+
+SESSION默认情况下是关闭的,所以开启session
+
+session_start()
+
+3.预定义变量 -- $_SESSION
+
+作用:存取会话信息
+
+存储会话信息
+
+$_SESSION[名称] = 值;
+
+读取会话信息
+
+$变量名称 = $_SESSION[名称]
+
+4.销毁SESSION变量
+
+session_destroy()
+
+Day29
+
+一、文件/目录函数库
+
+1.安装
+
+文件/目录函数库属于PHPCore的组成部分。
+
+2.目录函数库
+
+mkdir
+
+描述:创建目录
+
+语法:bool mkdir(string $path[,int $permisson=0755[,bool $recursive=FALSE]])
+
+说明:
+
+A.权限,1:可执行,2:可写,4:只读
+
+B.如果带有第三个参数,则可以同时创建父/子目录
+
+file_exists
+
+描述:检测文件/目录是否存在
+
+语法:bool file_exists(string $path)
+
+rename
+
+描述:重命名文件/目录
+
+语法:bool rename(string $oldname,string $newname)
+
+rmdir
+
+描述:删除目录
+
+语法:bool rmdir(string $path)
+
+说明:只能删除空目录
+
+opendir
+
+描述:打开目录
+
+语法:resource opendir(string $path)
+
+readdir
+
+描述:读取目录条目
+
+closedir
+
+描述:关闭目录
+
+语法:bool closedir(resource $handle)
+
+is_dir
+
+描述:判断是否为目录
+
+语法:bool is_dir(string $path)
+
+is_file
+
+描述:判断是否为文件
+
+语法:bool is_file(string $path)
+
+3.文件函数库
+
+unlink
+
+描述:删除文件
+
+语法:bool unlink(string $path)
+
+copy
+
+描述:复制文件
+
+语法:bool copy(string $source,string $destination)
+
+fopen
+
+描述:打开文件
+
+语法:resource fopen(string $path,string $mode)
+
+模式:
+
+r,只读模式,将文件指针置于文件首;
+
+r+,读写模式,将文件指针置于文件首;
+
+a,写入模式,将文件指针置于文件尾,如果文件不存在,则自动创建;
+
+a+,读写模式,将文件指针置于文件尾,如果文件不存在,则自动创建;
+
+w,写入模式,将文件大小截断为零,如果文件不存在,则自动创建;
+
+w+,读写模式,将文件大小截断为零,如果文件不存在,则自动创建;
+
+fgetc
+
+描述:读取一个字符
+
+语法:string fgetc(resource $handle)
+
+fgets
+
+描述:读取一行
+
+语法:string fgets(resource $handle)
+
+fgetss
+
+描述:读取一行,并且过滤掉其中的HTML标记
+
+语法:string fgetss(resource $handle)
+
+feof
+
+描述:返回指针是否到达文件尾
+
+语法:bool feof(resource $handle)
+
+fread
+
+描述:读取文件内容
+
+语法:string fread(resource $handle,int $length)
+
+filesize
+
+描述:获取文件字节数
+
+语法:int filesize(string $filename)
+
+fwrite
+
+描述:写入文本
+
+语法:int fwrite(resource $handle,string $string)
+
+fclose
+
+描述:关闭文件
+
+语法:bool fclose(resource $handle)
+
+Day30
+
+一、文件/目录函数库
+
+dirname
+
+描述:返回路径中的目录部分
+
+语法:string dirname(string $path)
+
+Day31
+
+一、文件/目录函数库
+
+file_get_contents
+
+描述:读取整个文件的内容
+
+语法:string file_get_contents(string $filepath)
+
+file_put_contents
+
+描述:写入文件内容
+
+语法:int file_put_contents(string $filepath,string $text)
+
+basename
+
+描述:返回路径中的文件名称部分
+
+语法:string basename(string $filepath)
+
+二、正则表达式
+
+1.什么是正则表达式?
+
+正则表达式(Regular Expression),用于限制字符的匹配规范。
+
+2.正则表达式的语法
+
+/正则表达式/[模式匹配符]
+
+3.元字符
+
+\d,表示任意数字,等价于[0-9]
+
+\D,表示任意非数字,等价于[^0-9]
+
+\s,表示任意空白字符,等价于[\n\r\t\v\f]
+
+\S,表示任意非空白字符,等价于[^\n\r\t\v\f]
+
+\w
+
+\W
+
+.,表示除换行符以外的任意字符
+
+^,表示以指定的字符开头或者不在指定的范围之内
+
+$,表示以指定的字符结尾
+
+|,或者
+
+[0-9a-zA-Z],限定范围
+
+4.限定数量
+
+?,出现零次或一次,等价于{0,1}
+
+*,至少出现零次,等价于{0,}
+
++,至少出现一次,等价于{1,}
+
+{m},只能出现m次
+
+{m,},至少出现m次
+
+{m,n},至少出现m次,至多n次
+
+5.转义符
+
+\n,换行
+
+\r,回车
+
+\t,水平制表符
+
+\v,垂直制表符
+
+\\,反斜线 
+
+\',单引号
+
+\",双引号
+
+\.,点本身(.)
+
+\{,花括号
+
+\[,中括号
+
+\|,竖线
+
+6.子模式
+
+(partten)
+
+7.贪婪模式与非贪婪模式
+
+在使用+、*等量词时,正则表达式将尽量多获取字符,此时称为贪婪模式;
+
+只需要在+、*等量词后添加问号(?),即可表示非贪婪模式。
+
+三、正则表达式函数库
+
+preg_match
+
+描述:执行一个正则表达式匹配
+
+语法:int preg_match ( string $pattern , string $subject[,array &$matches])
+
+说明:当搜索到第一个结果后,将停止搜索。
+
+preg_match_all
+
+描述:执行一个全局正则表达式匹配
+
+语法:int preg_match_all ( string $pattern , string $subject[,array &$matches])
+
+preg_split
+
+preg_replace
+
+Day32
+
+一、正则表达式函数库
+
+1.正则表达式函数库
+
+preg_replace
+
+描述:使用正则表达式进行匹配
+
+语法:string preg_replace(string $pattern,string $replacement,string $string)
+
+preg_split
+
+描述:使用正则表达式拆分字符串
+
+语法:array preg_split(string $pattern,string $string)
+
+2.捕获组
+
+将相应的正则表达式使用小括号括起来。
+
+3.捕获组的使用 -- 反向引用
+
+捕获组可以通过$1...$99或\\1....\\99引用。
+
+如果在正则表达式本身内使用反向引用的话,使用\\1来表示;
+
+在其他地方使用反向引用推荐使用$1...$99来表示。
+
+Day34
+
+一、OOP
+
+1.什么是OOP?
+
+OOP[Object Oritened Programming],面向对象编程,是一种计算机编程架构。
+
+OOP的基本思想是计算机程序是由完成特定功能的多个子程序/单元组合而成的。
+
+OOP涉及两个重要的概念:类(class)与对象(object)
+
+OOP的三大特点:封装、继承、多态。
+
+2.类与对象
+
+类(class):具有相同属性和行为的一组对象的抽象性概括。
+
+对象(object):用于描述客观事物的实体,是一个具象的概念。
+
+类与对象之间的关系,可以比喻成模具与铸件之间的关系。
+
+一组对象属性和行为的抽象性概括就得到了类;类的实例化得到对象。
+
+3.创建类
+
+class 类名称{
+  ...
+  ...  
+}
+
+A.类名称的命名规范与变量的命名相同;
+
+B.类名称为名词形式;
+
+C.类名称采用"驼峰标记法"
+
+4.属性
+
+属性(attribute)是对象的特征描述;属性就是类内部的变量。
+
+声明属性
+
+访问控制符 $属性名称 [=值];
+
+访问控制符包括:
+
+public,公共属性(在类的内部及实例化对象时都可以访问)
+
+protected,受保护的属性(在类的内部可以访问,实例化对象时不能访问)
+
+实例化对象时访问属性
+
+$object -> attribute
+
+在类的内部访问当前对象的属性
+
+$this -> attribute
+
+
+5.方法
+
+方法(method),对象的行为/动作。
+
+声明方法
+
+[访问控制符] function 方法名称([$参数名称=[值][,...]]){
+
+
+}
+
+访问控制符包括:
+
+public,公共属性,如果在方法前没有使用访问控制符,则默认为public;
+
+6.创建对象/实例化对象
+
+[$变量名称=] new 类名称([值,...])
+
+7.构造函数与析构函数
+
+构造函数/构造方法,指在实例化对象时自动调用的方法。
+
+PHP4的写法:构造方法名称与类名称相同;
+
+PHP5的写法:__construct
+
+析构函数/析构方法,指对象使用完毕或通过unset销毁时自动调用的方法。
+
+PHP5的写法:__destruct
+
+说明:
+
+A.构造函数可以带有参数;而析构函数必须不能带有参数。
+
+B.被构造函数和析构函数调用的方法,也可以理解为理论上的构造函数和析构函数。
+
+Day35
+
+一、OOP
+
+1.属性与方法
+
+在OOP的设计过程中,对象的属性值可以为任意数据类型(包括资源);
+
+方法的参数及返回值,也可以为任意数据类型(一般情况下,除资源外的所有数据类型)。
+
+如果对象的属性值为对象类型,那么在访问该属性时可以采用链式写法;如
+
+class A{
+  function fun1(){
+    echo 'A';
+  }
+}
+
+class B{
+  public $attr;
+}
+
+$b = new B();
+
+$b -> attr = new A();
+
+$b -> attr -> fun1();
+
+链式写法的根本原理就是要求属性值或方法的返回值为对象(包括自身对象)。
+
+
+2.子类
+
+class 类名称 extends 父类{
+   ...
+   ...
+}
+
+说明:
+
+A.子类也称为扩展类;父类也称为基类;
+
+B.任何一个类只能存在一个父类;一个父类可以存在多个子类;
+
+C.如果子类存在与父类同名称的方法,则产生方法覆盖/方法重写;
+
+
+二、静态成员
+
+[访问控制符] static 变量名称;
+
+[访问控制符] static function 方法名称([参数[,....]]){
+
+
+}
+
+
+提示:
+
+A.$this指实例化对象
+
+B.self指类本身,用于访问当前内的静态属性、方法、常量。
+
+C.static指静态成员或方法,$this关键字指实例化对象,也就代表只有使用new关键字
+
+创建对象后才可以访问当前对象的属性或方法;而通过static关键字声明的静态属性或方法
+
+不用实例化对象,而直接通过范围操作运算符(::)即可访问;
+
+如果访问父类的静态属性或方法,则通过parent关键字实现(在类的内部);
+
+如果访问当前类的静态属性或方法,则通过self关键字实现(在类的内部);
+
+在类的外部访问类的静态属性或方法时,通过 
+
+类名称::静态属性
+
+或者
+
+类名称::静态方法()
+
+来进行访问。
+
+D.其实在类的内部既可以通过self也可以通过类名称访问当前类的静态属性或方法;
+
+    而在类的外部,则只能通过类名称来访问
+
+
+
+三、抽象类
+
+1.什么是抽象类
+
+抽象类是指至少存在一个抽象方法的类(理论上);抽象方法在父类中定义,在子类中实现。
+
+而且必须实现父类中的所有抽象方法。
+
+在实际开发过程中,可以将没有抽象方法的类定义为抽象类,这样做的目的是告诉使用者,
+
+这个类只能被继承。
+
+抽象方法是指没有方法体的方法。
+
+Day36
+
+一、OOP
+
+instanceof
+
+描述:判断某个对象是否是某个类的实例
+
+语法:bool object instanceof class
+
+get_class
+
+描述:获取当前对象的类名称
+
+语法:string get_class([object $object])
+
+class_exists
+
+描述:检测类是否被定义
+
+语法:bool class_exists(string $classname)
+
+method_exists
+
+语法:检测方法是否存在
+
+语法:bool method_exists ( mixed $object , string $method_name )
+
+Day38
+
+一、OOP
+
+1.访问控制符
+
+public,在当前对象的内部可以使用,在子类中可以使用,实例化的对象可以使用
+
+protected,在当前对象的内部可以使用,在子类中可以使用,实例化的对象不能使用
+
+private,在当前对象的内部可以使用,,在子类中不能使用,实例化的对象不能使用
+
+说明:
+
+A.子类方法在覆盖父类的方法时,子类方法的访问级别应该小于等于父类方法的访问级别;
+
+    此规则同样适用于普通类在继承抽象类时实现父类抽象方法时的规则。
+
+B.静态成员(静态属性/方法)之前也可以添加访问控制符,如果没有添加默认为public;
+
+    静态属性的声明方式
+    
+  [访问控制符] static $key[=value];
+    
+    静态方法的声明方式
+    
+  [访问控制符] static funtion([参数[=值[,...]]]){
+  
+  
+  }
+C.在静态方法内不能使用$this关键字;
+
+D.final关键字,如果final关键字应用给方法,则代表该方法不能被覆盖;如果
+
+    应用给类,则代表该类无法被继承。
+   
+  final关键字如果添加在方法前,只是强调该方法不能被覆盖,但能否被继承取决于访
+  
+    问控制符(public、protected、private)
+    
+    访问控制符 final function 方法名称([...]){
+    
+  }
+  
+    总结:
+    
+  [final | abstract] class 类名称{
+  
+         访问符控制符 $attribute [=value];
+         
+    [访问控制符] static $attribute[=value];
+     
+    [访问控制符] function method(...){
+      
+    }
+    [访问控制符] static function method(...){
+      
+    }  
+    [访问控制符] final function method(...){
+      //此种写法保证类的声明方式可为任意方式(普通类、抽象类、最终类);
+    }  
+    [访问控制符] abstract function method(...){
+      //此种写法必须保证类的声明方式为抽象类
+    }    
+  
+  }  
+  
+E.抽象类中可以定义最终方法;但最终类中不能定义抽象方法;
+
+F.在类的内部可以通过const关键字声明常量,其作用域为当前类及子类;
+
+二、魔术方法
+
+2.1)、__construct,构造函数;
+
+    void __construct([mixed $arg[,...]])
+
+2.2)、__destruct,析构函数;
+
+    void __destruct(void)
+
+2.3)、__clone,在使用clone语句进行对象复制时自动调用;
+
+     void __clone ( void )
+
+2.4)、__set,在设置不存在的属性值时自动被调用;
+
+    public void __set ( string $name , mixed $value )
+
+2.5)、__get,在访问不存在的属性值是自动被调用;
+
+    public mixed __get ( string $name )   
+
+2.6)、__unset,在通过unset()函数销毁对象属性时自动调用;
+
+三、设计模式
+
+(1).单例模式,只能被实例化一次
+
+   A.因为只能被实例化一次,所以就肯定无法通过new关键字来实现,因为
+   
+     在通过new关键字实例化对象时,就一定会调用构造函数,所以只要将构造
+     
+     函数设置为protected或private,这样在通过new关键字来实现时将产生错误;
+     
+   B.在类的内部封装静态方法,使用者可以通过该方法访问的该类,该方法名一般为
+   
+   getInstance,如果该方法内的代码如下:
+   
+   public static function getInstance(){
+      return new Singleton();
+   }
+
+      这样的话，用户仍然可以无限制的调用访方法,这样仍然可以被实例化多次。
+      
+   C.我们知道静态属性/方法可以被该类的所有实例都访问到,那么如果我设置一个
+   
+      静态属性且初始值为NULL,那么在程序中只需要判断该静态属性值是否为NULL;如果
+      
+      为NULL,则将实例化的对象赋值该静态属性;如果不为NULL，则代表该对象已经被实例化
+      
+      过，只需要返回以前的实例化对象即可。
+      
+   D.单例模式不允许对象被复制,但是我们又清楚在使用clone语句进行对象复制时,
+   
+      将自动调用__clone()这个魔术方法。解决方案就是将__clone()这个魔术方法
+      
+      设置为protected或private。
+
+四、接口
+
+Day39
+
+一、Mysqli类库
+
+1.安装
+
+A.编辑PHP配置文件,启用extension=php_mysqli.dll选项
+
+B.配置extension_dir选项
+
+C.重新启动Apache
+
+2.Mysqli类库
+
+实例化Mysqli对象
+
+$object = new Mysqli(string $hostname,string $username,string $password,string $database[,string $port])
+
+connect_error属性
+
+描述:获取连接时的错误信息
+
+语法:string $object -> connect_error
+
+connect_errno属性
+
+描述:获取连接时的错误代码
+
+语法:int $object -> connect_errno
+
+query()
+
+描述:执行SQL查询
+
+语法:mixed $object -> query(string $sql)
+
+说明:
+
+A.如果SQL语句为除SELECT、SHOW、DESCRIBE语句外的SQL语句,正确执行时
+
+    将返回TRUE,否则返回FALSE;
+    
+B.对于SELECT、SHOW、DESCRIBE语句正确执行时将返回mysqli_result对象,
+
+    否则返回FALSE;
+
+affected_rows
+
+描述:返回上一条SQL语句所影响的记录数
+
+语法:int $object -> affected_rows
+
+insert_id
+
+描述:返回最后插入记录的ID号
+
+语法:int $object -> insert_id
+
+/////////////////////////////////////////
+
+prepare()
+
+描述:事先编译SQL语句
+
+语法:mysqli_stmt object $object ->  prepare(string $sql)
+
+
+/////////////////////////////////////////
+
+3.mysqli_result对象
+
+************与记录相关的属性或方法************
+
+num_rows
+
+描述:返回结果集包含的行数
+
+语法:int $object -> num_rows
+
+fetch_row()
+
+描述:抽取结果集的一行作为索引数组返回,结果没有更多的行,则返回NULL
+
+语法:mixed $object-> fetch_row() 
+
+fetch_assoc()
+
+描述:抽取结果集的一行作为关联数组返回,结果没有更多的行,则返回NULL
+
+语法:mixed $object-> fetch_assoc() 
+
+fetch_array()
+
+描述:抽取结果集的一行作为索引或者关联或两者都有返回,结果没有更多的行,则返回NULL
+
+语法:mixed $object-> fetch_array([int $result_type=MYSQLI_BOTH])
+
+其中常量的可能值为
+
+MYSQLI_NUM,返回索引数组
+
+MYSQL_ASSOC,,返回关联数组
+
+MYSQLI_BOTH,返回索引和关联数组
+
+fetch_object()
+
+描述:抽取结果集的一行作为对象返回,结果没有更多的行,则返回NULL
+
+语法:mixed $object-> fetch_object([ string $class_name = "stdClass"])
+
+fetch_all()
+
+描述:将结果集包含所有行作为索引数组/关联数组/两者兼有返回
+
+语法:mixed $object -> fetch_all ([ int $resulttype = MYSQLI_NUM ] )
+
+
+************与字段相关的属性或方法************
+
+field_count
+
+描述:获取结果集包含的字段数量(不一定是数据表中所有字段的数量)
+
+语法:int $object -> field_count
+
+free()
+
+描述:释放结果集
+
+语法:void $object -> free()
+
+4.mysqli_stmt对象
+
+bind_param()
+
+描述:绑定变量到事先编译的SQL语句中作为参数出现
+
+语法:bool $object -> bind_param ( string $types , mixed &$var1 [, mixed &$... ] )
+
+execute()
+
+描述:执行事先编译的SQL语句
+
+语法:bool $object -> execute ( void )
+
+insert_id
+
+描述:获取最后插入记录的ID号
+
+语法:int $object -> insert_id
+
+affected_rows
+
+描述:获取被影响的记录数
+
+语法:int $object -> affected_rows
+
+num_rows
+
+描述:返回stmt对象执行后结果集包含的行数
+
+语法:int $object -> num_rows
+
+bind_result
+
+描述:将结果集中的字段值绑定到变量
+
+语法:bool $object->bind_result ( mixed &$var1 [, mixed &$... ] )
+
+fetch()
+
+描述:将结果集中的一行绑定到事先定义好的变量内
+
+语法:bool $object -> fetch ( void )
+
+
+二、PDO类库
+
+1.PDO[PHP Data objects],提供处理各种数据库的统一方法。
+
+2.安装
+
+A.编辑PHP配置文件,启用extension=php_pdo_mysql.dll选项
+
+B.编辑extension_dir选项
+
+C.重新启动Apache
+
+3.PDO类库
+
+实例化PDO对象
+
+$object = new PDO(string $dsn[,string $username[,string $password]])
+
+DSN[Data source Name],数据源名称
+
+MySQL的DSN写法为:
+
+mysql:host=主机名称;dbname=数据库名称
+
+query()
+
+描述:执行SQL查询
+
+语法:mixed $object -> query(string $sql)
+
+lastInsertId()
+
+描述:返回最后插入行的ID
+
+语法:string $object -> lastInsertId()
+
+
+prepare()
+
+描述:预编译SQL语句
+
+语法:PDOStatement object $object -> prepare(string $sql)
+
+
+
+PDOStatement对象
+
+fetchAll()
+
+描述:抽取结果集中的全部记录作用数组返回
+
+语法:array $object -> fetchAll( [int $fetch_style = PDO::FETCH_BOTH])
+
+数组的形式有:
+
+PDO::FETCH_NUM,索引数组
+
+PDO::FETCH_ASSOC,关联数组
+
+PDO::FETCH_BOTH,两者兼有
+
+PDO::FETCH_CLASS,类
+
+bindParam()
+
+描述:绑定变量到参数(必须是变量)
+
+语法:bool $object->bindParam ( mixed $parameter , mixed &$variable) 
+
+PDO存在两种形式的占位符,分别是问号占位符(?)和命名占位符(:名称)
+
+bindValue()
+
+描述:绑定值到参数
+
+语法:bool $object->bindValue ( mixed $parameter , mixed &$variable) 
+
+execute()
+
+描述:执行预编译的SQL语句
+
+语法:bool $object -> execute([array $params])

@@ -1,0 +1,287 @@
+﻿Day67
+
+MySQL高级
+1、视图View
+2、触发器Trigger
+3、存储过程Procedure
+4、T-SQL编程
+5、索引Index
+6、存储引擎Engine
+7、事务Transaction
+8、数据库备份与还原   phpMyAdmin
+9、数据库优化
+
+
+
+Linux操作系统
+
+特点
+1、开源
+2、稳定
+3、安全性高
+4、丰富的安装软件
+
+准备Linux安装包
+1、购买Linux安装盘
+2、下载CentOS-6.5-i386-bin-DVD1.iso
+
+安装方式
+1、给我的电脑安装一个双系统(不建议)
+2、通过虚拟机软件安装Linux(建议)
+   VMware10
+
+
+利用VM安装Linux
+创建一台虚拟的计算机
+
+Linux下超级管理员：root
+
+
+Linux客户端软件：Putty.exe
+
+目录介绍
+bin-----------------------基本命令
+boot----------------------Linux从这里启动
+dev-----------------------磁盘信息*******
+etc-----------------------配置文件*******
+home----------------------用户主目录
+lib-----------------------动态链接库目录
+lost+found----------------回收站
+media---------------------光驱默认的挂载点
+misc----------------------常用工具目录
+mnt-----------------------移动设备的挂载点
+net-----------------------网络文件
+opt-----------------------可操作文件
+proc----------------------可以看到内存里的内容
+root----------------------root帐号主文件夹
+sbin----------------------系统命令
+selinux-------------------防火墙
+srv-----------------------服务信息
+sys-----------------------系统文件
+tmp-----------------------临时文件*******
+usr-----------------------安装程序的目录*******
+var-----------------------经常变化的文件*******
+
+
+终端：相当于Windows下的命令提示符窗口
+
+颜色介绍
+黑色(白色)	普通文件
+蓝色		文件夹
+绿色		可执行文件
+红色		压缩文件、包文件
+
+
+Linux命令
+1、显示当前工作目录
+pwd
+
+2、查看当前目录下所有内容
+ls		查看当前目录下所有内容
+ls -l		以列表的方式查看所有内容
+ls -a		显示所有内容(包括隐藏内容)
+ls 路径		查看指定路径下的所有内容
+ls var		查看var文件夹下所有内容
+
+3、切换目录
+cd /			进入根目录
+cd ..			返回上一级目录
+cd 文件夹		进入指定的文件夹
+cd 目录			直接进入指定的目录
+cd /var/www/html	直接进入html目录
+
+4、清屏
+clear
+ 
+5、修改登陆的密码
+passwd		修改root帐号的密码
+passwd 用户名	修改指定帐号的密码
+
+6、创建文件夹
+mkdir 文件夹名		在当前目录下新建一个文件夹
+mkdir 文件夹名 文件夹名	在当前目录下新建多个文件夹
+注意：mkdir不能创建多级目录   mkdir aaa/bbb/ccc
+
+7、删除文件夹
+rmdir 文件夹名		删除指定文件夹
+rmdir 文件夹名 文件夹名	同时删除多个文件夹
+注意：只能删除空文件夹
+
+8、创建一个空白文件
+touch 文件名		在当前目录下新建一个文件
+touch 文件名 文件名	同时创建多个文件
+
+9、删除文件
+unlink 文件名		删除指定的文件
+注意：一次只能删除一个文件
+
+10、删除文件或文件夹
+rm a.txt		先提示，删除a.txt文件
+rm b.txt c.txt		先提示，同时删除多个文件
+rm -f a.txt		不提示，直接删除a.txt
+rm -f a.txt b.txt c.txt	不提示，同时删除多个文件
+rm -r hello		先提示，删除hello文件夹
+rm -rf hello		不提示，直接删除hello文件夹
+rm -rf 文件夹 文件	同时删除文件和文件夹
+rm -rf *.*		删除当前目录下所有文件
+rm -rf *		清空当前目录
+
+11、复制文件
+cp a.txt hello/a.txt	将a.txt复制到hello文件夹下
+cp b.txt hello		将b.txt复制到hello下
+cp c.txt hello/ccc.txt	复制文件，并重命名
+注意：cp只能复制文件
+
+12、移动文件
+mv a.txt haha		将a.txt移动到haha文件夹
+mv b.txt haha/bbb.txt	移动文件，并重命名
+mv haha hello		将haha文件夹移动到hello目录下
+mv haha hello/ttt	移动文件夹，并重命名
+
+13、重命名
+mv 原名 新名		给文件或文件夹重命名
+
+14、修改权限
+权限种类：读(r、4)   写(w、2)   执行(x、1)
+用户种类：a所有用户   u文件拥有者   g组用户   o其他用户
+权限操作符：+赋予权限    -收回权限
+查看权限：ls -l
+	  -rw-r--r--	a.txt
+          drwxr-xr-x	hello
+	  第1位：表明是文件还是文件夹   -文件   d文件夹
+	  第234位：表明u用户的权限
+          第567位：表明g用户的权限
+          最后三位：表明o用户的权限
+将执行的权限施加给a.txt的u用户
+chmod u+x a.txt
+收回u用户的执行、写入权限，修改a.txt
+chmod u-x-w a.txt
+将最大权限施加给hello文件夹，不包括子文件夹
+chmod a+r+w+x hello
+chmod 777 hello
+设置hello权限：u读写执行  g读执行  o读执行
+chmod 755 hello
+将最大权限给hello文件夹，并包括子文件夹
+chmod -R 777 hello
+
+15、查找文件
+find 路径 -name 文件名
+find /etc -name httpd.conf
+find /etc -name php.ini
+find /etc -name my.*
+
+16、vi编辑器
+    1)通过vi打开一个文件
+      vi 文件名
+    2)vi编辑器两种状态
+      插入状态：可编辑的状态
+      命令状态：无法编写内容，只能接受vi命令
+      命->插：按下"i"键
+      插->命：按下"Esc"键
+    3)保存
+      回到命令状态，输入：":w"回车
+    4)退出编辑器
+      回到命令状态，输入：":q"回车
+    5)强制退出、不保存退出
+      回到命令状态，输入：":q!"回车
+    6)保存退出
+      回到命令状态，输入：":wq"回车
+    7)查找内容
+      回到命令状态，输入："/查找的内容"回车
+      查找下一个，按下"n"键
+    8)显示行号
+      回到命令状态，输入：":set nu"回车
+17、打包
+tar cvf xxx.tar 文件 文件夹...
+参数说明：
+Create：创建一个包文件
+View：显示打包信息
+File：产生一个文件
+tar cvf hello.tar a.txt hello tttt
+tar cf hello.tar a.txt hello tttt
+
+18、解包
+tar xvf xxxx.tar
+tar xvf hello.tar
+tar xf hello.tar
+
+19、gzip压缩(.gz)
+gzip 文件名
+gzip hello.tar
+注意：只能对文件进行操作
+
+20、gunzip解压缩
+gunzip xxxx.gz
+
+21、zip压缩
+zip xxx.zip 文件名
+zip hello.zip hello.tar
+注意：只能对文件进行操作
+
+22、unzip解压缩
+unzip xxx.zip
+unzip hello.zip
+
+23、查看Linux盘符信息
+fdisk -l
+
+24、挂载u盘
+假设：/tarena/uuu，将u盘的内容挂载到uuu文件夹下
+mount u盘的盘符路径  要挂载的路径
+mount /dev/sdb1 /tarena/uuu
+注意：u盘的格式必须为fat格式
+
+25、卸载u盘
+umount /tarena/uuu
+
+26、查看文件编码
+file 文件名
+
+27、查看文件内容
+cat 文件名
+
+28、查看文件内容
+more 文件名
+
+29、查看文件内容
+less 文件名
+
+30、查看系统进程
+ps -A
+
+31、杀死进程
+kill 进程号
+
+32、查看系统所有服务信息
+service --status-all
+
+33、操纵服务
+service httpd start		开启apache服务
+service httpd stop		停止apache服务
+service mysqld start		开启mysql服务
+service mysqld stop		停止mysql服务
+
+34、查看时间
+date
+
+35、查看当前月份日历
+cal
+
+36、定时关机
+shutdown -h 17:00
+shutdown -h now
+
+37、关机
+halt
+
+
+
+
+
+
+
+
+
+
+
+

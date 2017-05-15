@@ -1,0 +1,717 @@
+﻿Day01
+
+一、Web基础
+
+1).浏览器(Browser)
+
+1.1)浏览器主要功能:
+
+A、代理访问者提出请求
+
+B、作为HTML解释器和内嵌脚本程序执行器
+
+C、用图形化的方式来显示HTML文档
+
+1.2)主流浏览器
+
+Internet Explorer(IE)
+
+Firefox(火狐)
+
+Chrome(谷歌)
+
+Opera(欧朋)
+
+Safari
+
+1.3)浏览器内核
+
+Trident(IE内核)
+
+Gecko(Firefox内核)
+
+Blink(Opera内核)
+
+Webkit(Chrome内核、Safari内核)
+
+1.4)客户端技术
+
+客户端技术是指由浏览器解释执行的技术总称。
+
+客户端技术主要包括:
+ 
+    HTML/XHTML
+    
+    CSS
+    
+    JavaScript等
+
+客户端技术的难点在于:浏览器兼容性。
+
+2).Web服务器(Web Server)
+
+Web服务器是可以向提出请求的浏览器提供文档的应用程序。
+
+Web服务器是一种被动程序。
+
+常见的Web服务器有:
+
+    Apache
+    
+    Tomcat
+    
+    IIS等
+
+3).Web工作原理
+
+4).Apache的安装与配置
+
+4.1)安装Apache
+
+  Apache的官网
+  
+  http://www.apache.org
+  
+    端口(port),与计算机沟通的通道。
+    
+  Web端口为:80
+  
+  FTP端口为:21
+  
+4.2)测试安装
+    
+    浏览器地址栏输入:
+    
+  http://域名[:端口]
+    
+    或者
+    
+  http://IP地址[:端口]
+  
+    本地域名为http://localhost
+    
+    本地IP地址为http://127.0.0.1
+    
+4.3)编辑Apache的配置
+
+A.编辑Apache的配置文件 -- httpd.conf
+ 
+    位于Apache安装目录/conf子目录内
+    
+B.修改Listen选项,以编辑Apache的端口号;
+  
+B.修改DocumentRoot和Directory选项,以编辑Apache的主目录;
+
+B.修改DirectoryIndex选项,以编辑默认首页;多个文件名之间以空格分隔;
+
+    建议默认首页名称为index.php或index.htm或index.html
+
+C.保存配置,然后启动Apache
+
+4.4)重启Apache的方法
+
+4.4.1)可以通过Apache Monitor
+
+4.4.2)可以通过windows操作系统的服务管理
+
+4.4.3)可以通过命令实现
+
+  A.开始 --> 运行 --> cmd
+  
+  B.net stop 服务名称
+  
+        或者
+        
+    net start 服务名称 
+    
+二、XHTML
+
+1.XHTML能做什么?
+
+XHTML可以创建网页。
+
+2.XHTML是什么?
+
+XHTML(eXtensible HyperText Markup Language),扩展
+
+的超文本标记语言
+
+HTML(HyperText Markup Language),超文本标记语言
+
+3.HTML与XHTML之间的关系
+
+A.XHTML是HTML的升级版本;
+
+B.XHTML是更为纯净的HTML;
+
+C.XHTML是W3C的推荐版本;
+
+D.XHTML版本为1.0
+
+XHTML将被HTML5(简称H5)取代。
+
+Day02
+
+一、XHTML
+
+1.XHTML能做什么?
+
+XHTML可以创建网页。
+
+2.XHTML是什么?
+
+XHTML(eXtensible HyperText Markup Language),扩展
+
+的超文本标记语言
+
+HTML(HyperText Markup Language),超文本标记语言
+
+3.HTML与XHTML之间的关系
+
+A.XHTML是HTML的升级版本;
+
+B.XHTML是更为纯净的HTML;
+
+C.XHTML是W3C的推荐版本;
+
+D.XHTML版本为1.0
+
+XHTML将被HTML5(简称H5)取代。
+
+4.标记
+
+标记(Tag),也称为元素(Element),是完成特定功能的字符串。
+
+5.标记的分类
+
+5.1)根据是否包含子标记或内容来划分
+
+单标记:<标记名称/>
+
+双标记:<标记名称>...</标记名称>
+
+例1:
+
+<a><b>中国</b></a>
+
+例:
+
+<b><a>中国</a></b>
+
+5.2)根据是否换行
+
+行内元素(Inline Element),不换行
+
+块级元素(Block Element),换行
+
+6.属性
+
+6.1)概述
+
+属性(Attribute),对象的特征描述。
+
+6.2)属性语法结构
+
+<标记名称 属性名称="值" 属性名称="值" .../>
+
+<标记名称 属性名称="值" 属性名称="值" ...>...</标记名称>
+
+6.3)公共属性(除meta、style等)
+
+核心属性(Core Attributes)
+
+title,注释
+
+style
+
+class
+
+id
+
+事件属性(Event Attributes)
+
+
+7.XHTML文档的规范(W3C规范)
+
+A.标记名称/属性名称必须为英文小写字母;
+
+B.标记之间必须顺序嵌套;
+
+C.单标记必须以/>结尾;
+
+D.属性值必须括在引号之间(建议使用双引号);
+
+8.W3C合法性验证
+
+http://validator.w3.org
+
+二、XHTML的基本结构
+
+<!DOCTYPE html DTD>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=编码方式"/>
+        <title>网页标题</title>
+    </head>
+    <body>
+        网页正文
+    </body>
+</html>
+
+2.1)DTD
+
+DTD(Document Type Defination),文档类型定义
+
+DTD告诉浏览器用什么样的标准来解析页面。
+
+XHTML 1.0 DTD其有三种类型,它们是:
+
+XHTML 1.0 Strict(严格)
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+XHTML 1.0 Transitional(过渡)
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+XHTML 1.0 Frameset(框架集)
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+
+2.2)命名空间
+
+命名空间(Namespace),可以解决标记名称冲突。
+
+三、文本
+
+3.1)文本样式
+
+加粗:<b>...</b>
+
+加粗:<strong>...</strong>
+
+倾斜:<i>...</i>
+
+倾斜:<em>...</em>
+
+下划线:<u>...</u>
+
+删除线:<s>...</s>
+
+删除线:<strike>...</strike>
+
+删除线:<del>...</del>
+
+上标:<sup>...</sup>
+
+下标:<sub>...</sub>
+
+行内样式:<span>...</span>
+
+3.2)段落与换行
+
+段落
+
+<p align="left|center|right"></p>
+
+换行
+
+<br/>
+
+3.3)标题
+
+<h1 align="left|center|right">...</h1>
+
+...
+
+<h6 align="left|center|right">...</h6>
+
+3.4)实体(Entity)
+
+大于号(>)  &gt;
+
+小于号(<)  &lt;
+
+双引号(")  &quot;
+
+单引号(')  &apos;(IE不支持)或&#39;
+
+连接符(&)  &amp;
+
+不间断空格 &nbsp;
+
+版权符号   &copy;
+
+注册标记   &reg;
+
+3.5)水平分隔线
+
+<hr width="宽度" size="高度" align="left|center|right" noshade="noshade"/>
+
+四、图像
+
+4.1)浏览器支持的图像格式
+
+gif,支持透明色、支持动画，只能显示256种颜色。
+
+jpg/jpeg,不支持透明色、不支持动画,显示的颜色有1670万种。
+
+png,支持透明色,不支持动画,显示的颜色分为256、1670万和1670万+256种Alpha通道的颜色。
+
+4.2)图像标记
+
+<img src="图像URL" width="宽度" height="高度" border="边框宽度" alt="注释"/>
+
+说明:
+
+A.图像的src和alt属性必须存在;
+
+
+4.3)路径
+
+绝对路径:由完整的协议名称、主机名称、路径及文档组成。
+
+  如:
+
+  http://www.sina.com.cn
+ 
+  http://img1.gtimg.com/tech/pics/hv1/112/141/1851/120397342.jpg
+
+  ftp://61.135.129.31./download/20150601/328ek383x34.zip
+
+相对路径:从当前文档开始的路径。
+
+  同一级目录:直接书写名称(见path1.png)
+
+  下一级目录:目录名称(见path2.png)
+ 
+  上一级目录:..(见path3.png)
+
+根相对路径:从根目录开始的路径,总是以"/"开头。
+
+五、链接
+
+5.1)链接元素
+
+文本、图像
+
+5.2)标记
+
+<a href="目标文档URL" target="窗口形式">...</a>
+
+窗口形式:
+
+_self:在自身窗口打开(默认)
+
+_blank:在空白窗口打开
+
+_parent:在父窗口打开
+
+_top:在顶窗口打开
+
+framename:在指定的frame中打开
+
+5.3)链接的表现形式
+
+5.3.1)链接到网页或浏览器支持的文档
+
+  静态页面: .htm .html
+
+  动态页面: .php .jsp .aspx .shtm .shtml
+
+  浏览器支持的文档: .gif .jpg .jpeg .png
+
+5.3.2)链接到下载资源
+
+  A.先将下载资源使用压缩软件/命令进行压缩
+
+  B.将链接的目标文档指向压缩包文件
+
+5.3.3)电子邮件链接
+
+  <a href="mailto:电子邮件地址">...</a>
+
+5.3.4)
+
+5.3.5)
+
+5.3.6)
+
+Day03
+
+一、链接
+
+1.1)链接元素
+
+文本、图像
+
+1.2)标记
+
+<a href="目标文档URL" target="窗口形式">...</a>
+
+窗口形式:
+
+_self:在自身窗口打开(默认)
+
+_blank:在空白窗口打开
+
+_parent:在父窗口打开
+
+_top:在顶窗口打开
+
+framename:在指定的frame中打开
+
+1.3)链接的表现形式
+
+1.3.1)链接到网页或浏览器支持的文档
+
+  静态页面: .htm .html
+
+  动态页面: .php .jsp .aspx .shtm .shtml
+
+  浏览器支持的文档: .gif .jpg .jpeg .png
+
+1.3.2)链接到下载资源
+
+  A.先将下载资源使用压缩软件/命令进行压缩
+
+  B.将链接的目标文档指向压缩包文件
+
+1.3.3)电子邮件链接
+
+  <a href="mailto:电子邮件地址">...</a>
+
+1.3.4)锚点链接(书签链接)
+
+第一步:创建锚点/书签
+
+    <a name="锚点名称"></a>
+
+    命名的规范:
+
+    除文件/目录名称外,所有命名必须以字母或下划线开头，
+
+    包含字母、数字、短横线、下划线等;但不能包含空格、
+
+    斜线(/)、反斜线(\)、星号等特殊符号。
+
+    命名最好含义明确。
+
+第二步:链接到锚点/书签
+  
+情况1:如果文本/图像与锚点存在于同一页面
+
+<a href="#锚点名称">...</a>
+
+情况2:如果文本/图像与锚点存在于不同页面
+
+<a href="目标文档URL#锚点名称">...</a>
+
+1.3.5)链接到JavaScript
+
+<a href="javascript:代码">...</a>
+
+警示对话框:
+
+window.alert('内容')
+
+询问对话框:
+
+window.confirm('内容')
+
+1.3.6)空链接(没有目标文档,其行为由JavaScript控制)
+
+返回页面顶部
+
+<a href="#">...</a>
+
+保持原始位置
+
+<a href="javascript:void(0);">...</a>
+
+<a href="javascript:;">...</a>
+
+二、表格
+
+2.1)表格作用
+
+A.页面布局(在Web2.0时代被DIV取代)
+
+B.显示规则有序的数据
+
+2.2)表格标记
+
+<table bgcolor="背景颜色" background="背景图像URL" width="宽度" height="高度" border="边框宽度" bordercolor="边框颜色" align="left|center|right" cellspacing="外边距" cellpadding="内边距">
+
+  <tr bgcolor="背景颜色" align="left|center|right" valign="top|middle|bottom">
+
+     <td|th rowspan="行合并数量" colspan="列合并数量" bgcolor="背景颜色" background="背景图像URL" align="left|center|right"  valign="top|middle|bottom">...</td|th>
+   
+     ... 
+
+  </tr>
+
+  ...
+
+</table>
+
+2.3)行分组
+
+<thead>...</thead>
+
+<tbody>...</tbody>
+
+<tfoot>...</tfoot>
+
+三、DIV标记
+
+<div>...</div>
+
+四、有序列表、无序列表、定义列表
+
+4.1)有序列表
+
+<ol type="1|a|A|i|I" start="起始编号">
+
+    <li>...</li>
+
+    ...
+
+</ol>
+
+4.2)无序列表
+
+<ul type="disc|circle|square">
+
+  <li>...</li>
+
+  ...
+
+</ul>
+
+4.3)定义列表
+
+<dl>
+   <dt></dt>
+   ...
+   <dd>...</dd>
+   ...
+</dl>
+
+适用于一个整体,两种表现。
+
+五、表单
+
+5.1)表单的作用
+
+收集客户端的信息,然后提交给服务器。
+
+5.2)表单的标记
+
+<form name="名称" action="服务器页面URL" method="提交方式">
+
+  ...
+
+</form>
+
+说明:
+
+A.服务器页面为动态页面(如.php、.jsp、.aspx等);
+
+B.action属性缺失或者属性值为空,代表页面提交给自身;
+
+C.method提交方式有:post和get
+
+  get将所有提交数据以"名/值"对形式附加在地址栏
+
+  形式: url?名称=值&名称=值&...
+
+  post将数据附加在HTTP请求头部发送给服务器
+
+  如果省略method属性,则默认提交方式为get
+
+D.所有的表单元素/控件必须赋予含义明确的名称
+
+5.3)单行文本框
+
+<input type="text" name="名称" value="值" size="显示宽度" maxlength="最大宽度"/>
+
+5.4)密码框
+
+<input type="password" name="名称" value="值" size="显示宽度" maxlength="最大宽度"/>
+
+5.5)单选框
+
+<input type="radio" name="名称" value="值" checked="checked"/>
+
+说明:
+
+A.一组类型的单选框/复选框名称必须相同;
+
+B.单选框/复选框/列表框必须赋予有效值;
+
+5.6)复选框
+
+<input type="checkbox" name="名称" value="值" checked="checked"/>
+
+说明:复选框必须命名为数组形式:名称[]
+
+5.7)下拉列表框
+
+<select name="名称" size="高度" multiple="multiple">
+
+   <optgroup label="分组名称">
+
+      <option value="值" selected="selected">...</option>
+ 
+      ...
+
+   </optgroup>
+
+   ...
+
+</select>
+
+说明:
+
+如果列表框设置多选形式,则列表框必须命名为数组形式。
+
+5.8)浏览框
+
+<input type="file" name="名称"/>
+
+A.具有浏览框的表单,其提交方式只能为post;
+
+B.必须设置表单的enctype="multipart/form-data"属性;
+
+5.9)多行文本框
+
+<textarea name="名称" rows="行数" cols="列数">值</textarea>
+
+5.10)按钮
+
+提交按钮
+
+<input type="submit" name="名称" value="值"/>
+
+取消按钮
+
+<input type="reset" name="名称" value="值"/>
+
+自定义按钮(其行为由JavaScript控制)
+
+<input type="button" name="名称" value="值"/>
+
+5.11)隐藏域
+
+<input type="hidden" name="名称" value="值"/>
+
+隐藏域用来提交正确、但无需浏览者干涉的信息。
+
+
+
+
+Firefox浏览器的调试工具 -- Firebug
+
+http://getfirebug.com
+

@@ -1,0 +1,433 @@
+﻿Day51
+
+oop
+思想：
+	分离事务模型，为其封装属性及方法。
+
+封装：
+class 类名{
+	public|protected|private $属性名[=初值];
+	public|protected|private static $属性名称[=初值];
+	const 常量名称=值;
+	public|protected|private function 方法名(参数,.....){
+		$this->属性名
+		self|类名::$属性名称
+		self|类名::常量名称
+		方法体;
+		返回值;
+	}
+	abstract function 名称();
+	public|protected|private static function 方法名(){
+		//不能使用 $this
+		self|类名::$属性名称
+		self|类名::常量名称
+	}
+	function __construct(){
+
+	}
+	function __destruct(){
+
+	}
+	function __clone(){
+
+	}
+	function __set(){
+
+	}
+	function __get(){
+
+	}
+	function __isset(){
+
+	}
+	function __unset(){
+
+	}
+	function __call(){
+
+	}
+}
+普通属性：
+	实例化对象->属性名称
+	类名::$属性名称	
+	类名::常量名称
+继承：
+	class 子类名称 extends 类名{
+		
+	}
+	作用：减少代码重复编写，把需要多次声明的代码，放在父类中。
+	特点：
+	1、可见性为public protected 会被继承。
+	2、构造和析构会被继承。
+	3、继承后可以被重写
+	4、重写时，方法或属性的可见性应该越来越高。
+class f{
+	public $a=1;
+	protected $b=2;
+	private $c=3;
+	public function fun1(){
+		echo $this->a;
+	}
+	public function fun2(){
+		echo $this->b;
+	}
+	public function fun3(){
+		echo $this->c;
+	}
+}
+class s extends f{
+	public $a=4;
+	protected $b=5;
+	private $c=6;
+	public function fun4(){
+		echo $this->a;
+	}
+	public function fun5(){
+		echo $this->b;
+	}
+	public function fun6(){
+		echo $this->c;
+	}
+}
+$ob=new s();
+$ob->fun1();//4
+$ob->fun2();//5
+$ob->fun3();//3
+$ob->fun4();//4
+$ob->fun5();//5
+$ob->fun6();//6
+
+类的自动加载：
+
+js
+	作用：实现页面特效，运行客户端
+	基本语法：
+	1、写在<script type="text/javascript"></script>
+	2、代码结束使用 ; 换行
+	document.write('1');document.write('2')
+	3、严格区分大小写
+	4、// /**/
+	bom对象
+	window
+		window.onscroll=匿名函数|函数;
+		window.alert()
+		window.confirm()
+		window.setInterval()
+		window.setTimeout()
+		window.clearInterval()
+		window.clearTimeout()
+	location
+		location.href="http://www.baidu.com";
+		location.replace("http://www.baidu.com");
+	dom对象，节点对象的统称
+	document
+		属性：
+		title
+		body
+		
+		方法：
+		Element=document.getElementById()
+		集合列表=document.getElementsByTagName('p')
+		集合列表=document.getElementsByName()
+		for(var i=0;i<列表.length;i++){
+			列表[i]//Element
+		}
+对节点对象进行操作：
+	内容
+		Element.innerHTML
+		Element.value
+	属性
+		getAttribute()
+		setAttribute()
+	样式
+		Element.className=""
+		Element.style.样式属性名称=值;
+		说明：
+		样式属性的名称遇到 - 用小驼峰代替
+		background-color   backgroundColor
+	事件
+		Element.on事件名称=匿名函数|函数名;
+		
+jquery
+	找到它，操作它
+	$("选择器")
+	$("#id值")
+	$(".类别名称")
+	$("标签名称")
+	$("[属性名=值]")
+	$("[属性名^=值]")
+	$("[属性名$=值]")
+	$("[属性名*=值]")
+
+	$("选择器1 选择器2 ....")
+	$("选择器1>选择器2>....")
+	$("选择器1,选择器2,....")
+	$("选择器1选择器2....")
+
+	$(":first")
+	$(":last")
+	$(":eq(值)")
+	$(":odd")
+	$(":even")
+	$(":gt(值)")
+	$(":lt(值)")
+
+	选择器对象的方法
+	内容
+	object.html([content])
+	object.text([content])
+	object.val([content])
+	样式
+	object.css("样式名称"[,值])
+	object.addClass("类别样式名称")
+	object.removeClass("类别样式名称");
+	属性
+	object.attr("属性名"[,值]);
+	动画
+	object.show(speed)
+	object.hide(speed)
+	object.slideDown()
+	object.slideUp()
+	object.animate({json对象})
+	事件
+	object.事件名称(匿名函数|函数名)
+	宽高位置
+	object.width()
+	object.height()
+	object.outerWidth()
+	object.outerHeight()
+	object.offset().left
+	object.offset().top
+	滚动条位置
+	$(window).scrollTop()
+	$(window).scrollLeft()
+	鼠标位置：
+	object.mousemove(function(e){
+		e.pageX
+		e.pageY
+	})
+	节点动态操作
+	追加
+	object.append("html内容")
+	object.before("html内容")
+	object.after("html内容");
+	删除
+	object.remove()
+	object.empty()
+	异步通信ajax
+	$().ajax({
+		url:'',
+		type:'',
+		data:{a:1,b:2},
+		dataType:'',
+		success:function(re){
+			
+		},
+		cache:false,
+		timeout:2000
+	})
+
+Smarty
+	作用：把php+html分离，程序和美工
+	使用：
+	1、下载源码包
+	2、目录结构
+	libs
+		源码文件
+		Smarty.class.php
+	template //模板文件 html文件
+	template_c //程序运行过程中，自动产生的，模板编译文件
+	3、实例化
+	require "Smarty.class.php";
+	$smartyOb=new Smarty();
+	4、配置
+	告诉Smarty哪个目录是放模板html的
+	$smartyOb->setTemplateDir(path);
+	告诉smarty哪个目录是放编译文件的
+	$smartyOb->setCompileDir(path)
+	5、显示模板
+	$smartyOb->display("模板名称及路径");
+如何给模板传值
+	$smartyOb->assign('模板上名称',被传递的变量);
+在模板上如何调用
+	模板标签
+	{$名称}
+	数组
+	{$数组名.下标}
+	二维数组
+	array(
+		0=>array('title'=>'t1','pubtime'=>1234567890,'author'=>'xiaoli'),
+		1=>array('title'=>'t2','pubtime'=>1334567890,'author'=>'xiaoli'),
+		array('title'=>'t3','pubtime'=>1434567890,'author'=>'xiaoli'),
+		array('title'=>'t4','pubtime'=>1534567890,'author'=>'xiaoli'),
+	)
+	遍历数组
+	{foreach 数组名 as 变量名}
+	{$变量名.title}
+	{/foreach}
+	下标值
+	<{$变量名@key}>
+	循环次数
+	<{$变量名@total}>
+	当前是第几次循环
+	<{$变量名@iteration}>
+	是否为第一次循环
+	<{$变量名@first}>
+	是否为最后一次循环
+	<{$变量名@last}>
+案例：
+	实现一个隔行背景颜色变化
+	<{if 条件}>
+	代码
+	<{/if}>
+练习：
+	给每个li加上下划线（虚线），最后一行除外
+
+了解内容：
+	<{section name=s1 loop=被遍历的数组}>
+	<{$被遍历的数组[s1].下标}>
+	<{/section}>
+	属性：
+	<{$smarty.section.s1.total}>
+	<{$smarty.section.s1.index}>
+	<{$smarty.section.s1.iteration}>
+	<{$smarty.section.s1.last}>
+	<{$smarty.section.s1.first}>
+练习：
+	使用section，实现隔行背景颜色不一样
+
+	变量调节器
+	<{第一个参数|函数名称:第二个参数:.....}>
+	字符串的拼接
+	<{模板变量|cat:第二个参数}>
+	例子：
+	$str1="abc";
+	
+	<{$str1|cat:'NBA'}>
+	说明：可以直接使用php函数对变量进行处理
+	例子：把时间戳转化成时间日期格式字符串
+	<{'Y-m-d H:i:s'|date:$t}>
+	复合变量调节器
+	<{'Y-m-d H:i:s'|date:$t|substr:0:10}>
+例子：读文章表数据，生成一个列表，使用smarty
+newsLister.php
+获取数据
+把数据传递给模板
+显示模板
+
+newsLister.html
+遍历数组，生成一个列表
+
+	
+模板标签定界符的指定：
+	<{}>
+	$smartyOb->left_delimiter="<{";
+	$smartyOb->right_delimiter="}>";
+
+Day52
+
+复习：
+	Smarty
+	1、Smarty，放在php主程序中
+	2、配置
+		$smartyOb->setTemplateDir()
+		$smartyOb->setCompileDir()
+		$smartyOb->left_delimiter()
+		$smartyOb->right_delimiter()
+	3、给模板传值
+	$smartyOb->assign("模板变量名称",变量);
+	4、显示模板
+	$smartyOb->display(path);
+	
+	{$名称}
+	{$数组.下标}
+	{foreach 数组名 as 变量}
+	{$变量名}
+	{/foreach}
+	标签属性：
+	{$变量名@key}
+	{$变量名@index}
+	{$变量名@iteration}
+	{$变量名@total}
+	{$变量名@first}
+	{$变量名@last}
+	{if 条件}
+	{else}
+	{/if}
+	
+	变量调节器：
+	{第一个参数|函数名:第二个参数:.......}
+文章详细页：
+	02_detail.php?id=5
+	1、配置smarty
+	2、接收文章id
+	3、实例化pdo
+	4、拼sql语句
+	5、执行
+	6、获取数据
+	7、给模板传值
+	8、显示模板
+	9、套模板标签，使用主程序传递过来的数据
+
+页面拆分
+	{include file="模板的路径"}
+注册函数
+	function fun1(){
+		return 'abc';
+	}
+	$smartyOb->registerPlugin("function","模板函数名","被注册的函数名称");
+	
+	在模板上调用：
+	{模板函数名称 名=值 名=值 ....}
+	如何传参？？？
+	1、参数个数最多两个，
+	第一个接收的模板上所有的传参，
+	第二参数接收的是当前的smarty对象。
+缓存
+	数据库中的数据被缓存。
+	好处：减轻了mysql服务器的压力
+	1、指定缓存文件的存放目录
+	$smartyOb->setCacheDir(ROOT."day02/cache");
+	2、开启缓存
+	$smartyOb->caching=true;
+	3、指定缓存的生命周期。
+	$smartyOb->cache_lifetime=100;//秒
+	作用：判断缓存文件是否存在且有效
+	$smartyOb->isCached("模板名称及路径",id)
+	$smartyOb->display("模板名称及路径",id);
+清除缓存：
+	$smartyOb->clearCache("模板名称及路径",id);
+在模板上如何获取预定变量，及常量内容。
+	$_GET-------{$smarty.get.名称}
+	$_POST-------{$smarty.post.名称}
+	$_REQUEST-------{$smarty.request.名称}
+	$_COOKIE-------{$smarty.cookies.名称}
+	$_SESSION-------{$smarty.session.名称}
+	$_SERVER-------{$smarty.server.名称}
+常量：
+	$smarty.const.常量名称
+
+改造项目一，Smarty
+	文章相关页面
+		lister.php
+	
+		detail.php
+	1、修改配置文件，把smarty的配置，放到配置文件中
+	2、拆分php+html
+	3、修改html上的php标签
+
+	单位信息相关页面
+		cominfo.php
+
+Smarty的优点：
+	1、实现html和php分离，代码清晰。
+	2、分离了美工和程序员的工作。
+
+Smarty的缺点：
+	1、效率低了。
+	2、实时性高的系统，不用smarty
+
+MVC 2天
+
+ThinkPHP 4天
+YII 4天

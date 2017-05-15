@@ -1,0 +1,36 @@
+<form id="js-form" method="post" action="<?= $this->url("promotion-banner/upload-img");?>" enctype= "multipart/form-data">
+    <input type="file" name="file">
+    <img id="js-show-img" src="" />
+    <button>Submit</button>
+</form>
+
+<script>
+    $('#js-form input[name="file"]').change(function () {
+        var imgInfo = new Array();
+        imgInfo['src'] = this.value;
+        imgInfo['name'] = this.files[0].name;
+        imgInfo['type'] = this.files[0].type;
+        imgInfo['size'] = this.files[0].size;
+        var reader = new FileReader();
+        reader.readAsDataURL(this.files[0]);
+        reader.onload = function (evt) {
+            $('#js-show-img').attr({src: evt.target.result}).load(function () {
+                imgInfo['width'] = this.width;
+                imgInfo['height'] = this.height;
+                if (imgInfo.length == 1) imgInfo = imgInfo[0];
+
+                console.log(imgInfo);
+            });
+        }
+    });
+
+    $('#js-form').submit(function () {
+        var $$ = $(this);
+        $$.ajaxAuto({
+            success: function(re) {
+                console.log(re);
+            }
+        });
+        return false;
+    });
+</script>

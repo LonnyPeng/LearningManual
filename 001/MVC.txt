@@ -1,0 +1,38 @@
+m--数据模型层
+v--视图层
+c--控制层
+
+
+
+规划目录
+controller 控制器类
+model 数据模型类
+views 模板
+common 公共函数
+vendor 第三方类文件
+core 公共类
+images
+js
+css
+
+
+
+
+MVC
+OOP
+系统函数
+
+a 97
+d 100
+w 119
+s 115
+空格 32
+enter 13
+
+idrac
+
+192.168.0.120
+
+root
+
+calvin

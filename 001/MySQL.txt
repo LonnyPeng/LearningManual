@@ -1,0 +1,1797 @@
+﻿Day19
+
+一、MySQL基础
+
+1.MySQL能做什么?
+
+MySQL是用于进行数据管理的软件,可以通过它实现数据的增/删/改/查等操作。
+
+2.数据库基础
+
+数据库(Database,DB),指一定的结构存储数据的仓库,其真实形态为电子文件。
+
+数据库管理系统(Database Management System,DBMS),是应用软件,可以管理数据库的信息。
+
+常见的DBMS有:
+
+MySQL
+
+SQL Server
+
+Oracle等
+
+数据库系统(Database System,DBS),数据库+数据库管理系统
+
+3.MySQL基础
+
+MySQL版本:
+
+A.社区版
+
+B.标准版
+
+4.MySQL的服务器端与客户端
+
+MySQL服务器进程名称为mysqld.exe
+
+MySQL客户端进程名称为mysql.exe
+
+MySQL客户端工具有很多,如mysql.exe、MySQL WorkBentch、PHPMyAdmin等
+
+5.连接到MySQL服务器
+
+Windows系统:开始 -> 运行 -> cmd
+
+Linux系统:打开终端
+
+mysql -h服务器名称 -u用户名 -p密码 -P端口号
+
+MySQL超级用户为root
+
+MySQL默认端口为3306 
+
+6.常用的MySQL命令
+
+MySQL命令规范
+
+A.每行MySQL命令必须以分号结尾;
+
+B.命令中的关键字/函数为大写字母,用户自定义的为小写字母
+
+-- 打印MySQL的版本信息
+
+SELECT VERSION();
+
+-- 打印当前的日期时间
+
+SELECT NOW();
+
+-- 打印当前登录用户
+
+SELECT USER();
+
+-- 打印当前打开的数据库
+
+SELECT DATABASE();
+
+7.标识符
+
+标识符指数据库、数据表、字段等的名称。
+
+标识符的命名规范:
+
+A.必须以字母或下划线开头,包含字母、数字及下划线;
+
+B.禁止包含空格、斜线、反斜线等特殊符号;
+
+C.标识符最好含义明确;
+
+D.标识符禁止与系统关键字相同;如果与系统关键字相同,则必须使用反引号括起号
+
+8.MySQL的配置
+
+MySQL的配置文件 -- my.ini
+
+二、数据库操作
+
+1.创建数据库
+
+CREATE DATABASE [IF NOT EXISTS] db_name [[DEFAULT] CHARACTER SET '编码方式']
+
+
+说明:
+
+A.数据库映射到磁盘将形成目录;
+
+B.如果创建数据库时没有指定编码方式,默认编码方式受MySQL配置文件的影响;
+
+  client section(客户端片断)
+  
+  default-character-set=utf8
+  
+  server section(服务器端片断)
+    
+  character-set-server=utf8  
+
+
+2.显示当前服务器的数据库列表
+
+SHOW DATABASES [WHERE 'condition' | LIKE 'pattern']
+
+3.查看数据库创建时的命令
+
+SHOW CREATE DATABASE [IF NOT EXISTS] db_name;
+
+4.修改数据库
+
+ALTER DATABASE db_name [DEFAULT] CHARACTER SET '编码方式'
+
+5.删除数据库
+
+DROP DATABASE [IF EXISTS] db_name;
+
+6.打开数据库
+
+USE db_name;
+
+三、数据类型
+
+1.整型
+
+TINYINT[(n)] [ZEROFILL] [UNSIGNED],占1字节,
+
+无符号位的存储范围为0~255;
+
+有符号位的存储范围为-128 ~ 127。
+
+SMALLINT[(n)] [ZEROFILL] [UNSIGNED],占2字节,
+
+无符号位的存储范围为0~65535;
+
+有符号位的存储范围为-32768 ~ 32767。
+
+MEDIUMINT[(n)] [ZEROFILL] [UNSIGNED],占3字节,
+
+无符号位的存储范围为0~16777215;
+
+有符号位的存储范围为-8388608 ~ 8388607。
+
+INT[(n)] [ZEROFILL] [UNSIGNED],占4字节,
+
+无符号位的存储范围为0~4294967295;
+
+有符号位的存储范围为-2147483648 ~ 2147483647。
+
+BIGINT[(n)] [ZEROFILL] [UNSIGNED],占8字节
+
+BOOLEAN,等价于TINYINT(1),其为0表示假,其余表示真。
+
+2.浮点型
+
+FLOAT[(M,D)][ZEROFILL] [UNSIGNED],单精度浮点,
+
+存储范围为-3.4E38~3.4E38,最多可以保留于小数点后的7位。
+
+其中M指数字的总长度,D指小数点之后的数字长度
+
+DOUBLE[(M,D)][ZEROFILL] [UNSIGNED],双精度浮点,
+
+存储范围为-1.79E308~1.79E308,最多可以保留于小数点后的15位。
+
+DECIMAL[(M[,D])][ZEROFILL] [UNSIGNED],定点数,M最大值为65,
+
+D最大值为30;M默认值为10,D默认值为0
+
+3.字符串
+
+CHAR[(n)],定长的字符,如果字符长度没有到达指定的长度,右侧
+
+将以空格补充,n最大值为255。
+
+VARCHAR[(n)],变长的字符,n最大值为65535,而且65535是所有 VARCHAR列的总和,并且与编码方式有关。
+
+TINYTEXT,最多只能存储255个字符。
+
+TEXT,最多只能存储65535个字符。
+
+MEDIUMTEXT,最多只能存储16777215个字符。
+
+LONGTEXT,最多只能存储4294967295个字符。
+
+ENUM('value','value',...),枚举值,最多为65535个值。
+
+SET('value','value',...),集合,最多为64个值。
+
+4.日期时间
+
+DATE,存储范围为1000-01-01到9999-12-31
+
+TIME,存储范围为-838:59:59到838:59:59
+
+DATETIME,存储范围为1000-01-01 00:00:00到9999-12-31 23:59:59
+
+四、数据表
+
+1.什么是数据表?
+
+数据表(Table),是一张二维表格,其中列称为字段,行称为记录;
+
+其真实形态是电子文件。
+
+2.创建数据表
+
+CREATE TABLE [IF NOT EXISTS] table_name(
+
+    column_name data_type [NULL | NOT NULL] [DEFAULT value]
+    
+    [,...]
+    
+);
+
+说明:
+
+A.每张数据表至少一个字段;但至少零条记录;
+
+3.显示数据表列表
+
+SHOW TABLES [FROM db_name] [WHERE 'condition' | LIKE 'pattern']
+
+4.查看数据表结构
+
+SHOW COLUMNS FROM table_name [FROM db_name][WHERE 'condition' | LIKE 'pattern']
+
+DESC[RIBE] [db_name.]table_name;
+
+五、记录操作
+
+1.插入记录
+
+INSERT [INTO] table_name [(field,...)] VALUES(value,...),(value,..)...
+
+说明:
+
+A.如果省略字段名称,则必须依次为所有字段赋值;
+
+B.字段与字段值的数量、顺序、数据类型必须完全匹配;
+
+C.必须为没有默认值且禁止为空的字段赋值;
+
+D.空值用NULL表示;
+
+E.默认值用DEFAULT表示;
+
+2.查找记录
+
+SELECT expression [[AS] alias][,...];
+
+SELECT field [[AS] alias],... FROM table_name;
+
+说明:
+
+A.所有字段通过星号(*)表示;
+
+Day20
+
+一、约束
+
+1.什么约束?
+
+约束(constraint),保证记录的唯一性、关联性等,实现在数据库层面的"防火墙"。
+
+2.约束的分类
+
+按作用划分:
+
+主键约束(Primary key)
+
+唯一约束(Unique key)
+
+外键约束(Foreign key)
+
+非空约束(Not NULL)
+
+默认约束(Default)
+
+按针对字段的数量:
+
+列级约束,只能针对一个字段。
+
+表级约束,同时针对两个或多个字段。
+
+3.主键约束
+
+主键约束可以保证记录的唯一性,而且自动为NOT NULL,每张数据表
+
+只能存在一个主键;系统将自动创建主键索引(是一种特殊的唯一索引)。
+
+查看数据表的索引
+
+SHOW INDEXES FROM table_name;
+
+提示:
+
+表级约束时除非所有约束字段的值都相同,才会产生错误。
+
+4.唯一约束(unique key)
+
+唯一约束可以保证记录的唯一性,允许为空;每张数据表可以存在多个
+
+唯一约束,系统将自动创建唯一索引。
+
+5.自动递增(AUTO_INCREMENT)
+
+自动递增的字段只能为整型或浮点型(写法必须为FLOAT(N,0)或DOUBLE(N,0)),
+
+自动递增的字段必须与唯一索引组合使用;每张数据表只能存在一个自动
+
+递增的字段。自动递增的默认值为1,递增量为1。
+
+提示:
+
+A.MySQL中自动递增的字段允许用户指定序号;
+
+B.新插入记录的ID号为已有的最大ID号+1
+
+C.自动递增字段使用NULL或DEFAULT来表示遵循自动递增的规范;
+
+
+二、MySQL函数库
+
+1.安装
+
+A.启用PHP配置文件中的extension=php_mysql.dll选项;
+
+B.指定extension_dir选项的值为PHP安装目录下的ext子目录
+
+C.重新启动Apache
+
+2.MySQL函数库
+
+mysql_connect
+
+描述:建立与MySQL服务器的连接
+
+语法:resource mysql_connect(string $host,string $username,string $password)
+
+mysql_select_db
+
+描述:打开指定的数据库
+
+语法:bool mysql_select_db(string $database)
+
+mysql_query
+
+描述:执行SQL语句
+
+语法:mixed mysql_query(string $sql)
+
+说明:
+
+A.SQL语句的分号可以省略;
+
+Day21
+
+一、修改数据表
+
+ALTER TABLE table_name alter_specification[,...]
+
+alter_specification包括:
+
+1.1)添加单列
+
+ADD [COLUMN] col_name data_type [[NOT NULL |NULL] [DEFAULT value] [PRIMARY KEY | UNIQUE KEY] [AUTO_INCREMENT]] [FIRST | AFTER col_name]
+
+1.2)添加多列
+
+ADD [COLUMN] (col_name column_definition,...)
+
+1.3)添加主键约束
+
+ADD [CONSTRAINT [symbol_name]] PRIMARY KEY (index_col_name,...)
+
+1.4)添加唯一约束
+
+ADD [CONSTRAINT [symbol_name]] UNIQUE KEY (index_col_name,...)
+
+1.5)删除列
+
+DROP [COLUMN] col_name
+
+1.6)删除主键约束
+
+DROP PRIMARY KEY
+
+1.7)删除索引
+
+DROP {INDEX|KEY} index_name
+
+1.8)修改字段
+
+1.8.1)只能添加/删除默认值
+
+ALTER  [COLUMN] col_name {SET DEFAULT value | DROP DEFAULT}
+
+1.8.2)只能修改列定义及位置
+
+MODIFY [COLUMN] col_name col_defination [FIRST | AFTER col_name]
+
+1.8.3)修改列名称、列定义及及位置
+
+CHANGE [COLUMN] old_col_name new_col_name col_defination [FIRST | AFTER col_name]
+
+1.9)数据表更名
+
+RENAME [TO] new_name
+
+二、删除数据表
+
+删除数据表
+
+DROP TABLE [IF EXISTS] table_name
+
+三、更新记录(单表更新)
+
+UPDATE table_name SET col_name = value[,...] [WHERE condition]
+
+说明:
+
+A.如果省略WHERE条件,将更新全部记录
+
+四、删除记录
+
+4.1)删除记录
+
+DELETE FROM table_name [WHERE condition]
+
+说明:
+
+A.如果省略WHERE条件,将删除全部记录
+
+4.2)截断数据表
+
+TRUNCATE TABLE table_name
+
+说明:
+
+A.将任何AUTO_INCREMENT字段重置为起始值;
+
+五、查找记录
+
+SELECT col_name [[AS] alias][,...] FROM table_name [WHERE condition]
+
+六、MySQL函数库
+
+mysql_query()
+
+描述:执行SQL语句
+
+语法:mixed mysql_query(string $sql)
+
+说明:
+
+A.SQL语句可以省略分号
+
+B.如果SQL语句为SELECT、SHOW、DESCRIBE时,正确执行将返回
+
+    资源(rosource),错误执行返回FALSE;其他语句正确执行时返回
+    
+  TRUE,否则返回FALSE。
+  
+mysql_num_rows
+
+描述:返回结果集包含的行数(记录数)
+
+语法:int mysql_num_rows(resource $result)
+
+mysql_fetch_assoc
+
+描述:抽取结果集的一行作为关联数组返回,如果没有更多的行则返回FALSE
+
+语法:array mysql_fetch_assoc(resource $result)
+
+Day22
+
+一、外键约束
+
+1.语法
+
+[CONSTRAINT [symbol]] FOREIGN KEY (col_name,...) REFERENCES table_name(col_name,...)
+
+[ON DELETE {RESTRICT | SET NULL | CASCADE | NO ACTION}]
+
+[ON UPDATE {RESTRICT | SET NULL | CASCADE | NO ACTION}]
+
+ 参照选项的含义:
+ 
+CASCADE,子表随父表发生相同的变化;
+
+RESTRICT,禁止删除或更新被子表使用的父表中的相应记录,与NO ACTION含义相同;
+
+SET NULL,将子表中相应的记录设置为NULL(前提条件是子表的字段允许为NULL);
+
+2.要求
+
+A.外键字段与参照字段的数据类型为数值型时必须完全一致(包括是否存在符号位);
+
+    如果为字符型时,长度可以不相同;
+
+B.必须在主键字段和外键字段创建索引;如果没有在外键字段上创建索引,
+
+    系统将自动创建;
+    
+C.父表与子表的引擎只能为InnoDB;
+
+     修改方法1:修改MySQL配置文件的default-storage-engine选项
+     
+     修改方法2:在创建数据表指定存储引擎
+     
+  CREATE TABLE [IF NOT EXISTS] table_name(
+     ...
+     ...
+  ) ENGINE = engine_name;    
+   
+二、连接
+
+1.语法
+
+table_name [[AS] alias] 
+
+join_type 
+
+table_name [[AS] alias] 
+
+ON condition   
+
+2.连接类型
+
+2.1)内连接
+
+INNER JOIN,仅显示符合连接条件的记录。
+
+2.2)外连接
+
+2.2.1)简介
+
+外连接显示左表(LEFT JOIN)/右表(RIGHT JOIN)的全部记录及右表/左表中符合连接条件的记录
+
+2.2.2)左外连接
+
+table_name [[AS] alias] 
+
+LEFT [OUTER] JOIN 
+
+table_name [[AS] alias]
+
+ON condition
+
+2.2.3)右外连接
+
+table_name [[AS] alias] 
+
+RIGHT [OUTER] JOIN 
+
+table_name [[AS] alias]
+
+ON condition
+
+Day23
+
+一、SELECT语句
+
+SELECT expression[,...] 
+[
+   FROM table_references
+   [WHERE condition]
+   [GROUP BY col_name [ASC | DESC], ...]
+   [HAVING condition]
+   [ORDER BY col_name [ASC | DESC], ...]
+   [LIMIT [offset,] row_count ]
+]
+
+说明:
+
+A.expression既可以为表达式,也可以为函数或字段名称(此时不能省略表名称)
+
+B.expression的语法为 expression [[AS] alias]
+
+C."WHERE条件"进行记录的过滤,"WHERE条件"中可以书写任意的运算符及函数;
+
+D.GROUP BY指进行查找结果的分组;ASC为升序(默认),DESC为降序;
+
+E.HAVING指对分组的结果进行过滤;HAVING的字段必须出现在GROUP BY或聚合函数中;
+
+F.ORDER BY指对查询的结果进行排序,其中ASC为升序(默认),DESC为降序;
+
+G.LIMIT用于限制返回的查询结果数量;其中offset指偏移值(也就是从哪一条记录开始,从0开始编号)
+
+    分页时LIMIT的计算公式为
+    
+  (n-1) * 每页显示的记录数量
+  
+     注:n为当前页码
+
+二、运算符与函数
+
+2.1)算术运算符及函数
+
+算术运算符包括:+、-、+、-、*、/、%
+
+常用的算术函数有:
+
+CEIL(),进一取整
+
+FLOOR(),舍一取整
+
+POW(),幂运算
+
+SQRT(),平方根
+
+ROUND(),四舍五入
+
+RAND(),产生0~1之间的随机数(0<=n<1)
+
+2.2)字符函数
+
+CONCAT(),字符连接
+
+CONCAT_WS(),字符连接
+
+SUBSTR(),截取字段串(字符串从1开始编号)
+
+LTRIM(),删除前导空格
+
+RTRIM(),删除后续空格
+
+TRIM(),删除前导和后续空格
+
+UPPER(),转换成大写字母
+
+LOWER(),转换成小写字母
+
+REPLACE(),字符串替换
+
+[NOT] LIKE 'pattern' 
+
+pattern(模式)有:
+
+%,表示任意数量的字符
+
+_,表示任意长度为一的字符
+
+2.3)比较运算符与函数
+
+比较运算符包括:>、>=、=、!=、<>、<=、<
+
+[NOT] BETWEEN ... AND ...
+
+[NOT] IN(...)
+
+IS [NOT] NULL
+
+2.4)逻辑运算符
+
+NOT、!
+
+AND、&&
+
+OR、||
+
+2.5)信息函数
+
+VERSION(),服务器版本号
+
+DATABASE(),当前数据库
+
+ROW_COUNT(),被影响到记录数量(针对INSERT、UPDATE、DELETE而言)
+
+LAST_INSERT_ID(),返回最后被插入记录的ID号(数据表必须存在AUTO_INCREMENT字段,另外如果一次插入多条记录,只返回第一条的ID号)
+  
+FOUND_ROWS(),返回查找到的记录数(针对SELECT)
+
+2.6)加密函数
+
+MD5()
+
+PASSWORD()
+
+2.7)聚合函数
+
+COUNT(),计数
+
+SUM(),求和
+
+AVG(),平均值
+
+MIN(),最小值
+
+MAX(),最大值
+
+三、其他SQL语句
+
+1.CREATE TABLE... SELECT语句
+
+CREATE TABLE [IF NOT EXISTS] table_name 
+
+[(col_name data_type [NULL | NOT NULL] [DEFAULT value] [PRIMARY KEY | UNIQUE])[,...]]
+
+SELECT ...
+
+2.UPDATE语句 (多表更新)
+
+UPDATE table_refereces SET col_name=value[,...] [WHERE condition] 
+
+
+三、MySQL函数库
+
+Day25
+
+一、分页技术
+
+1.分页原理
+
+分页技术实际上利用SELECT语句的LIMIT子句,每页只返回部分结果集。
+
+2.实现过程
+
+A.获取总记录数
+
+B.指定每页显示的记录数
+
+C.计算总页数, ceil(x / y)
+
+Day65
+
+MySQL基础
+1、安装
+   1)选择MySQL编码(utf8)
+   2)设定MySQL密码
+2、my.ini配置文件
+   1)设置MySQL端口号
+     port=3306
+   2)最大连接数
+     max_connections=100
+   3)设定mysql编码
+     default-character-set=utf8
+     character-set-server=utf8
+   4)设置存储引擎
+     default-storage-engine=INNODB
+3、MySQL服务
+   控制面板->管理工具->服务->MySQL
+4、MySQL登陆
+   mysql -h 主机地址 -u 用户名 -p密码
+   mysql -u 用户名 -p密码
+   mysql -u 用户名 -p
+5、"mysql不是系统内部或外部的命令"解决办法
+   修改系统的环境变量
+   我的电脑(右键)->属性->高级->环境变量->Path
+   变量名：Path
+   变量值：dasfjaklsdfl;C:\Program Files\MySQL\MySQL Server 5.5\bin
+
+
+查看mysql编码
+show variables like 'character%';
+名			   值
+character_set_client     | utf8(客户端窗口的编码)
+character_set_connection | utf8(数据库连接的编码)
+character_set_database   | utf8(数据库的编码)
+character_set_filesystem | binary(文件系统的编码)
+character_set_results    | utf8(结果集的编码)
+character_set_server     | utf8(MySQL服务的编码)
+character_set_system     | utf8(MySQL系统的编码)
+character_sets_dir       | C:\Program Files\MySQL\MySQL Server 5.5\share\charsets\
+
+设置mysql客户端的编码
+set names gbk;
+
+查看现存的所有库
+show databases;
+
+进入库
+use 库名;
+
+查看现存的所有表
+show tables;
+
+查看表结构
+desc 表名;
+
+建库
+create database 库名;
+
+删库
+drop database 库名;
+
+建表
+create table 表名
+(
+  字段名   数据类型   约束,
+  字段名   数据类型   约束,
+  字段名   数据类型   约束
+);
+
+数据类型
+int  float  char   varchar   text  timestamp   date
+
+约束
+主键约束		primary key
+自增长约束		auto_increment
+非空约束		not null
+空约束			null
+外键约束		foreign key
+默认值约束		default
+唯一约束		unique
+
+删表
+drop table 表名;
+
+修改表结构
+1、修改表名
+alter table 原表名 rename to 新表名;
+2、添加字段
+alter table 表名 add column 字段名 数据类型 约束;
+3、删除字段
+alter table 表名 drop column 字段名;
+4、修改字段
+alter table 表名 change 原字段名 新字段名 数据类型 约束;
+
+添加记录
+insert into 表名(字段,字段...)values(值,值...);
+insert into 表名 values(值,值...);
+
+修改记录
+update 表名 set 字段=值,字段=值;
+update 表名 set 字段=值,字段=值 where 条件;
+
+删除记录
+delete from 表名 where 条件;
+
+清空表
+delete from 表名;	慢  不恢复id  支持事务    可恢复数据
+truncate table 表名;	快    恢复id  不支持事务  不可恢复
+
+普通查询
+select * from 表名;
+select 字段,字段... from 表名;
+
+条件查询
+select * from 表名 where 条件;
+select 字段,字段... from 表名 where 条件;
+
+排序
+select * from 表名 order by 字段;
+select * from 表名 order by 字段 desc;
+select * from 表名 order by 字段,字段;
+select * from 表名 where 条件 order by 字段;
+
+分组
+select * from 表名 group by 字段;
+
+聚合函数(统计函数)
+select count(*|字段) from 表名;
+select sum(字段) from 表名;
+select avg(字段) from 表名;
+select max(字段) from 表名;
+select min(字段) from 表名;
+
+给字段、表起别名
+select 字段 as 别名,字段,字段 as 别名 from 表名;
+select * from 表 别名;
+
+模糊查询
+_：代表任意一个字符
+%：代表任意多个字符
+select * from 表名 where 字段 like '_%内容';
+
+分页查询
+select * from 表名 limit 起始值,条数;
+
+
+多表查询语句
+1、子查询(嵌套查询)
+select * from 表1
+   where 字段 in (select 字段 from 表2 where 条件);
+delete from 表1
+   where 字段 in (select 字段 from 表2 where 条件);
+update 表名 set 字段=值,字段=值
+   where 字段 in (select 字段 from 表2 where 条件);
+例子：
+表：学院表  字段：schId  schName
+表：班级表  字段：claId  schId   claName
+表：学生表  字段：stuId  claId   stuName  age  sex....
+1)查询claName='php1505'班的所有学生
+select * from 学生表
+  where claId in (select claId from 班级表 where claName='php1505');
+2)删除claName='php1505'班的所有学生
+delete from 学生表
+  where claId in (select claId from 班级表 where claName='php1505');
+3)查询schName='理工学院'的所有班级
+select * from 班级表 
+  where schId in (select schId from 学院表 where schName='理工学院');
+4)查询schName='理工学院'的所有学生
+select * from 学生表
+  where claId in (select claId from 班级表 where schId in (select schId from 学院表 where schName='理工学院'));
+例子：
+表：明星表   	字段：starId   starName
+表：演唱会表	字段：ychId  starId   ychName  address time
+查询明星表： starId,starName,演唱会的次数
+select
+ starId,
+ starName,
+ (select count(*) from 演唱会表 b where a.starId=b.starId)
+ from 明星表 a;
+
+子查询的使用情况
+1、子查询出现在条件中
+select * from 表 where 字段 in (子查询);
+2、子查询出现在字段中
+select 字段,字段,(子查询) from 表;
+
+
+内连接
+两表内连接
+select * from 表1 inner join 表2 on 关联的字段相等;
+三表内连接
+select * from 表1
+ inner join 表2 on 关联的字段相等
+   inner join 表3 on 关联的字段相等;
+另一种写法
+select * from 表1,表2,表3... where 关联的字段相等;
+
+
+外连接
+左外连接：以左表为主，右表为副
+select * from 表1 left outer join 表2 on 关联的字段相等;
+右外连接：以右表为主，左表为副
+select * from 表1 right outer join 表2 on 关联的字段相等;
+
+
+多表查询语句的使用场合
+1、子查询
+   1)结果集中只有一个表中的数据
+   2)子查询出现在条件或字段中
+2、内连接
+   1)结果集中出现了多个表的数据
+   2)将多张表的字段合为一个结果集
+3、外连接(不用)
+   1)结果集中出现了多个表的数据
+   2)将多张表的字段合为一个结果集
+   3)在结果集中可能会出现null关键字
+
+
+
+
+MySQL高级
+
+视图View：当对结果集进行再次筛选时，使用视图
+作用：简化sql查询语句
+
+创建视图
+create view 视图名
+as
+select语句;
+
+create view newsView
+as
+select articleId,title,typeName,a.typeId from newsArticles a,newsTypes b where a.typeId=b.typeId;
+
+修改视图
+alter view 视图名
+as
+select语句;
+
+alter view newsView
+as
+select * from newsTypes;
+
+调用视图：把视图当表用
+select * from 视图名;
+
+删除视图
+1、删除库
+drop database 库名;
+2、删除视图
+drop view 视图名;
+
+查看现存的所有视图
+1、查看表
+show tables;
+2、查询information_schema->views表
+select table_schema,table_name from views;
+select table_schema,table_name from information_schema.views;
+
+视图总结：
+1、视图作用、使用场合
+2、创建、修改、删除、使用
+3、查看现存的所有视图
+4、注意：建意只对视图进行查询操作
+         不建意对视图执行insert、update、delete
+-----------------------------------------------------
+触发器Trigger：数据库中的事件
+
+作用：当对表进行insert、update、delete操作的同时，
+      是否要执行其他操作
+
+触发器的时间
+1、before：先调触发器，后执行相关的操作
+2、after：先执行相关的操作，后调触发器
+
+触发器的类型
+1、insert：当对表进行insert操作时，自动调用触发器
+2、delete：当对表进行delete操作时，自动调用触发器
+3、update：当对表进行update操作时，自动调用触发器
+注意：一个触发器只能有一个类型
+
+创建触发器
+delimiter //
+drop trigger if exists 触发器名//
+create trigger 触发器名
+触发器时间 触发器的类型
+on 表名
+for each row
+begin
+  sql语句;
+  sql语句;
+  sql语句;
+end //
+delimiter ;
+
+删除触发器
+1、删除表
+drop table 表名;
+2、删除库
+drop database 库名;
+3、删除触发器
+drop trigger 触发器名;
+
+
+例子：
+1、删除bbsInfo表的一条记录，同时向users表添加一条记录
+delimiter //
+drop trigger if exists delBbs//
+create trigger delBbs
+before delete
+on bbsInfo
+for each row
+begin
+  insert into users(userName,password,age,sex)values('张三','123',30,1);
+end //
+delimiter ;
+
+delete from bbsInfo where bbsId=15;
+2、利用触发器实现统计功能
+create table employee
+(
+  empId		int		auto_increment primary key,
+  empName	varchar(20)	not null,
+  address	varchar(200)	not null,
+  empTime	timestamp	default current_timestamp
+);
+create table diannao
+(
+  dnId		int		auto_increment primary key,
+  dnType	varchar(200)	not null,
+  empId		int		not null,
+  foreign key (empId) references employee(empId)
+);
+create table tongji
+(
+  empcount	int		default 0,#员工的个数
+  dncount	int		default 0#电脑的个数
+);
+insert into tongji values(0,0);
+
+添加员工的触发器
+delimiter //
+drop trigger if exists addEmp//
+create trigger addEmp
+after insert
+on employee
+for each row
+begin
+  update tongji set empcount=empcount+1;
+end //
+delimiter ;
+
+insert into employee(empName,address)values('张三','北京');
+insert into employee(empName,address)values('李四','天津');
+insert into employee(empName,address)values('王五','上海');
+insert into employee(empName,address)values('赵六','深圳');
+insert into employee(empName,address)values('田七','山西');
+
+
+删除员工的触发器
+delimiter //
+drop trigger if exists delEmp//
+create trigger delEmp
+after delete
+on employee
+for each row
+begin
+  update tongji set empcount=empcount-1;
+end //
+delimiter ;
+
+delete from employee where empName='赵六';
+
+
+查看现存的所有触发器
+information_schema->triggers表
+字段：
+TRIGGER_SCHEMA：库名
+TRIGGER_NAME：触发器名
+EVENT_MANIPULATION：触发器的类型
+EVENT_OBJECT_TABLE：表名
+select
+ trigger_schema,
+ event_object_table,
+ trigger_name,
+ event_manipulation
+ from information_schema.triggers;
+
+触发器知识点
+1、介绍、作用
+2、创建、删除
+3、查看现存的所有触发器
+注意
+1、触发器由系统自动调用
+2、触发器没参数、没返回值
+3、一个触发器只能有一个类型
+4、一个表最多只能有三个触发器
+-------------------------------------------
+存储过程Procedure：数据库中的自定义函数
+
+创建存储过程
+delimiter //
+drop procedure if exists 存储过程名//
+create procedure 存储过程名()
+begin
+  sql语句;
+  sql语句;
+  sql语句;
+end //
+delimiter ;
+
+删除存储过程
+1、删除所在的库
+drop database 库名;
+2、删除存储过程
+drop procedure 存储过程名;
+
+调用存储过程
+call 存储过程名();
+
+
+例子
+select '你好' as msg;
+select current_timestamp as time;
+
+delimiter //
+drop procedure if exists hello//
+create procedure hello()
+begin
+  select current_timestamp as time;
+end//
+delimiter ;
+
+call hello();
+
+
+
+delimiter //
+drop procedure if exists hello//
+create procedure hello()
+begin
+  select * from bbsInfo;
+end//
+delimiter ;
+
+call hello();
+
+
+
+delimiter //
+drop procedure if exists hello//
+create procedure hello(id int)
+begin
+  select * from bbsInfo where bbsId=id;
+end//
+delimiter ;
+
+call hello(3);
+
+
+delimiter //
+drop procedure if exists hello//
+create procedure hello(msg varchar(100))
+begin
+  select * from bbsInfo where title=msg;
+end//
+delimiter ;
+
+call hello('社会调查案例');
+
+
+利用ttnews库中的表：实现删除一个新闻分类的功能
+newsTypes：分类表	typeId,typeName,articleNums
+newsArticles：新闻表	articleId,typeId,title,content...
+reviews：评论表		id,articleId,body....
+题目：利用存储过程删除typeId=4的分类
+delimiter //
+drop procedure if exists delNewsType//
+create procedure delNewsType(tid int)
+begin
+  delete from reviews
+    where articleId in (select articleId from newsArticles where typeId=tid);
+  delete from newsArticles where typeId=tid;
+  delete from newsTypes where typeId=tid;
+end //
+delimiter ;
+
+call delNewsType(4);
+
+
+查看现存的所有存储过程
+mysql库->proc表
+select db,name from mysql.proc;
+
+存储过程的知识点
+1、介绍、作用
+2、创建、删除、调用、查看
+注意
+1、存储过程可以有参数
+2、存储过程由用户来调用
+3、存储过程不能产生结果集(php无法获得存储过程产生的结果集)
+delimiter //
+drop procedure if exists hello//
+create procedure hello()
+begin
+  select * from newsTypes;
+end //
+delimiter ;
+
+
+
+总结：
+1、视图View		简化查询语句
+2、触发器Trigger	对表进行insert、update、delete
+3、存储过程Procedure	函数
+
+
+记每个知识点
+1、作用
+2、使用场合
+3、语法
+
+Day66
+
+MySQL高级
+
+视图View
+
+作用：简化查询语句
+
+创建视图
+create view 视图名
+as
+select语句;
+
+修改视图
+alter view 视图名
+as
+select语句;
+
+使用视图
+select * from 视图名;
+
+查看现存的所有视图
+show tables;
+information_schema->views;
+-------------------------------------------
+触发器Trigger
+
+作用：当对表进行insert、update、delete
+
+触发器执行的时间
+before：先调触发器，后执行相关的操作
+after：先执行相关的操作，后调用触发器
+
+触发器的类型
+insert：对表执行insert操作时，系统自动调用触发器
+update：对表执行update操作时，系统自动调用触发器
+delete：对表执行delete操作时，系统自动调用触发器
+
+创建触发器
+delimiter //
+drop trigger if exists 触发器名//
+create trigger 触发器名
+before|after  insert|update|delete
+on 表名
+for each row
+begin
+  sql语句;
+  sql语句;
+  sql语句;
+end //
+delimiter ;
+
+删除触发器
+1、删除表
+drop table 表名;
+2、删除库
+drop database 库名;
+3、删除触发器
+drop trigger 触发器名;
+
+查看现存所有触发器
+information_schema->triggers
+
+注意：
+1、使用场合
+2、一个触发器最多只能有一个类型
+3、一个表最多只能有三个触发器
+4、触发器没有参数，没有返回值
+5、触发器由系统自动调用
+--------------------------------------------------------
+存储过程Procedure
+
+作用：数据库中的自定义函数
+
+创建存储过程
+delimiter //
+drop procedure if exists 存储过程名//
+create procedure 存储过程名(参数名 数据类型,参数名 数据类型)
+begin
+  sql语句;
+  sql语句;
+  sql语句;
+end //
+delimiter ;
+
+删除存储过程
+1、删除库
+drop database 库名;
+2、删除存储过程
+drop procedure 存储过程名;
+
+调用存储过程
+call 存储过程名();
+call 存储过程名(值,值...);
+-----------------------------------------------------
+Transaction-SQL编程：数据库编程
+
+知识点
+1、定义变量
+2、变量赋值
+3、简单运算
+4、判断语句(了解)
+5、循环语句(了解)
+
+T-SQL编程出现的地方：触发器、存储过程
+
+定义变量
+declare 变量名 数据类型;
+declare 变量名 数据类型 default 值;
+注意：定义变量的代码必须出现在最顶端
+
+delimiter //
+drop procedure if exists hello//
+create procedure hello()
+begin
+  #定义变量
+  declare age int;
+  declare userName varchar(20) default '张三';
+  declare score float default 98.5;
+  #输出
+  select age,userName,score;
+end //
+delimiter ;
+
+
+变量赋值
+declare 变量名 数据类型 default 值;
+set 变量名 = 值;
+set 变量名 = (子查询);#子查询只能查询一个值(一条记录、一个字段)
+select 字段 into 变量名 from 表名 where 条件;
+
+
+delimiter //
+drop procedure if exists hello//
+create procedure hello()
+begin
+  declare bbsCount int;#总记录数
+  declare maxClickTimes int;#最大的点击数
+  #赋值
+  select count(*) into bbsCount from bbsInfo;
+  select max(clickTimes) into maxClickTimes from bbsInfo;
+  #输出
+  select bbsCount,maxClickTimes;
+end //
+delimiter ;
+
+
+delimiter //
+drop procedure if exists hello//
+create procedure hello(id int)
+begin
+  declare cl int;
+  declare t varchar(100);
+  #赋值
+  select title into t from bbsInfo where bbsId=id;
+  select clickTimes into cl from bbsInfo where bbsId=id;
+  #输出
+  select cl,t;
+end //
+delimiter ;
+
+
+delimiter //
+drop procedure if exists hello//
+create procedure hello()
+begin
+  declare bbsCount int;
+  set bbsCount = (select count(*) from bbsInfo);
+  select bbsCount;
+end //
+delimiter ;
+
+
+delimiter //
+drop procedure if exists hello//
+create procedure hello(id int)
+begin
+  declare t varchar(100);#title字段
+  declare cl int;#clickTimes字段
+  #赋值
+  set t = (select title from bbsInfo where bbsId=id);
+  set cl = (select clickTimes from bbsInfo where bbsId=id);
+  #输出
+  select cl,t;
+end //
+delimiter ;
+
+
+delimiter //
+drop procedure if exists hello//
+create procedure hello()
+begin
+  declare age int;
+  declare userName varchar(20);
+  #给变量赋值
+  set userName = '田七';
+  set age = 30;
+  #输出
+  select age,userName;
+end //
+delimiter ;
+
+
+运算
+算术运算符：+  -  *  /  %
+比较运算符：<  <=  >  >=  =  !=  <>
+逻辑运算符：and  or  not
+
+delimiter //
+drop procedure if exists hello//
+create procedure hello()
+begin
+  declare a int default 3;
+  declare b int default 2;
+  declare result float;
+  #运算
+  set result = a + b;
+  select result;
+  set result = a - b;
+  select result;
+  set result = a * b;
+  select result;
+  set result = a / b;
+  select result;
+  set result = a % b;
+  select result;
+end //
+delimiter ;
+
+
+判断语句
+if 条件 then
+  sql语句;
+  sql语句;
+  sql语句;
+elseif 条件 then
+  sql语句;
+  sql语句;
+  sql语句;
+else
+  sql语句;
+  sql语句;
+  sql语句;
+end if;
+
+delimiter //
+drop procedure if exists hello//
+create procedure hello(age int)
+begin
+  if age = 10 then
+    select '好好学习' as msg;
+  elseif age = 20 then
+    select '远大理想' as msg;
+  elseif age = 30 then
+    select '基本定向' as msg;
+  else
+    select '不知道' as msg;
+  end if;
+end //
+delimiter ;
+
+循环语句
+while 条件 do
+  sql语句;
+  sql语句;
+  sql语句;
+end while;
+
+repeat
+  sql语句;
+  sql语句;
+  sql语句;
+until 条件 end repeat;
+
+名:loop
+  sql语句;
+  sql语句;
+  sql语句;
+  if 条件 then
+    leave 名;
+  end if;
+end loop;
+
+
+delimiter //
+drop procedure if exists hello//
+create procedure hello()
+begin
+  declare i int default 0;
+  haha:loop
+    select i;
+    set i=i+1;
+    if i>5 then
+      leave haha;
+    end if;
+  end loop;
+end //
+delimiter ;
+
+
+delimiter //
+drop procedure if exists hello//
+create procedure hello()
+begin
+  declare i int default 0;
+  repeat
+    select i;
+    set i=i+1;
+  until i>5 end repeat;
+end //
+delimiter ;
+
+
+delimiter //
+drop procedure if exists hello//
+create procedure hello()
+begin
+  declare i int default 0;
+  while i<5 do
+    select i;
+    set i=i+1;
+  end while;
+end //
+delimiter ;
+---------------------------------------------------
+存储过程参数种类
+1、输入参数：外->里   in 名 数据类型     名 数据类型
+2、输出参数：里->外   out 名 数据类型
+
+delimiter //
+drop procedure if exists 存储过程名//
+create procedure 存储过程名(in a int,out c float,in b varchar(20),out d char(3))
+begin
+  sql语句;
+  sql语句;
+  sql语句;
+  给输出变量赋值
+end //
+delimiter ;
+
+call 存储过程名(值,@变量名,值,@变量名);
+select @变量名,@变量名;
+
+例子
+1、通过bbsId获得一条记录title,clickTimes字段值
+delimiter //
+drop procedure if exists hello//
+create procedure hello(id int,out t varchar(100),out cl int)
+begin
+  #给输出变量赋值
+  set t = (select title from bbsInfo where bbsId=id);
+  #select title into t from bbsInfo where bbsId=id;
+  set cl = (select clickTimes from bbsInfo where bbsId=id);
+  #select clickTimes into cl from bbsInfo where bbsId=id;
+end //
+delimiter ;
+
+call hello(5,@aaa,@bbb);
+select @aaa,@bbb;
+
+
+存储过程知识点
+1、介绍、作用、使用场合
+2、创建、删除、调用、查看
+3、参数：输入参数、输出参数
+--------------------------------------------------------
+索引Index
+
+作用：提高查询语句的执行的速度
+
+索引是施加给字段的
+
+适合添加索引的字段：经常充当where条件的字段
+
+索引分类
+1、主键索引：非空、唯一、一个表只能有一个字段添加主键索引
+   建表的同时直接指定主键约束
+2、唯一索引：唯一
+   建表的同时直接指定唯一约束
+   create unique index 索引名 on 表名(字段);
+   create unique index title_index on bbsInfo(title);
+3、普通索引：没限制
+   create index 索引名 on 表名(字段);
+   create index title_index on bbsInfo(title);
+4、全文索引：没限制(适合添加给大字符串字段)
+   create fulltext index 索引名 on 表名(字段);
+   create fulltext index title_index on bbsInfo(title);
+
+删除索引
+drop index 索引名 on 表名;
+drop index title_index on bbsInfo;
+
+查看表的索引
+show index from 表名;
+
+什么样的字段适合添加什么样的索引
+主键索引：主键
+唯一索引：字段不能有重复值
+全文索引：大字符串的字段(text)
+普通索引：除了上述三者以外，还必须添加索引
+
+索引总结：
+1、介绍、作用、适用场合
+2、索引分类、添加索引
+3、查看、删除
+4、什么样的字段，适合添加什么样的索引
+----------------------------------------------------
+数据库的存储引擎
+
+作用：不同的存储引擎会给数据库带来不同的性能
+
+存储引擎种类
+ISAM：查询速度快、支持全文索引、不支持事务、不支持外键
+MyISAM：ISAM升级
+HEAP(Memory)：数据驻留在内存、速度快、数据管理不稳定、计算机断电后数据全部丢失
+InnoDB：速度较慢、支持事务、支持外键、不支持全文索引
+
+MySQL默认的存储引擎：InnoDB
+
+网站使用哪种存储引擎
+MyISAM：内容管理系统(门户)
+InnoDB：技术型网站(论坛、博客、微博、邮箱、网络办公...)
+
+修改MySQL存储引擎
+1、修改my.ini配置文件
+   default-storage-engine=INNODB
+   default-storage-engine=MyISAM
+   重启MySQL服务
+2、建表的同时直接指定表的存储引擎
+create table 表名
+(
+  字段  数据类型  约束,
+  字段  数据类型  约束,
+  字段  数据类型  约束
+)type=InnoDB;
+create table 表名
+(
+  字段  数据类型  约束,
+  字段  数据类型  约束,
+  字段  数据类型  约束
+)engine=InnoDB;
+
+
+查看表的存储引擎
+show create table 表名;
+
+
+create table newsInfo
+(
+   newsId		int		auto_increment primary key,
+   title		varchar(100)	not null,
+   content		text		not null,
+   newsTime		timestamp	default current_timestamp
+)engine=MyISAM;
+
+create fulltext index txt_index on newsInfo(content);
+----------------------------------------------------------
+事务Transaction
+
+作用：保持数据的完整性
+
+特点(特征)：原子性、一致性、隔离性、持久性
+
+开启事务
+start transaction;
+
+提交事务(成功)
+commit;
+
+撤消事务、回滚事务(失败)
+rollback;
+
+结束事务：commit;   rollback;
+
+事务的最终状态：commit;  rollback;
+
+不支持事务语句
+create
+drop
+alter
+truncate table
+--------------------------------------------------------
+MySQL高级知识点
+1、view
+2、trigger
+3、procedure
+4、t-sql
+5、index
+6、engine
+7、transaction
+-------------------------------------------------------
+数据库备份、还原
+1、MyISAM引擎有效
+   1)备份
+     将数据库的文件夹直接复制
+   2)还原
+     将文件夹直接复制到mysql的data目录
+    C:\Documents and Settings\All Users\
+       Application Data\MySQL\MySQL Server 5.5\data\库名
+2、对所有引擎都有效
+   1)备份(注意：打开cmd窗口直接输入该命令)
+     mysqldump -u 用户名 -p密码 库名>保存路径
+     mysqldump -u root -proot test>f:/aaa.sql
+   2)还原(注意：在mysql数据库里输入的该命令)
+     (1)新建一个数据库，并进入该库
+     (2)输入如下命令
+        source 文件路径
+        source f:/aaa.sql
+--------------------------------------------------------
+数据库优化
+1、char与varchar类型的选择
+   char、varchar存储的字符串的长度不同
+   char长度固定、varchar长度伸缩
+   char(50)   varchar(50)    男
+2、能用数字类型，尽可能不要用字符串
+3、每个表最好都有主键
+4、主键最好是数字类型的短主键
+5、适当的添加外键，外键关联的字段最好是数字类型
+6、尽可能少用子查询
+   1)利内连接代替子查询
+   2)子查询出现字段、delete语句、update语句
+7、尽可能少用like查询
+   1)利用sphinx代替like查询
+8、给表添加事务、外键，保证数据的完整性
+9、给表添加索引
+10、在where条件中，最好以相同类型的字段做比较
+11、在where条件中，应避免数据类型的转换(索引会失效)
+12、在添加索引的字段上，不要使用聚合函数(索引会失效)
+13、给页面添加缓存
+14、网站静态化
+15、拆分表：拆分记录(纵向拆分)、拆分字段(横向拆分)
+16、主从数据库：最多两台、失效
+17、负载均衡

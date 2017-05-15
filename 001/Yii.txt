@@ -1,0 +1,756 @@
+Day59
+
+总入口
+        index.php
+		//开启调试模式
+		define("APP_DEBUG",true);
+		//项目名称
+		define("APP_NAME","名称");
+		//项目目录
+		define("APP_PATH","./message/");
+		//加载框架入口程序
+		require("./ThinkPHP/ThinkPHP.php");
+url规则
+	....index.php?g=分组名称&m=控制器名称&a=方法名
+	....index.php/分组名称/控制名称/方法名
+
+	默认分组（修改配置文件 conf/config.php）
+	'DEFAULT_GROUP'         => 'Home',  // 默认分组
+	默认控制器
+	'DEFAULT_MODULE'        => 'Index', // 默认模块名称
+	默认方法名
+	'DEFAULT_ACTION'        => 'index', // 默认操作名称
+c层
+	控制器定义规则：
+	1、命名 XxxAction.class.php  类名和类文件名同名
+	2、方法名，没有要求，小写。
+	3、放在Lib/Action/分组/控制器
+	4、继承Action类
+	Action类的方法：
+	给模板传值
+	$this->assign("模板变量名称",被传递的变量);
+	显示模板
+	$this->display("path");
+	失败提示
+	$this->error("提示语句","目标地址");
+	U("分组/控制器名/方法名",array('名称'=>值))
+	成功提示
+	$this->success("提示语句","目标地址");
+	修改成功提示和失败提示的模板路径：
+	'TMPL_ACTION_ERROR'     => THINK_PATH.'Tpl/dispatch_jump.tpl', // 默认错误跳转对应的模板文件
+   	'TMPL_ACTION_SUCCESS'   => THINK_PATH.'Tpl/dispatch_jump.tpl', // 默认成功跳转对应的模板文件
+	跳转
+	$this->redirect("目标地址",array(),"等待时间","提示语");
+	初始化方法
+	function _initialize(){
+		方法体;
+	}
+m层
+	修改配置文件，数据库链接
+	'DB_TYPE'               => 'mysql',     // 数据库类型
+    	'DB_HOST'               => 'localhost', // 服务器地址
+    	'DB_NAME'               => '',          // 数据库名
+    	'DB_USER'               => 'root',      // 用户名
+    	'DB_PWD'                => '',          // 密码
+    	'DB_PREFIX'             => 'think_',
+	声明规则：
+	1、命名 XxxModel.class.php ,类名和类文件名一致
+	2、方法名，小驼峰。
+	3、继承Model类
+	4、放在 Lib/Model/数据模型类
+	Model类的属性及方法：
+	属性：
+	protected $tableName="表名";//设置表名
+	protected $trueTableName="真实表名称";//设置真实表名
+	protected $_validate=array(
+		array("字段","规则",'提示语','条件','附加规则',"时机"),
+		
+	);
+	附加规则：   规则
+	regex--------email require number
+	function-----函数名
+	in-----------array('值1',.....)
+	between------array("最小值","最大值")
+	length-------array(minLength,maxLength)
+	confirm------另一个字段的名称
+	unique-------''
+	
+	protected $_auto=array(
+		array('字段','内容','条件','附加规则'),
+	);
+	附加规则：
+	function   函数
+	string     字符串
+	field      另一个字段名
+	方法：
+	产生sql语句中查询语句的子句：
+	where()
+	order()
+	limit()
+	join()
+	group()
+	having()
+	field()
+	alias()
+	table()
+	
+	select()
+
+	count()
+	增加
+	object data($arr)
+	array create($arr)
+	add()
+	删除
+	where()
+	delete()
+	修改
+	data()
+	create()
+	where()
+	save()
+	
+v层
+	定界符修改
+	TMPL_L_DELIM => '{{'
+	TMPL_R_DELIM => '}}'
+
+	模板标签：
+	变量标签
+	{$名称}
+	{$arr.下标}
+	数组遍历
+	<foreach name="数组名称" item="接收值的变量名称" key="接收下标的变量名称">
+	{$v.下标}
+	</foreach>
+	条件标签
+	<if condition="">
+	
+	</if>
+	<if condition="">
+	<else />
+	</if>
+	<if condition="">
+	<elseif condition="">
+	......
+	<else />
+	</if>
+	条件写法：
+	eq
+	neq
+	gt
+	lt
+	egt
+	elt
+	魔术标签
+	__PUBLIC__
+	__ROOT__
+	__APP__
+	__GROUP__
+	__URL__
+	__ACTION__
+	__SELF__
+
+	预定义变量的使用
+	$Think.get.名称
+	$Think.post.名称
+	$Think.request.名称
+	$Think.cookie.名称
+	$Think.session.名称
+	$Think.server.名称
+
+	模板拆分
+	<include file="路径"/>
+	变量调节器
+	{$变量|函数名=参数,.....}
+	{$变量|函数名=参数,###,.....}
+	布局
+	conf/config.php
+	conf/分组名/config.php
+	开启
+	LAYOUT_ON => true,
+	指定布局名称
+	LAYOUT_NAME => 'layout'
+
+	布局文件放在哪：
+	Tpl/分组/layout.html
+	
+	在布局中，调用控制器方法对应模板运行结果：
+	{__CONTENT__}
+	在模板上不使用布局：
+	{__NOLAYOUT__}
+	
+公共类
+	文件上传
+	1、加载文件上传类
+	import("ORG.Net.UploadFile");
+	2、实例化对象
+	$uploadOb=new UploadFile();
+	3、配置
+	$uploadOb->allowTypes=array('image/png','image/gif','image/jpeg','image/jpg');
+	$uploadOb->maxSize=20000;
+	$uploadOb->savePath="./Public/upload/";
+	$uploadOb->saveRule='uniqid';
+	4、保存图片
+	$re=$uploadOb->upload();
+	5、获取文件上传后的信息
+	$arr=$uploadOb->getUploadFileInfo();
+	6、获取错误信息
+	$str=$uploadOb->getErrorMsg();
+	缩略图
+	$uploadOb->thumb=true;
+	$uploadOb->thumbMaxHeight="",
+	$uploadOb->thumbMaxWidth="",
+	$uploadOb->thumbPrefix="s_,s2_",
+	分页
+	1、加载分页类
+	import("ORG.Util.Page");
+	2、获取总条数
+	$mOb=new Model("表名");
+	$num=$mOb->count();
+	3、每页的条数
+	$pageSize=5;
+	4、实例化对象
+	$pageOb=new Page($num,$pageSize);
+	5、获取开始位置值
+	$start=$pageOb->firstRow;
+	6、获取分页的结果
+	$pageStr=$pageOb->show();
+	7、拿当前页的数据
+	$arr=$mOb->limit("$start,$pageSize")->select();
+	8、给模板传值
+
+	验证码
+	1、加载类
+	import("ORG.Util.Image");
+	2、生成验证码
+	Image::buildImageVerify($length=4, $mode=1, $type='png', $width=48, $height=22, $verifyName='verify');
+
+Yii: Yes it is.
+	美籍华人编写。1版本 2版本
+	www.yiiframework.com
+	www.yiichina.com
+	安全性高。
+dos命令：
+	盘符间跳转：
+	盘符:回车
+	不同目录跳转
+	cd 路径
+
+	
+如何安装？
+	借助于yiic.php,创建web项目
+	在cmd窗口运行yiic.php
+	1、跳转到php的安装目录，当前目录下能够看到php.exe
+2、php.exe -f F:/psd1505/14_Yii/framework/yiic.php webapp F:/psd1505/14_YII/shop
+
+目录：
+	
+	protected
+		views
+		controllers
+		models
+url地址规则：
+	index.php?r=分组名/控制器名/方法名/id/5
+默认的控制器及方法：
+	site  默认的控制器
+	index 默认方法
+修改默认控制器及方法的名称：
+	'defaultController'=>"default/test"
+控制器的编写：
+	1、命名 XxxController.php ,类名和类文件名一致
+	2、方法 actionXxx(){
+
+	}
+	3、必须继承 Controller
+	4、必须放在protected/controllers
+如何找到Controller类
+	去文件yiilite.php找，类与存放目录映射关系数组。
+	CController类的方法：
+	作用：显示模板，给模板传值
+	render(模板路径,传值) 
+	说明：渲染布局
+	renderPartial(模板路径,传值)
+	说明：不会渲染布局。
+	传值：
+		是一个数组
+	模板默认规则：
+	views/控制器名/方法名.php
+	跳转
+	redirect("path")//index.php?r=.....
+	redirect(array("控制器/方法名",'id'=>5,'type'=>123))
+	例子：访问abc,跳转到test上
+	
+	提示并跳转
+	yii::app()->user
+	返回对象CWebUser，提供了方法：
+	setFlash("名称","提示语内容")//设置提示语
+	hasFlash("名称")//判断提示语是否存在
+	getFlash("名称")//获取提示语
+
+	现象：
+	提示语能够跨页面访问
+	只能访问一次。
+	说明：
+	提示语在cookie中存放
+	getFlash(),获取提示语后，把提示语删除。
+
+	改造提示跳转：公共函数
+	commands/functions.php
+	在functions.php中声明了一个函数 jump()
+	在入口文件中，index.php，加载functions.php
+
+M层：
+
+Day60
+
+修改布局文件
+1、修改类Controller的属性 public $layout='//layouts/column1';
+呈现控制器方法的内容，<?php echo $content?>
+2、能否在某个控制器中，单独某个布局？
+在控制中，覆盖属性$layout的值。
+public $layout='//layouts/column1';
+
+？？能否使用render(),且布局不出现？
+
+M层：
+	班级和学生表为例
+	1、链接数据库
+	'db'=>array(
+			'connectionString' => 'mysql:host=localhost;dbname=company',
+			'emulatePrepare' => true,
+			'username' => 'root',
+			'password' => 'root',
+			'charset' => 'utf8',
+			'tablePrefix'=>'cms_',
+			'enableParamLogging'=>true,
+		),
+	2、测试是否链接成功
+	var_dump(yii::app()->db);
+
+	3、数据模型类的封装。
+	1、命名 类名和表名一样。
+	2、方法名 小驼峰命名法。
+	3、必须有一个静态方法
+	public static function model($className=__CLASS__){
+		parent::model($className);
+	}
+	4、指定表名的方法
+	public function tableName(){
+		return "{{表名}}";
+	}
+	说明 ： {{}} ，代表，此表有前缀
+	5、必须继承 CActiveRecored
+	
+	学习CActiveRecord类的属性及方法：
+	查询方法：
+	find($condition,$params) 
+	例子：查询id为8的学生
+	$id=$_GET['id'];
+	$sOb=Student::Model();
+	$re=$sOb->find("id=:id",array(":id"=>$id));
+	var_dump($re->attributes);
+	说明：获取结构使用属性 attributes
+
+	object findByPk($id)
+
+	object findBySql("sql",params)
+
+	findAll($condition,$params)
+	findAllByPk($id|array("id1","id2",.....))
+	findAllBySql("sql",params)
+
+	count($condition,$params)
+	countBySql($sql,$params)
+
+	CDbCriteria 
+	作用：查询子句的产生
+	$cOb=new CDbCriteria();
+	字段列表
+	$cOb->select="id,name";//字段列表
+	limit子句
+	$cOb->offset="";//开始位置值
+	$cOb->limit="";//长度
+	order子句
+	$cOb->order="id desc";//order by 子句
+	group子句
+	$cOb->group="cid";
+	having子句
+	$cOb->having="count(*) > 3";
+	where 子句
+	$cOb->condition="条件";
+	占位符绑定数据
+	$cOb->params=array('占位符名称'=>值);
+
+	连接查询
+	1、创建一个关联
+	Student数据模型类中
+	function relations(){
+		return array(
+
+			'关联名称'=>array("关系类型",'关联的数据模型名称',"外键名称"),
+		);
+	}
+	多对一：
+	self::BELONGS_TO
+	多对多：
+	self::MANY_MANY
+	一对多：
+	self::HAS_MANY
+	一对一：
+	self::HAS_ONE
+	2、查询时，使用$CDbCriteria->with='关联名称';
+	说明：当只有一个规则时，可以省略这步操作。
+	
+	数据增加
+	1、产生数据模型对象。
+	$sOb=new 数据模型类的名称();
+	2、产生数据
+	$sOb->字段名=值;
+	3、入表
+	$sOb->save();
+
+	例子：增加学生数据
+	1、呈现表单
+	2、数据入表
+	作用：获取主键id值
+	getPrimaryKey()
+
+	数据的修改
+	1、实例化数据模型类
+	$sOb=Student::Model();
+	2、修改谁，找到谁。
+	$re=$sOb->findByPk($id);
+	3、赋值
+	$re->name="新名称";
+	4、保存
+	$re->save();
+	数据删除
+	delete() //找到谁删除谁
+	deleteAll($condition,$params)
+	deleteByPk($id)
+	
+
+	$sOb=Student::Model();
+	var_dump($sOb->isNewRecord);
+	echo "<hr/>";
+	$testOb=new Student();
+	var_dump($testOb->isNewRecord);
+	
+
+Day61
+
+M层
+	数据模型类的封装
+	1、命名 Xxx.php，类名和类文件名一致
+	2、继承CActiveRecord
+	3、放在protected/models
+	4、语法格式：
+	class Xxx extends CActiveRecord{
+		public static function Model($className=__CLASS__){
+			return parent::Model($className);
+		}
+		public function tableName(){
+			return "{{xxx}}";
+		}
+	}
+	基类CActiveRecord的方法
+	查询
+	1、实例化数据模型类
+	$mOb=Xxx::Model();
+	2、查询
+	$re=$mOb->find()
+	$re=$mOb->findBySql()
+	$re=$mOb->findByPk()
+	
+	$arr=$re->attributes
+
+	$arr=$mOb->findAll()
+	$arr=$mOb->findAllBySql()
+	$arr=$mOb->findAllByPk()
+
+	$arr2=array();
+	foreach($arr as $ob){
+		$arr2[]=$ob->attributes;
+	}
+
+	$num=$mOb->count()
+	$num=$mOb->countBySql()
+	
+	连接查询：
+	1、指定一个数据模型与数据模型的关系
+	function relations(){
+		return array(
+			array("关系类型","关联模型的名称","外键"),
+		);
+	}
+	关系类型：
+	1、多对一 
+	self::BELONGS_TO
+	2、一对多
+	self::HAS_MANY
+	3、多对多
+	self::MANY_MANY
+	4、一对一
+	self::HAS_ONE
+	排错：
+		1、数据表中有脏数据（不完整数据）。
+		学生没有班级
+		2、Banji.php中 
+		function tableName(){
+			
+		}
+	
+	修改
+	1、实例化数据模型类
+	$mOb=Xxx::Model();
+	2、修改谁找到谁
+	$ob=$mOb->findByPk($id);
+	3、赋值
+	$ob->字段名=值;
+	4、保存
+	$ob->save();
+	删除
+	1、实例化数据模型类对象
+	$mOb=Xxx::Model();
+	2、删除谁，找到谁
+	$mOb->findByPk($id);
+	3、删除
+	$mOb->delete();
+
+	添加
+	1、实例化数据模型类
+	$mOb=new Xxx();
+	2、产生数据
+	$mOb->字段名=值
+	3、保存
+	$re=$mOb->save();
+	4、获取主键id值
+	$mOb->getPrimartyKey();
+
+	查询子句管理类：
+	$cOb=new CDbCriteria();
+	$cOb->condition="";
+	$cOb->order="";
+	$cOb->select="";
+	$cOb->offset="";
+	$cOb->limit="";
+	$cOb->group="";
+	$cOb->having="";
+	$cOb->alias="";
+
+表单生成 CActiveForm
+	$form=$this->beginWidget('CActiveForm',array(
+		'action'=>'',
+		'method'=>'post|get',
+		'htmlOptions'=>array(
+			'enctype'=>"multipart/form-data",
+			'name'=>'form1',
+		)
+	));
+	//产生表单控件
+	$this->endWidget();//表单结束 <form/>
+	
+	表单控件的生成：
+	单行文本输入框
+	$form->textField($model,$attribute);
+	密码框
+	$form->passwordField($model,$attribute);
+	单选按钮组：
+	$form->radioButtonList($model,$attribute,array('value'=>'label'),array('separator'=>"&nbsp;"))
+	指定默认值：
+	$mobel->字段名称='默认值';
+	下拉列表框：
+	$form->dropDownList($model,$attribute,array('value'=>'label'),array()))
+	指定默认值：
+	$mobel->字段名称='默认值';
+	文本域：
+	$form->textArea($model,$attribute,array());
+	
+	表单控件的提示语如何换成中文：
+	在数据模型类中加一个方法
+	public function attributeLabels()
+	{
+		return array(
+			'字段名'=>'中文提示语：',
+		);
+	}
+例子：生成会员注册的表单
+	$form->labelEx($model,"username")
+	说明：$model----Ueser数据模型类对应的一个对象。
+	
+1、自己提交给自己，保存数据，数据能够保存成功后？？？	
+
+2、数据验证：数据模型类
+	function rules(){
+		return array(
+			array("哪个字段","验证规则","message"=>"提示语",....),
+		);
+	}
+	说明：验证规则在数据模型类方法save()执行时，验证规则被调用。
+	例子：
+	1、字段必填
+	array('字段名称',"required","message"=>"不能为空")
+	2、正则表达式验证用户名
+	array('字段名',"match","pattern"=>"正则表达式",'message'=>"错误提示")
+	正则表达式：首位是字母或_,共4到20为由字母数字及下划线组成的字符串。
+	3、验证长度
+	array("password","length",'max'=>20,'min'=>6,'tooLong'=>'不能超过20位','tooShort'=>'不能小于6位')
+	4、比较两个字段的值
+	array("repassword",'compare','compareAttribute'=>'另一个字段的名称','message'=>"两个字段的值不一致")
+	5、判断是否为整数
+	array("age",'numerical','integerOnly'=>true,'max'=>,'min'=>,'tooBig'=>"超过最大值的提示",'tooSmall'=>"小于最小值的提示",'message'=>"请输入整数")
+	6、email
+	array('email','email','message'=>"邮箱格式错误")
+	7、字段的值是否为某数组中的值
+	array('字段名','in','range'=>array('男','女'),'message'=>"错误提示")
+	8、验证字段值的唯一性
+	array("字段名",'unique','message'=>"用户名已经存在")
+3、显示错误：
+	表单上
+	$form->error($model,'字段名称');
+分组
+	1、修改配置
+	'gii'=>array(
+			'class'=>'system.gii.GiiModule',
+			'password'=>'123456',
+		 	// If removed, Gii defaults to localhost only. Edit carefully to taste.
+			'ipFilters'=>array('127.0.0.1','::1'),
+		),
+	2、使用gii助手工具
+	index.php?r=gii
+	3、分组如何访问：
+	index.php?r=分组名/控制器名/方法名/......
+	4、能否修改默认控制器及方法名
+	5、后台访问控制
+
+	
+公共类
+	分页类
+	验证码类
+	自己扩展文件上传类
+	水印类
+
+产品模块
+
+Day62
+
+复习：
+表单生成
+	产生form表单，产生CActiveForm的对象。
+	$form=$this->beginWidget("CActiveForm",array(
+		'action'=>'',
+		'method'=>'',
+		'htmlOptions'=>array()
+	));
+	生成表单控件
+	单行文本输入框
+	echo $form->textField($model,$attribute);
+	密码框
+	echo $form->passwordField($model,$attribute);
+	文本域
+	echo $form->textArea($model,$attribute,$htmlOptions=array());
+	隐藏域
+	echo $form->hiddenField($model,$attribute);
+	单选按钮组
+	echo $form->radioButtonList($model,$attribute,array('separator'=>'&nbsp;'))
+	下拉列表框
+	echo $form->dorpDownList($model,$attribute,$data=array());
+	提示语生成：
+	echo $form->labelEx($model,$attribute);
+	错误提示的输出：
+	echo $form->error($model,$attribute);
+	表单控件默认值如何产生：
+	控制器方法中的数据模型对象执行某属性默认值？
+	$model->province='默认值';
+	表单结束
+	$this->endWidget();
+自动验证
+	需要制定验证规则：给数据模型类加一个方法
+	public function rules(){
+		return array(
+			array('字段名','验证规则',.....),
+		);
+	}
+	验证规则：     辅助内容：
+	required
+	email
+	unique
+	
+	match           'pattern'=>"/正则表达式/"
+	in              'range'=>array('','','')
+	length          'max'=> 'min'=> 'tooLong'=> 'tooShort'=>
+	compare
+	numerical        'integerOnly'=>true 'max'=> 'min'=> 'tooBig'=> 'tooSmall'=> 'message'=""
+
+	data	
+分组
+	1、修改配置项
+		把gii
+	2、访问url
+	index.php?r=gii
+	3、修改配置文件
+	modules=>array(
+		'admin',
+		'gii'
+	)
+	4、分组访问
+	index.php?r=admin/控制器名/方法名
+
+
+公共类
+	分页类 CPagination
+	1、获取总条数
+	2、实例化分页类
+	3、指定每页的条数
+	4、给CDbCriteria对象赋值，offset limit属性
+	5、拿本页的数据
+	6、把数据及分页对象传到模板上
+	7、在模板上遍历显示数据
+	8、显示分页结果
+	$this->widget("CLinkPager",array('pages'=>$pages))
+	例子：
+	学生列表，加分页效果
+	
+	验证码类
+	1、显示验证码
+	在控制器中加一个方法，比如：SuibianController--->actionReg()
+	public function actions(){
+		return array(
+			'captcha'=>array(
+			'class'=>'system.web.widgets.captcha.CCaptchaAction',
+			'height'=>25,
+			'maxLength'=>4,
+			'minLength'=>2,
+			)
+		);
+	}
+	在模板上调用方法，显示验证码：
+	<img src="index.php?r=suibian/captcha"/>
+	
+	2、如何验证
+	给function rules(){
+		array('captcha','captcha','message'=>'验证码错误'),
+	}
+
+	自己扩展文件上传类
+	Upload.php
+	缩略图类
+	Thumb.php
+
+
+产品模块
+	1、设计表
+	create table cms_product(
+		id int(8) primary key auto_increment,
+		title varchar(50) not null,
+		content text,
+		price varchar(8),
+		userprice varchar(8),
+		num int(5) default 0,
+		imagename varchar(100),
+		state tinyint(1) default 0
+	);
+	2、封装数据模型类
+	
+	3、添加产品
