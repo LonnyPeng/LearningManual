@@ -1,0 +1,16 @@
+﻿Ctrl+D 只选择同一个变量
+Ctrl+D Ctrl+D 重命名同一个变量
+鼠标右键+Shift 垂直选区
+把目标代码片段的每一个整行都选中，然后进行复制；在subl中对插入行进行正确的缩进；Ctrl+hift+V 进行自适应缩进的粘贴
+Ctrl+N 创建新文件
+Ctrl+Shift+N 在新窗口创建新文件
+Ctrl+Shift+P；输入install AdvancedNewFile Emmet ExpandRegion 安装插件
+./index.php 新建文件
+Ctrl+` 调出命令行
+
+安装Package Control sublime text3:
+import  urllib.request,os;pf='Package Control.sublime-package';ipp=sublime.installed_packages_path();urllib.request.install_opener(urllib.request.build_opener(urllib.request.ProxyHandler()));open(os.path.join(ipp,pf),'wb').write(urllib.request.urlopen('http://sublime.wbond.net/'+pf.replace(' ','%20')).read())
+
+将光标移至标签的开头或结尾；Ctrl+Shift+' 就能选中这组标签
+
+Ctrl+Shift+Space 选择当前的最小区域 再按一次会向外扩展区域

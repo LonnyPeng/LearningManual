@@ -1,0 +1,63 @@
+compmgmt.msc //计算机管理
+
+http://www.17sucai.com/preview/245880/2015-10-29/index/index.html
+
+http://www.w3school.com.cn/cssref/pr_transform.asp CSS3 transform 属性
+
+http://www.w3school.com.cn/tags/html_ref_canvas.asp HTML5 Canvas 参考手册
+
+https://www.ssllabs.com/ssltest/ //HTTPS网站检测工具-SSL Labs
+
+console.log('a'); document.alert('a');
+
+c1df3ee59c9dc3e792a1392747444eaa:6d
+
+https://fortawesome.github.io/Font-Awesome/icons/ 图标
+
+https://developers.google.com/structured-data/testing-tool/ 检测
+
+xgettext -no-wrap -w 5000 -L php -j xxx.phtml -o approot/locale/fr_CA/LC_MESSAGES/message.po --from-code=UTF-8 --keyword=__
+
+$(this).toggleClass('event-faq'); //有则删除，无则添加
+
+$(this).siblings().addClass('event-faq'); //除自己之外同级的所有元素
+
+https://analytics.google.com/analytics/ google/analytics
+
+json_decode(json_encode($stdclassobject),true);
+
+unicode_encode && unicode_decode
+
+google.maps geasy AIzaSyAfJJ_yLmIwPm8SojQG5ah2bCPf1oDm3tw
+
+uuid: ip + time + rand
+
+T F,Y/d l H:i:s A
+
+window.navigator //获取浏览器信息
+
+window.history
+
+phantomjs xx.js
+
+document.documentElement.innerHTML
+
+150388 ipa
+
+http://lipis.github.io/flag-icon-css/flags/4x3/in.svg 国家国旗
+
+wget -r -c phtv.ifeng.com
+
+wget -b -q -c -r --no-check-certificate www.baidu.com
+
+show variables like '%datadir%' //要查看数据库在磁盘上的存放位置
+
+https://codepen.io/pen/
+
+sph: 近视 (负数) | 远视（正数）
+cyl: 散光
+va: 矫正视力
+pd: 瞳距
+ax: 散光的轴向
+
+$.regexp.email.test(email);

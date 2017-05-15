@@ -1,0 +1,127 @@
+sudo passwd root
+
+su root
+
+shutdown -c
+
+mv * *
+
+cp * *
+
+ls
+
+ll
+
+rm -rf *
+
+unzip *
+
+vim * i|:q|:wq|:q!
+
+sudo apt-get update
+
+sudo apt-get install vsftpd
+
+sudo service vsftpd start|stop|restart
+
+sudo mkdir /home/uftp
+
+sudo useradd -d /home/uftp -s /bin/bash uftp
+
+sudo passwd uftp
+
+sudo vim /etc/vsftpd.conf
+	userlist_deny=NO
+	userlist_enable=YES
+	userlist_file=/etc/allowed_users
+	seccomp_sandbox=NO
+	local_enable=YES
+	
+sudo vim /etc/allowed_users
+	uftp
+	lonny
+	root
+	
+vim /etc/ftpusers
+	(no uftp)
+	
+wget -c http://soft.vpser.net/lnmp/lnmp1.3-full.tar.gz
+ 
+tar zxf lnmp1.3-full.tar.gz && cd lnmp1.3-full && ./install.sh lnmp
+
+sudo chmod 777 -R *
+
+sudo apt-get remove * && sudo apt-get autoremove * 
+
+cd /usr/local/nginx/conf/
+
+mysql> source *;
+
+CREATE USER 'lonny'@'%' IDENTIFIED BY '123456';
+
+DROP USER 'lonny'@'%';
+
+ifconfig
+
+netstat -ap|grep 3306
+
+find / -name *x*
+
+sudo apt-get -y install openssh-server openssh-client
+
+sudo apt-get -y install git
+
+sudo adduser --system --shell /bin/sh --group --disabled-password --home /home/gitolite gitolite
+
+ssh-keygen -t rsa
+
+cp ~/.ssh/id_rsa.pub /tmp/ubuntugege.pub
+
+sudo apt-get -y install gitolite3
+
+sudo su - gitolite
+
+sudo vim /etc/vim/vimrc
+	set nu                           // 在左侧行号
+	set tabstop                  //tab 长度设置为 4
+	set nobackup               //覆盖文件时不备份
+	set cursorline               //突出显示当前行
+	set ruler                       //在右下角显示光标位置的状态行
+	set autoindent             //自动缩进
+	
+sudo apt-get install vim-gtk
+
+sudo apt-get install vim-youcompleteme
+
+#sudo apt-get install matchit
+
+sudo apt-get install vim-fugitive vim-syntastic vim-ctrlp vim-ultisnips vim-snippets
+
+vim-addons install ctrlp
+
+sudo apt-get install exuberant-ctags
+
+zip -q -r *.zip *
+
+tar -zxvf *.tar.gz
+
+sudo apt-get purge ***
+
+sudo apt-get autoremove
+
+sudo apt-get remove --purge ***
+
+sudo apt-get update
+
+sudo apt-get install mplayer
+
+mplayer -vo caca **.***
+
+sudo apt-get install w3m
+
+nginx -s reload (restart)
+
+nginx -c /usr/local/nginx/conf/nginx.conf (set conf)
+
+killall nginx stop (root)
+./nginx start

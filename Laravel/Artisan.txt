@@ -1,0 +1,11 @@
+php artisan -v
+php artisan make:controller WelcomeController
+php artisan make:controller ArticlesController
+php artisan route:list
+php artisan make:auth
+php artisan make:model Article
+php artisan make:migration create_article_table
+
+php artisan make:migration create_tasks_table --create=tasks //创建表
+php artisan migrate //迁移数据库
+php artisan make:model Task //创建模型

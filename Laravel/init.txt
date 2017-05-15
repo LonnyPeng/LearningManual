@@ -1,0 +1,9 @@
+https://cs.laravel-china.org/#
+
+#nginx
+try_files $uri $uri/ /index.php?$query_string;
+
+git clone https://github.com/laravel/laravel.git
+npm install
+gulp
+composer install
