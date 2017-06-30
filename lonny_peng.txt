@@ -1,0 +1,328 @@
+1/HTTP和HTTPS的区别
+HTTP是互联网上应用最为广泛的超文本传输协议。HTTPS是用SSL加密的,Web服务器启用SSL需要获得一个服务器证书并将该证书与要使用SSL的服务器绑定,HTTP和HTTPS使用的是完全不同的连接方式,用的端口也不一样,HTTP用的是80端口,HTTPS用的是443端口。HTTPS协议是由SSL加HTTP协议构建的可进行加密传输、身份认证的网络协议，要比HTTP协议安全。
+2/GETT|POST|AJAX进行表单提交的区别
+	<form action="{{ $url }}" method="GET|POST" enctype="multipart/form-data">
+		<input type="text" name="user" value="" />
+		<input type="password" name="password" value="" />
+		<button type="submit">Submit</button>
+	</form>
+	<script type="text/javascript">
+		$.ajax({
+			async: true|false, //默认值: true，所有请求均为异步请求。同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行。
+			url: $('form').attr('action'),
+			type: $('form').attr('method'),
+			data: {user: $('form input[name="user"]').val(), password: $('form input[name="password"]').val()},
+			dataType: 'json',
+			beforeSend: function () {
+				//在发送请求之前调用。
+			},
+			success: function (result) {
+				//当请求之后调用。传入返回后的数据，以及包含成功代码的字符串。
+			},
+			error: function () {
+				//在请求出错时调用。
+			}
+		});
+	</script>
+	$_GET['user']，把数据加URL中，安全性不好，在URL中可以看得到；传送数据量较小。对于其长度，HTTP协议规范没有对URL长度进行限制。这个限制是特定的浏览器及服务器对它的限制。IE对URL长度的限制是2083字节(2K+35)。对于其他浏览器，理论上没有长度限制，其限制取决于操作系统的支持。
+	$_POST['user']，通过HTTP POST机制，将数据放置在HTTP HEADER内一起传送，用户看不到这个过程。提交的大小一般来说不受限制，但是具体根据服务器的不同略有不同。相对于_GET方式安全性略高。
+	$_REQUEST['user]，可以获取以POST方法和GET方法提交的数据，但是速度比较慢。
+		PHP超全局变量
+			$GLOBALS，引用全局作用域中可用的全部变量。 $a=1;$b=2;function c() {$GLOBALS['d'] = $GLOBALS['a'] + $GLOBALS['b']}c();echo $d; //3
+			$_SERVER，保存关于报头、路径和脚本位置的信息。SERVER_ADDR|REMOTE_ADDR
+			$_FILES，HTTP文件上传变量。error[0,8]，0成功。
+			$_ENV，通过 php-fpm.conf 设置环境变量
+			$_COOKIE，把一些信息保存在客户端。setCookie('user', 'Lonny', time() + 60, '/');$_COOKIE['user']; 如果不设置时间，就不会保存到cookie文件中。当浏览器关闭时，就无法访问了。
+			$_SESSION，把一些信息保存在服务端，客户端第一次访问会生成一个唯一会话ID基于cookie保存在客户端，用户下次访问时浏览器会带着这个会话ID过来来确定客户端，客户端禁用了cookie，则必须用url传递session_id，通过php.ini中设置session.use_trans_sid=1，过期时间 session.gc_maxlifetime 。session_start();unset($_SESSION);session_destroy();
+3/PHP魔术方法
+	__construct():当使用 new 操作符创建一个类的实例时，构造方法将会自动调用。如果子类中定义了构造函数则不会隐式调用其父类的构造函数。要执行父类的构造函数，需要在子类的构造函数中调用。
+	__destruct():析构函数会在到某个对象的所有引用都被删除或者当对象被显式销毁时执行。和构造函数一样，父类的析构函数不会被引擎暗中调用。要执行父类的析构函数，必须在子类的析构函数体中显式调用。
+	__toString():方法用于一个类被当成字符串时应怎样回应。
+	__invoke(): 当尝试以调用函数的方式调用一个对象时会被自动调用。
+	__set()：在给不可访问属性赋值时会被自动调用。
+	__get()：读取不可访问属性的值时会被自动调用。
+4/PHP常量
+	自定义 !defined('NAME') && define('NAME', 'Lonny');
+	魔术常量 __LINE__|__FILE__|_DIR__|__FUNCTION__|__CLASS__|__TRAIT__|__METHOD__|__NAMESPACE__
+5/PHP的自动加载机制
+	__autoload();__autoload的最大缺陷是无法有多个autoload方法。比如你的项目引用了别人的一个项目，你的项目中有一个__autoload，别人的项目也有一个__autoload,这样两个__autoload就冲突了。
+	spl_auto_register();注册__autoload()。
+6/PHP关键字
+	public|protected|private
+	extends|implements; implements|实现多个接口,接口的方法一般为空的,必须重写才能使用,
+	class A extends B implements C,D,E{function a(){} function b(){} function c(){}} 
+	interface C{function a(){}} interface D{function b(){}} interface E{function c(){}}
+	self|parent|static
+7/PHP
+	php-cgi.exe -b 127.0.0.1:9000 -c php.ini
+	taskkill /F /IM php-cgi.exe 2>nul
+	
+	function_exists();class_exists();method_exists($class, $function);file_exists($filename);
+	
+	json_decode(json_encode($object), true);
+	unicode_encode();unicode_decode();
+	reset(['a', 'b']);
+	array_map('trim', ['a']);
+	array_values(['a' => 'b', 'c' => 'd']);
+	array_keys(['a' => 'b', 'c' => 'd']);
+	array_filter(['', null, 0, 'a']);
+	array_unique(['a', 'a', 'b']);
+	array_search('a', ['a', 'b']);
+	array_reverse(['a', 'b']);
+	array_combine([0, 1], ['a', 'b']);
+	shuffle(['a', 'b', 'c']);
+	count(['a', 'b'], false);
+	explode(",", $str);
+	implode(",", $array);
+	
+	time();
+	date('Y-m-d H:i:s', strtotime('2017-06-30 14:23:30'));
+	microtime();
+	
+	ceil();floor();sqrt();ads();max();min();mt_rand();round();fmod($x, $y);number_format();sprintf("%.2f", 1.234);
+	
+	strlen($str);substr($str, 0, 1);strrev($str);strtolower();strtoupper();ucfirst();ucwords();htmlspecialchars($str);
+	md5();uniqid();trim($str);str_shuffle($str);rawurldecode($url);simplexml_load_file($filename);str_repeat($str, 2);
+	iconv("UTF-8", "GBK//IGNORE", $str);
+	mb_strlen($string, "UTF-8");
+	mb_substr($string, $start, $length, "UTF-8");
+	addslashes($str);
+	
+	new PDO('mysql:host=127.0.0.1:3306;dbname=db_main', 'root', 'root');
+	
+	imagecreatetruecolor($width, $height);
+	imagecopyresized($dst_image, $src_image, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
+	imagecreatefromjpeg($imagename);
+	imagedestroy($handel);
+	getimagesize($filename);
+	
+	mkdir($flie, 0755, true);
+	rmdir($file);unlink($file);
+	opendir($file);readdir($readdir);
+	fopen($file, 'w');
+	file_get_contents($file);
+	file_put_contents($file);
+	fclose($handel);
+	move_uploaded_file($filename, $destination);
+	is_file($file);is_dir($file);
+	pathinfo($file);
+	fgetcsv($handel);fputcsv($handel, $str);
+	
+	parse_url($url);
+	curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_exec($ch);
+	curl_close($ch);
+	
+	curl_multi_init();
+	curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_multi_add_handle($mh, $ch);
+	curl_multi_exec($mh);
+	curl_multi_getcontent($ch);
+	curl_multi_remove_handle($mh, $ch);
+	curl_multi_close($mh);
+	
+	preg_match("/^[\d]{2}/i", $str);
+	preg_replace("/[ ]{2,}|null/i", " ", $str);
+	preg_match_all("/<a.*?href[\s]*=[\s]*[\"|']{1}(.*?)[\"|']{1}[^>]*?>/i", $str, $matches);
+8/MYSQL
+	mysql -h 127.0.0.1 -P 3306 -u root -proot db_main -L -N -s -e"SHOW DATABASES;">c:/lonny.sql
+	mysql -h 127.0.0.1 -P 3306 -u root -proot db_main t_tbale>c:/lonny.sql
+	
+	use mysql;
+	select host, user from user;
+	create user 'lonny'@'%' identified by 'lonny';
+	set password for lonny=password('123456');
+	grant select on db_main.* to lonny;
+	revoke select on db_main.* from 'lonny'@'%';
+	flush privileges;
+	drop user lonny;
+	
+	USE db_main;
+	SOURCE c:/lonny.sql
+	CREATE DATABASE IF NOT EXISTS db_main DEFAULT CHARSET utf8;
+	DROP DATABASE db_main;
+	
+	CREATE TABLE `t_user` (
+		`user_id` INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+		`user_name` VARCHAR(45) NOT NULL, 
+		`user_add_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+		`user_status` INT(1) DEFAULT 1,
+		KEY `user_name` (`user_name`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	
+	ALTER TABLE `t_user` CHANGE `user_status` `status` INT(11) DEFAULT 0 COMMENT 'Status';
+	ALTER TABLE `t_user` MODIFY COLUMN status INT(1);
+	ALTER TABLE `t_user` ADD `user_mail` VARCHAR(100) NOT NULL UNIQUE KEY COMMENT 'Your mail' AFTER `user_name`;
+	ALTER TABLE `t_user` DROP COLUMN `user_add_time`;
+	
+	INSERT INTO t_user SET user_name = 'lonny', user_mail = '123456@qq.com';
+	SELECT IFNULL(COUNT(user_id), 0) AS qty 
+		FROM t_user 
+		WHERE user_status = 1 
+		AND POSITION('qq' IN user_mail) 
+		GROUP BY DATE(user_add_time) 
+		ORDER BY CONVERT(user_name USING GBK) ASC 
+		LIMIT 0, 10;
+	UPDATE t_user SET user_name = 'Lonny.P' WHERE user_mail = '123456@qq.com';
+	DELETE FROM t_user WHERE user_mail = '123456@qq.com';
+	
+	TRUNCATE t_user;
+	DROP TABLE `t_user`;
+	
+	start transaction;
+	INSERT INTO t_user SET user_name = 'lonny1', user_mail = '123457@qq.com';
+	INSERT INTO t_user SET user_name = 'lonny2', user_mail = '123458@qq.com';
+	commint|rollback;
+	
+	create view viewName as SELECT user_name, user_mail FROM t_user LIMIT 1;
+	alter view viewName as SELECT user_name, user_mail FROM t_user LIMIT 2;
+	SELECT * FROM viewName;
+	DROP view viewName;
+	
+	DROP TRIGGER IF EXISTS t_afterdelete_on_tab1;
+	CREATE TRIGGER t_afterdelete_on_tab1
+	AFTER DELETE ON tab1
+	FOR EACH ROW
+	BEGIN
+		  delete from tab2 where tab2_id=old.tab1_id;
+	END;
+	drop trigger t_afterdelete_on_tab1;
+	
+	DELIMITER //
+	drop procedure if exists 存储过程名//
+	create procedure 存储过程名(IN p_id int)
+	begin
+	  select p_id//
+	  sql语句//
+	  sql语句//
+	end//
+	DELIMITER;
+	set @p_id=1;
+	call hello(@p_id);
+	drop procedure;
+	
+	高并发下的性能优化 innodb_deadlock_detect = false; (>5.7); 多线程并发下，InnoDB 内部要做死锁检测等操作，对性能的影响及其严重。
+9/SHELL
+	#!/bin/bash
+
+	# mysql conf start
+	host="127.0.0.1"
+	user="root"
+	password="root"
+	databaseName="db_main"
+	# mysql conf end
+
+	# stop(.php) is same stop(.sh)
+	stop=5000
+	##
+
+	SQL="SELECT FLOOR(COUNT(*)/${stop}) FROM t_order_shipment ORDER BY order_id DESC LIMIT 1"
+
+	if [ "$2" != "" ]; then
+		if [[ $2 == *[0-9]* ]]; then
+			i=$2
+		else
+			i=$(mysql -h ${host} -u ${user} -p${password} ${databaseName} -L -N -s -e"${SQL}")
+		fi
+	else
+		i=$(mysql -h ${host} -u ${user} -p${password} ${databaseName} -L -N -s -e"${SQL}")
+	fi
+
+	FILE=$(pwd)
+	FILE="${FILE}/basic_order.sh"
+
+	if [ "$1" != "" ]; then
+		HOST=$1
+		url="${HOST}/crons/transfer/basic_order.php?i=${i}"
+
+		echo "${url}"
+	else
+		echo "Please enter your host (http://www.baidu.com)..."
+		read HOST
+
+		url="${HOST}/crons/transfer/basic_order.php?i=${i}"
+
+		echo "Please enter URL is true: ${url}"
+		echo "yes|no"
+		read STATUS
+
+		if [ "$STATUS" != "yes" ]; then
+			source $FILE
+		fi
+	fi
+
+	RESULT=$(curl -s ${url})
+
+	if [ "${RESULT}" = "ok" ]; then
+		echo "Success."
+
+		read EBD
+	else
+		if [[ $RESULT == *[0-9]* ]]; then
+			i=$RESULT
+		else
+			i=$(mysql -h ${host} -u ${user} -p${password} ${databaseName} -L -N -s -e"${SQL}")
+		fi
+
+		echo "----------------------------------------------------------"
+		echo ""
+
+		source $FILE $HOST $i
+	fi
+10/UBUNTU
+	sudo passwd root
+	ru root
+	pwd
+	mkdir *
+	rm -rf *
+	cp * *
+	mv * *
+	unzip *
+	tar zxvf *
+	sudo chmod 777 -R *
+	sudo yum insert *
+	cd etc/init.d/
+	./nginx start|stop|restart
+	./mysql start|stop|restart
+	./php-fpm start|stop|restart
+11/GIT
+	ssh-keygen -t rsa -C "xingchenyekong@163.com"
+	git clone git@192.168.0.8:/git/evn.git
+	git init
+	git remote add origin git@192.168.0.8:/git/evn.git
+	git config --global use.name 'lonny'
+	git config --global use.email 'lonny.p@qq.com'
+	git pull origin master
+	git checkout -b lonny
+	git merge master
+	git push origin :lonny
+	git branch
+	git branch -D lonny
+	git status
+	git diff .
+	git checkout .
+	git add .
+	git reset HEAD .
+	git log --pretty=oneline
+	git reset --hard 133f2c02bcd
+	git commit -m "test"
+	git stash
+	git stash pop
+	gitk
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+
+	
+		
+
