@@ -311,6 +311,278 @@ HTTP是互联网上应用最为广泛的超文本传输协议。HTTPS是用SSL�
 	git stash
 	git stash pop
 	gitk
+12/HTML
+	<!DOCTYPE html>
+	<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+		<title>HTML</title>
+	</head>
+	<body>
+		<header>HEADER</header>
+		<div></div>
+		<footer>FOOTER</footer>
+	</body>
+	</html>
+13/CSS
+	.clear:after{
+		display: inline-block;
+		height: 0;
+		content: ".";
+		visibility: hidden;
+		clear: both;
+	}
+
+	.clear{
+		zoom: 1;
+	}
+	
+	a:hover {
+		color: #000;
+		text-decoration: underline;
+	}
+	
+	.a {
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		.b {
+			min-width: 100px;
+			cursor: pointer;
+			z-index: 0;
+			opacity: 0.5;
+			@media screen and (max-width: 720px) {
+				left: 0px;
+			}
+		}
+	}
+	.b {
+		position: relative;
+		top: 5px;
+		right: 5px;
+	}
+	
+	.box {
+		display: inline-block; 
+		width: 40%; 
+		overflow: hidden;
+		opacity: .75;
+		background-color: #fff;
+		transform: perspective(600px);
+		transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+		-webkit-animation: circle 4s infinite linear;
+	}
+	@-webkit-keyframes circle{
+		0% {
+			transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+		}
+		50% {
+			transform: rotateX(180deg) rotateY(180deg) rotateZ(180deg);
+		}
+		100% {
+			transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+		}
+	}
+14/JAVASCRIPT
+	document.createElement('div');
+	document.getElementById('js-submit').innerHTML;
+	window.location.href;
+	window.navigator;
+	window.history;
+	console.log('Lonny');
+	window.onload = function () {console.log("Lonny");};
+	
+	$(this).toggleClass('none');
+	$(this).siblings().addClass('none');
+	$(this).trigger('click');
+	$.regexp.email.test('lonny.p@gmail.com');
+	$.ajax();$.getJSON();$.post();
+	$.inArray('b', ['a', 'b']);
+	/^[a]+[\d]*/.test('aa123');
+	['a'].push('b');
+	$(this).addClass('none).removeClass('none);
+	$(this).append('<div></div>').remove();
+	setTimeout(function () {}, 1000);
+	'a,b,c'.split(',');
+	['a', 'b', 'c'].join(',');
+15/NGINX
+	worker_processes  1;
+	error_log /ENV/tmp/nginx_error.log crit;
+
+	events {
+		worker_connections 1024;
+	}
+
+	http {
+		include mime.types;
+		default_type application/octet-stream;
+		
+		server_names_hash_bucket_size  64;
+		
+		access_log off;
+		sendfile on;
+		tcp_nopush on;
+		tcp_nodelay on;
+
+		keepalive_timeout 60;
+
+		gzip on;
+		gzip_min_length 1024;
+		gzip_types text/plain text/xml text/css application/x-javascript;
+		
+		charset utf-8;
+
+		client_max_body_size 5m;
+		fastcgi_connect_timeout 300;
+		fastcgi_read_timeout 300;
+		fastcgi_send_timeout 9999;
+		fastcgi_intercept_errors on;
+
+		upstream backend {
+			server 127.0.0.1:9000;
+		}
+
+		include conf.d/default;
+		include conf.d/*.conf;
+		include conf.d/personal/*.conf;
+	}
+
+	server {
+		listen 80;
+		
+		server_name www.laravel.com;
+		
+		resolver 114.114.114.114 114.114.115.115;
+
+		error_page 500 502 504 /50x.html;
+
+		root /sites/www.laravel.com/laravel/public;
+			
+		location / {
+			if (!-e $request_filename) {
+				rewrite ^ /index.php last;
+			}
+			index index.php index.html;
+			try_files $uri $uri/ /index.php?$query_string;
+		}
+
+		location ~ \.php$ {
+			if (!-e $request_filename) {
+				rewrite ^ /index.php last;
+			}
+			fastcgi_pass backend;
+			fastcgi_index index.php;
+			include fastcgi.conf;
+			fastcgi_param PATH_INFO $fastcgi_script_name;
+		}
+	}
+16/REDIS
+	$redis = new \Redis();
+	$redis->pconnect('127.0.0.1', '6379');
+	$redis->select(0);
+	$redis->setOption(\Redis::OPT_SERIALIZER, \Redis::SERIALIZER_PHP);
+	
+	$redis->exists($key);
+	$redis->set($key, $data);
+	$redis->get($key);
+	$rdeis->del($key);
+17/PHANTOMJS
+	var page = require('webpage').create(), system = require('system'), fs = require('fs');
+	var ajaxUrl = "http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js";
+
+	page.viewportSize = {width: window.screen.width, height: window.screen.height};
+	page.zoomFactor = 1;
+
+	page.open(system.args[1], function (status) {
+		if (status === 'success') {
+			var body = page.evaluate(function () {
+				return document.getElementsByTagName('html')[0].getBoundingClientRect(); 
+			});
+
+			var isJQ = page.evaluate(function () {
+				return typeof(jQuery) == "function" ? true : false;
+			});
+
+			var action = function () {
+				page.evaluate(function () {
+					$(document).ready(function () {
+						//action
+						$('body').trigger("mouseenter");
+					});
+				});
+			};
+			
+			if (isJQ) {
+				action();
+			} else {
+				page.includeJs(ajaxUrl, function () {
+					action();
+				});
+			}
+
+			page.clipRect = {top: body.top, left: body.left, width: body.width, height: body.height};
+
+			page.render(system.args[2]); //save image
+			fs.write(system.args[3], page.content, 'w'); //save html
+
+			page.close();
+			phantom.exit();
+		}
+	});
+18/LARAVEL
+	https://laravel.com/
+19/HTTP STATUS
+	// 信息化 1xx
+	100 => '继续'
+	101 => '交换协议'
+
+	// 成功 2xx
+	200 => 'OK'
+	201 => '创建'
+	202 => '公认'
+	203 => '非权威信息'
+	204 => '无内容'
+	205 => '重置内容'
+	206 => '部分内容'
+
+	// 重定向 3xx
+	300 => '多种选择'
+	301 => '永久移动'
+	302 => '发现'
+	303 => '见其他'
+	304 => '未修改'
+	305 => '使用代理服务器'
+	307 => '临时重定向'
+
+	// 客户端错误 4xx
+	400 => '错误的请求'
+	401 => '擅自'
+	402 => '需付款'
+	403 => '被禁止'
+	404 => '未找到'
+	405 => '方法不允许'
+	406 => '不能接受的'
+	407 => '需要代理验证'
+	408 => '请求超时'
+	409 => '冲突'
+	410 => '飘'
+	411 => '需要长度'
+	412 => '前提失败'
+	413 => '请求的实体太大'
+	414 => '请求URI太长'
+	415 => '不支持的媒体类型'
+	416 => '要求范围不满意'
+	417 => '期待失败'
+
+	// 服务端错误 5xx
+	500 => '内部服务器错误'
+	501 => '未实现'
+	502 => '错误的网关'
+	503 => '暂停服务'
+	504 => '网关超时'
+	505 => 'HTTP版本不支持'
+
 	
 	
 	
