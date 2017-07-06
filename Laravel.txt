@@ -1,0 +1,8 @@
+composer -v
+composer install
+composer update
+php artisan migrate
+php artisan migrate:rollback
+php artisan db:seed
+npm install
+yum list telnet*
