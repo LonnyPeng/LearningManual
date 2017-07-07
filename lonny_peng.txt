@@ -284,6 +284,7 @@ HTTP是互联网上应用最为广泛的超文本传输协议。HTTPS是用SSL�
 	sudo chmod 777 -R *
 	sudo yum insert *
 	php -i | grep php.ini
+	lsof -i:9501
 	cd etc/init.d/
 	./nginx start|stop|restart
 	./mysql start|stop|restart
