@@ -51,7 +51,7 @@ HTTP是互联网上应用最为广泛的超文本传输协议。HTTPS是用SSL�
 	public|protected|private
 	extends|implements; implements|实现多个接口,接口的方法一般为空的,必须重写才能使用,
 	class A extends B implements C,D,E{function a(){} function b(){} function c(){}} 
-	interface C{function a(){}} interface D{function b(){}} interface E{function c(){}}
+	interface C{function a()} interface D{function b()} interface E{function c()}
 	self|parent|static
 7/PHP
 	php-cgi.exe -b 127.0.0.1:9000 -c php.ini
