@@ -1,6 +1,6 @@
 mkdir sites
 
-git pull //È¡»ØÔ¶³ÌÖ÷»úÄ³¸ö·ÖÖ§µÄ¸üĞÂ£¬ÔÙÓë±¾µØµÄÖ¸¶¨·ÖÖ§ºÏ²¢¡£
+git pull //å–å›è¿œç¨‹ä¸»æœºæŸä¸ªåˆ†æ”¯çš„æ›´æ–°ï¼Œå†ä¸æœ¬åœ°çš„æŒ‡å®šåˆ†æ”¯åˆå¹¶ã€‚
 
 cd sites/
 
@@ -8,37 +8,37 @@ giy clone git@192.168.0.1:/git/name.git
 
 cd /e/sites/www.baidu.com
 
-master //Ö÷Ö§
+master //ä¸»æ”¯
 
-git branch name //´´½¨Ò»¸ö·ÖÖ§
+git branch name //åˆ›å»ºä¸€ä¸ªåˆ†æ”¯
 
-git checkout name //ÇĞ»»µ½·ÖÖ§
+git checkout name //åˆ‡æ¢åˆ°åˆ†æ”¯
 
-git checkout master //ÇĞ»»µ½masterÖ÷Ö§
+git checkout master //åˆ‡æ¢åˆ°masterä¸»æ”¯
 
-git status //²é¿´ÎÄ¼ş×´Ì¬
+git status //æŸ¥çœ‹æ–‡ä»¶çŠ¶æ€
 
-git log //²é¿´Ìá½»ÀúÊ·
+git log //æŸ¥çœ‹æäº¤å†å²
 
-git commit -mf &quot //Ìá½»ÄãµÄĞŞ¸Ä
+git commit -mf &quot //æäº¤ä½ çš„ä¿®æ”¹
 
-git push origin lonny //ÍÆËÍÄãµÄ¸üĞÂµ½Ô¶´¦·ÖÖ§
+git push origin lonny //æ¨é€ä½ çš„æ›´æ–°åˆ°è¿œå¤„åˆ†æ”¯
 
-git remote -v //²é¿´Ô¶³Ì²Ö¿âi
+git remote -v //æŸ¥çœ‹è¿œç¨‹ä»“åº“i
 
-git remote show origin //²é¿´Ô¶³Ì²Ö¿âii
+git remote show origin //æŸ¥çœ‹è¿œç¨‹ä»“åº“ii
 
-git add approot/template/lonny/ //Ôö¼ÓĞÂµÄÎÄ¼ş
+git add approot/template/lonny/ //å¢åŠ æ–°çš„æ–‡ä»¶
 
-git commit -am 'messwage' //Ìá½»ÄãĞŞ¸ÄµÄËùÓĞÎÄ¼ş
+git commit -am 'messwage' //æäº¤ä½ ä¿®æ”¹çš„æ‰€æœ‰æ–‡ä»¶
 
-git config --global use.name 'name' //ĞŞ¸ÄÄãµÄÓÃ»§Ãû
+git config --global use.name 'name' //ä¿®æ”¹ä½ çš„ç”¨æˆ·å
 
-git config --global use.email 'name.p@qq.com' //ĞŞ¸ÄÄãµÄÓÊÏäÃû
+git config --global use.email 'name.p@qq.com' //ä¿®æ”¹ä½ çš„é‚®ç®±å
 
-gitk //µ÷³ögitk´°¿Ú
+gitk //è°ƒå‡ºgitkçª—å£
 
-git remote -v //²é¿´Ô´
+git remote -v //æŸ¥çœ‹æº
 
 ssh-keygen -t rsa -C "name.p@qq.com" //
 
@@ -46,40 +46,42 @@ git remote add origin git@192.168.0.1:/git/name.git
 
 git bash
 
-git log --pretty=oneline //²é¿´Ìá½»ÀúÊ·
+git log --pretty=oneline //æŸ¥çœ‹æäº¤å†å²
 
-git reset --hard HEAD^ //·µ»ØÉÏÒ»¸ö°æ±¾
+git reset --hard HEAD^ //è¿”å›ä¸Šä¸€ä¸ªç‰ˆæœ¬
 
-cat readme.txt //²é¿´ÎÄ¼şÄÚÈİ
+cat readme.txt //æŸ¥çœ‹æ–‡ä»¶å†…å®¹
 
-git reflog //²é¿´×î½üÊ¹ÓÃµÄÃüÁî
+git reflog //æŸ¥çœ‹æœ€è¿‘ä½¿ç”¨çš„å‘½ä»¤
 
-git diff readme.txt //²é¿´ÎÄ¼şĞŞ¸ÄµÄÄÚÈİ
+git diff readme.txt //æŸ¥çœ‹æ–‡ä»¶ä¿®æ”¹çš„å†…å®¹
 
-git clone https://github.com/LonnyPeng/LearningManual.git //¿ËÂ¡Ô¶³ÌÎÄ¼ş¿â
+git clone https://github.com/LonnyPeng/LearningManual.git //å…‹éš†è¿œç¨‹æ–‡ä»¶åº“
 
-git branch //²é¿´·ÖÖ§
+git branch //æŸ¥çœ‹åˆ†æ”¯
 
-git merge name //ºÏ²¢·ÖÖ§
+git merge name //åˆå¹¶åˆ†æ”¯
 
-git branch -D name //É¾³ı·ÖÖ§
+git branch -D name //åˆ é™¤åˆ†æ”¯
 
-git checkout -b name //´´½¨·ÖÖ§
+git checkout -b name //åˆ›å»ºåˆ†æ”¯
 
-git checkout master //ÇĞ»»µ½Ö÷·ÖÖ§
+git checkout master //åˆ‡æ¢åˆ°ä¸»åˆ†æ”¯
 
-git push origin master //ÍÆËÍµ½Ô¶³Ì¿â
+git push origin master //æ¨é€åˆ°è¿œç¨‹åº“
 
-git push origin :master //ÍÆËÍµ½Ô¶³Ì¿â
+git push origin :master //æ¨é€åˆ°è¿œç¨‹åº“
 
-git merge master //´Ómaster¸üĞÂµ½±¾Ö§
+git merge master //ä»masteræ›´æ–°åˆ°æœ¬æ”¯
 
-git stash //°Ñ±¾µØµÄĞŞ¸ÄÔİ´æµ½»º´æÖĞ
+git stash //æŠŠæœ¬åœ°çš„ä¿®æ”¹æš‚å­˜åˆ°ç¼“å­˜ä¸­
 
-git stash pop //È¡³ö»º´æÖĞÔİ´æµÄ×ÊÔ´
+git stash pop //å–å‡ºç¼“å­˜ä¸­æš‚å­˜çš„èµ„æº
 
 git remote add origin https://github.com/LonnyPeng/LearningManual.git
 
 git pull origin bread
 
 git reset --hard 133f2c02bcd
+
+git remote set-url origin https://username:password@github.com/nodie/jomooapi.git
