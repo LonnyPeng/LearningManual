@@ -125,3 +125,4 @@ nginx -c /usr/local/nginx/conf/nginx.conf (set conf)
 
 killall nginx stop (root)
 ./nginx start
+find / -name '*' | xargs grep 'route'
