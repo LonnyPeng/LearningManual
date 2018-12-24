@@ -86,5 +86,5 @@ git reset --hard 133f2c02bcd
 
 git remote set-url origin https://username:password@github.com/nodie/jomooapi.git
 
-git fetch
+git fetch origin develope4.2
 git checkout origin/develope4.2 -- crontab/get_orders_by_md.php
