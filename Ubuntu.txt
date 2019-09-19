@@ -130,3 +130,7 @@ find / -name '*' | xargs grep 'route'
 ps -aux
 top
 show processlist;
+show full processlist;
+
+ps -ef|grep update_car_stop.php|grep -v grep|cut -c 9-15|xargs kill -9
+history
