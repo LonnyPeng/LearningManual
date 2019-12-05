@@ -136,3 +136,5 @@ ps -ef|grep update_car_stop.php|grep -v grep|cut -c 9-15|xargs kill -9
 history
 
 split -b 10m file.txt new_file_prefix
+
+sudo sed -n "s/InnoDB/MyISAM/p" Dump20191205.sql
