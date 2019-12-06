@@ -88,3 +88,7 @@ git remote set-url origin https://username:password@github.com/nodie/jomooapi.gi
 
 git fetch origin develope4.2
 git checkout origin/develope4.2 -- crontab/get_orders_by_md.php
+
+sudo git for-each-ref --format='delete %(refname)' refs/original | git update-ref --stdin
+sudo git reflog expire --expire=now --all
+sudo git gc --aggressive --prune=now
