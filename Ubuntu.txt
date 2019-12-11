@@ -138,3 +138,12 @@ history
 split -b 10m file.txt new_file_prefix
 
 sudo sed -n "s/InnoDB/MyISAM/p" Dump20191205.sql
+
+生成原始 RSA私钥文件
+openssl genrsa -out rsa_private_key.pem 1024
+
+生成 RSA公钥 rsa_public_key.pem
+openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
+
+从公钥 rsa_public_key.pem 获取十六进制的公钥（第一段16进制字符串，用于前端js加密）
+openssl asn1parse -out temp.ans -i -inform PEM<rsa_private_key.pem
