@@ -147,3 +147,11 @@ openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
 
 从公钥 rsa_public_key.pem 获取十六进制的公钥（第一段16进制字符串，用于前端js加密）
 openssl asn1parse -out temp.ans -i -inform PEM<rsa_private_key.pem
+
+php Crontab/tool/sub_car_location.php
+
+history | grep tai
+
+nohup php Crontab/tool/sub_car_location.php > sub_car_location.txt &
+
+tail sub_car_location.txt
