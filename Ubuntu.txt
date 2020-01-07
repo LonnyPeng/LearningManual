@@ -155,3 +155,6 @@ history | grep tai
 nohup php Crontab/tool/sub_car_location.php > sub_car_location.txt &
 
 tail sub_car_location.txt
+
+ufw status
+ufw allow 8080/tcp
